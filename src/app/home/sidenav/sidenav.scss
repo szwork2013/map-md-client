@@ -1,0 +1,20 @@
+.md-sidenav-left {
+  z-index: 1001;
+  .md-tall {
+    height: 180px;
+    max-height: 180px;
+  }
+
+  .button-signin {
+    width: 100%;
+    button {
+      width: 100%;
+    }
+  }
+
+  md-list {
+    md-icon {
+      float: left;
+    }
+  }
+}

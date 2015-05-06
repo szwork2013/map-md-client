@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,OAAQ;EACN,QAAQ,EAAE,QAAQ;EAClB,QAAQ,EAAE,MAAM",
+"sources": ["photoSlider.scss"],
+"names": [],
+"file": "photoSlider.css"
+}

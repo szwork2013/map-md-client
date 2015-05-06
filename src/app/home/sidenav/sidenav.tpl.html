@@ -1,0 +1,36 @@
+<md-sidenav class="md-sidenav-left md-whiteframe-z2"
+            md-component-id="left">
+    <md-toolbar md-scroll-shrink
+                class="md-tall md-hue-3">
+        <span flex></span>
+        <div class="md-toolbar-tools md-toolbar-tools-bottom"
+                ng-switch="Authenticated.login">
+            <div ng-switch-when="true" flex layout-fill>
+                <user-profile user="Authenticated.user"
+                              flex layout-fill>
+                </user-profile>
+            </div>
+
+            <div ng-switch-default
+                    class="button-signin">
+                <md-button class="md-accent" ng-click="signin($event)"
+                        >登录</md-button>
+            </div>
+
+        </div>
+    </md-toolbar>
+    <md-content>
+        <md-list flex layout="column">
+            <md-button ng-click="navigateTo(setting.extraScreen, $event)"
+                       ng-repeat="item in linkItems"
+                    >
+                <md-icon md-svg-icon="{{item.icon}}"></md-icon>
+                <div class="menu-text"> {{ item.name }} </div>
+            </md-button>
+        </md-list>
+
+        <md-button ng-click="close()" class="md-primary" hide-gt-md>
+            Close Sidenav Left
+        </md-button>
+    </md-content>
+</md-sidenav>

@@ -1,0 +1,37 @@
+<div flex layout="row">
+    <md-content flex style="width: 60%;">
+        <leaflet id="main-map" defaults="defaults" center="center"
+                 markers="markers"
+                 geojson="geojson"
+                 layers="layers"
+                 legend="legend"
+                 paths="paths"
+                 url-hash-center="yes"
+                 style="width: 100%; height: 100%;position: absolute;"></leaflet>
+    </md-content>
+
+    <md-sidenav flex layout="column" md-is-locked-open="$mdMedia('gt-sm')"
+                class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+        <md-toolbar class="md-theme-indigo" ng-hide="config.noToolbar">
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" aria-label="Settings">
+                    <md-icon md-svg-icon="menu"></md-icon>
+                </md-button>
+                <h2>
+                    <span>Toolbar with Icon Buttons</span>
+                </h2>
+                <span flex></span>
+                <md-button class="md-icon-button" aria-label="Favorite"
+                           ng-click="showAdvancedDialog($event)">
+                    <md-icon md-svg-icon="mail" style="color: greenyellow;"></md-icon>
+                </md-button>
+                <md-button class="md-icon-button" aria-label="More"
+                           ng-click="showGridBottomSheet($event)">
+                    <md-icon md-svg-icon="more_vert"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <div flex layout="column" ui-view>
+        </div>
+    </md-sidenav>
+</div>

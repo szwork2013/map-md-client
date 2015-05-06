@@ -1,0 +1,38 @@
+<md-toolbar md-scroll-shrink
+            class="md-tall md-accent">
+    <div class="md-toolbar-tools">
+        <h3>
+            <span>{{travel.title}}</span>
+        </h3>
+    </div>
+    <p>
+        {{travel.description}}
+    </p>
+</md-toolbar>
+<md-content style="height: 600px;">
+    <md-tabs md-selected="selectedIndex" md-border-bottom>
+        <md-tab ng-repeat="spot in travel.spots"
+                ng-disabled="spot.disabled"
+                label="{{spot.title}}">
+            <div>
+                <div ng-bind="spot.description"></div>
+                <br/>
+                <md-content>
+                    <div mmd-photo-card-wall layout-fill flex
+                         mmd-wall-options="{targetHeight: 160, fadeSpeed: 0, allowPartialLastRow: true}">
+                        <mmd-photo-card ng-repeat="photo in spot.photos"
+                                        mmd-photo-id = "photo.id"
+                                        mmd-photo-color = "photo.color"
+                                        mmd-photo-url = "{{staticCtx}}/{{photo.oss_key}}@!photo-preview-sm"
+                                        mmd-photo-size = "photo"
+                                        mmd-photo-is360 = "photo.is360"
+                                        mmd-photo-address = "photo.point.address"
+                                        mmd-photo-description = "photo.description"
+                                >
+                        </mmd-photo-card>
+                    </div>
+                </md-content>
+            </div>
+        </md-tab>
+    </md-tabs>
+</md-content>

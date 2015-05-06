@@ -1,0 +1,64 @@
+.photo-card-wall, [mmd-photo-card-wall], mmd-photo-card-wall {
+  mmd-photo-card {
+    position: relative;
+    display: inline-block;
+    margin: 1px;
+    background-color: grey;
+    @include transition-linear(all);
+    img {
+      @include transition-linear(all);
+    }
+
+    .action-container {
+      position: absolute;
+      bottom: 0;
+      height: 40%;
+      width: 100%;
+      overflow: hidden;
+      @include transition(height $transition-time ease-out);
+      .action {
+        @include translate(0, 100%);
+      }
+    }
+
+    .ponm-photo-footer {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      border: 5px solid transparent;
+      background-color: rgba(128, 128, 128, 0.5);
+      color: white;
+      font-size: 10px;
+      overflow: hidden;
+      @include transition(background-color $transition-time ease-in);
+      .description {
+        color: white;
+      }
+    }
+
+    .action {
+      @include transition(transform $transition-time ease-in);
+    }
+
+    &.ng-enter {
+      @include animation(enter_sequence 300ms ease-out);
+    }
+
+    &.ng-leave {
+      @include animation(leave_sequence 300ms ease-out);
+    }
+    &:hover, &.hover {
+      .action {
+        @include translate(0, 0);
+        opacity: 1;
+      }
+      .action-container:hover, .action-container.hover {
+        height: 100%;
+        .ponm-photo-footer {
+          background-color: rgba(128, 128, 128, 0.8);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+@import "../scss/_variables.scss";
+@import '../scss/_mixins.scss';
+@import '../common/leaflet/leaflet.scss';
+@import './home/home.scss';
+@import './home/sidenav/sidenav.scss';
+@import './home/signin/signin.scss';
+@import './components/photoCardWall/photoCardWall.scss';
+@import './components/photoDialog/photoDialog.scss';
+@import './components/photoSlider/photoSlider.scss';
+@import './components/user/profile/profile.scss';
+@import './components/comment/comment.scss';
+@import './maps/popular/maps.popular.scss';
+@import './maps/geojson/geojson.scss';
+@import './maps/app.maps.scss';
+
+body {
+  font-family: Microsoft YaHei;
+}
+
+#menu.md-raised {
+  position: absolute;
+  top: 10px;
+  left: 50px;
+  z-index: 5;
+  color: grey;
+  background-color: white;
+}
+
+.md-sidenav-right.md-locked-open {
+  max-width: 500px;
+  width: 500px;
+}
+
+.md-dialog-container {
+  z-index: 1002;
+}
+
+md-bottom-sheet {
+  z-index: 1001;
+}
+
+md-input-container.md-icon-float {
+
+  margin-top: -16px;
+  transition: margin-top 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  > label {
+    pointer-events: none;
+    position: absolute;
+    margin-left: 36px;
+  }
+
+  > md-icon {
+    top: 26px;
+    left: 2px;
+  }
+
+  > md-icon + input {
+    margin-left: 36px;
+    padding-top: 20px;
+  }
+}

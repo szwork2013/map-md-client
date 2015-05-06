@@ -1,0 +1,46 @@
+<div class="comments">
+    <div class="status">
+        <div ng-if="!!comments.length&&!!comment.commentLimit&&comment.commentLimit==comment.limit">
+            <a ng-click="comment.limit = comments.length">{{comments.length}} 条评论<span class="icon icon-dropdown"></span>
+            </a>
+        </div>
+        <div ng-if="!!comment.commentLimit&&comment.commentLimit!=comment.limit&&!!comment.limit">
+            <a href=""
+               ng-click="comment.limit = comment.commentLimit">隐藏评论<span class="icon icon-dropup" ></span>
+            </a>
+        </div>
+        <div ng-if="!comment.commentLimit||!comments.length">
+            <div>{{comments.length}} 条评论</span>
+            </div>
+        </div>
+    </div>
+    <perfect-scrollbar class="comment-container scroller" wheel-propagation="false" wheel-speed="50" refresh-on-change="comments">
+        <md-list>
+            <md-list-item ng-repeat="comment in comments" class="comment">
+                <mmd-comment comment="comment" user-id="userId" deleted-comment="deletedComment">
+                </mmd-comment>
+
+                <md-divider md-inset ng-if="!$last"></md-divider>
+            </md-list-item>
+
+        </md-list>
+        <!--<div ng-repeat="comment in comments"-->
+             <!--class="comment">-->
+            <!--<mmd-comment comment="comment" user-id="userId" deleted-comment="deletedComment">-->
+            <!--</mmd-comment>-->
+        <!--</div>-->
+    </perfect-scrollbar>
+    <div class="comment-new" ng-show="ponmCtxConfig.login">
+        <div class="editable">
+            <a href=""
+               editable-textarea="commentContent"
+               e-rows="4"
+               onbeforesave="createComment($data)"
+               oncancel="cancelComment()"
+                    >
+                <input type="text" class="form-control" placeholder="{{comment.placeholder || '发表评论'}}">
+                <!--<pre>{{ user.desc || 'no description' }}</pre>-->
+            </a>
+        </div>
+    </div>
+</div>

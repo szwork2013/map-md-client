@@ -1,0 +1,18 @@
+<md-content mmd-infinite-scroll="loadMorePhotos()"
+     mmd-infinite-scroll-distance="1"
+     mmd-infinite-scroll-disabled="loadMoreDisabled"
+     mmd-infinite-scroll-immediate-check="false" flex layout-fill>
+     <div mmd-photo-card-wall layout-fill flex
+             mmd-wall-options="{targetHeight: 160, fadeSpeed: 0, allowPartialLastRow: true}">
+          <mmd-photo-card ng-repeat="photo in photos"
+                      mmd-photo-id = "photo.id"
+                      mmd-photo-color = "photo.color"
+                      mmd-photo-url = "{{staticCtx}}/{{photo.oss_key}}@!photo-preview-sm"
+                      mmd-photo-size = "photo"
+                      mmd-photo-is360 = "photo.is360"
+                      mmd-photo-address = "photo.point.address"
+                      mmd-photo-description = "photo.description"
+                  >
+          </mmd-photo-card>
+     </div>
+</md-content>

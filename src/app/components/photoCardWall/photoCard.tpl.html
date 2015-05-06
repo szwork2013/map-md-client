@@ -1,0 +1,14 @@
+<a href=""
+   ng-click="displayPhoto($event, photoId)">
+    <img ng-src="{{photoUrl}}"
+         data-width="{{photoSize.width}}" data-height="{{photoSize.height}}">
+    <div ng-if="photoIs360">
+        <div class="icon-photo-p360"></div>
+    </div>
+</a>
+<div class="action-container">
+    <div class="action ponm-photo-footer">
+        <h6>{{photoAddress}}</h6>
+        <pre class="description">{{photoDescription}}</pre>
+    </div>
+</div>

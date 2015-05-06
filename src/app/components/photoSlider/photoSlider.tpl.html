@@ -1,0 +1,39 @@
+<div class="slider"
+     hm-pan = "onPan($event)"
+     hm-panstart = "onPanstart($event)"
+     hm-panmove      = "onPanmove($event)"
+     hm-panend   = "onPanend($event)">
+    <div class="slide slide-left"
+         layout="row" layout-align="center center">
+        <img ng-src="http://www.photoshows.cn:9292/static.photoshows.cn/{{imageLeft.src}}@!photo-preview-lg"
+             class="md-card-image">
+    </div>
+    <div class="slide"
+         layout="row" layout-align="center center">
+        <img ng-src="http://www.photoshows.cn:9292/static.photoshows.cn/{{photo.id}}.jpg@!photo-preview-lg"
+             class="md-card-image">
+    </div>
+    <div class="slide slide-right"
+         layout="row" layout-align="center center">
+        <img ng-src="http://www.photoshows.cn:9292/static.photoshows.cn/{{imageRight.src}}@!photo-preview-lg"
+             class="md-card-image">
+    </div>
+</div>
+
+<!--<ul rn-carousel class="image">-->
+    <!--<li ng-repeat="image in images">-->
+        <!--<div class="layer">-->
+            <!--<img ng-src="http://www.photoshows.cn:9292/static.photoshows.cn/{{image.src}}@!photo-preview-lg"-->
+                    <!--class="md-card-image">-->
+       <!--</div>-->
+   <!--</li>-->
+<!--</ul>-->
+<div class="arrows" layout="row" layout-align="space-between center">
+   <md-button class="md-fab md-mini md-primary" aria-label="Left">
+       <md-icon md-svg-src="chevron_left" style="color: greenyellow;"></md-icon>
+   </md-button>
+   <md-button class="md-fab md-mini md-primary" aria-label="Right"
+           ng-click="next()">
+       <md-icon md-svg-src="chevron_right" style="color: greenyellow;"></md-icon>
+   </md-button>
+</div>

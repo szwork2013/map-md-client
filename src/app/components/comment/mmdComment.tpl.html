@@ -1,0 +1,57 @@
+<div class="media comment"
+     ng-class="{'userable': ponmCtxConfig.login}">
+    <a class="pull-left" href="{{ctx}}/#/user/{{comment.user_id}}"
+       user-card owner="ponmCtxConfig" user-id="comment.user_id">
+        <img class="media-object img-rounded"
+             ng-src="{{UrlService.getAvatarUrl(comment.user_avatar)}}"
+             width="60" height="60" alt="{{comment.username}}">
+    </a>
+    <div class="media-body">
+        <div class="header">
+            <h6 class="media-heading">
+                <a href="{{ctx}}/#/user/{{comment.user_id}}">{{comment.username}}</a>
+            </h6>
+            <div>
+                <span class="footnotes">{{comment.create_date | calculatetime | date:'yyyy-MM-dd'}}</span>
+                <span class="footnotes">{{comment.like_count || 0}}个赞</span>
+                <a href=""
+                   class="thumbs-up"
+                   ng-class="{'like': comment.like}"
+                   ng-click="likeComment(comment)"
+                   tooltip="赞"
+                   tooltip-trigger="mouseenter"
+                   tooltip-placement="top"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+            </div>
+        </div>
+        <div class="action" ng-switch="comment.editable">
+            <div ng-switch-when="true">
+                <a href="" ng-click="deleteCommment(comment)"
+                   tooltip="删除"
+                   tooltip-trigger="mouseenter"
+                   tooltip-placement="top"><span class="glyphicon glyphicon-remove-sign"></span></a>
+            </div>
+            <div ng-switch-default>
+                <a href=""
+                   ng-click="replyComment(comment)"><span class="glyphicon">回复</span></a>
+                <a href=""
+                   tooltip="举报"
+                   tooltip-trigger="mouseenter"
+                   tooltip-placement="top"><span class="glyphicon glyphicon-flag"></span></a>
+            </div>
+        </div>
+        <div ng-switch="comment.editable">
+            <a href=""
+               ng-switch-when="true"
+               editable-textarea="comment.content" e-rows="4"
+               onbeforesave="modifyComment(comment, $data)"
+               tooltip="修改"
+               tooltip-trigger="mouseenter"
+               tooltip-placement="top">
+                <pre class="content">{{comment.content}}</pre>
+            </a>
+            <pre class="content"
+                 ng-switch-default>{{comment.content}}</pre>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,31 @@
+.photo-card-wall mmd-photo-card {
+  position: relative;
+  display: inline-block;
+  margin: 1px;
+  background-color: grey; }
+  .photo-card-wall mmd-photo-card .action-container {
+    position: absolute;
+    bottom: 0;
+    height: 40%;
+    width: 100%;
+    overflow: hidden; }
+  .photo-card-wall mmd-photo-card .ponm-photo-footer {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    border: 5px solid transparent;
+    background-color: rgba(128, 128, 128, 0.5);
+    color: white;
+    font-size: 10px;
+    overflow: hidden; }
+    .photo-card-wall mmd-photo-card .ponm-photo-footer .description {
+      color: white; }
+  .photo-card-wall mmd-photo-card:hover .action, .photo-card-wall mmd-photo-card.hover .action {
+    opacity: 1; }
+  .photo-card-wall mmd-photo-card:hover .action-container:hover, .photo-card-wall mmd-photo-card:hover .action-container.hover, .photo-card-wall mmd-photo-card.hover .action-container:hover, .photo-card-wall mmd-photo-card.hover .action-container.hover {
+    height: 100%; }
+    .photo-card-wall mmd-photo-card:hover .action-container:hover .ponm-photo-footer, .photo-card-wall mmd-photo-card:hover .action-container.hover .ponm-photo-footer, .photo-card-wall mmd-photo-card.hover .action-container:hover .ponm-photo-footer, .photo-card-wall mmd-photo-card.hover .action-container.hover .ponm-photo-footer {
+      background-color: rgba(128, 128, 128, 0.8); }
+
+/*# sourceMappingURL=photoCardWall.css.map */
