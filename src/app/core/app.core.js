@@ -11,5 +11,15 @@
                 RestangularConfigurer.setBaseUrl('http://www.photoshows.cn');
             });
         }])
+        .factory('QQWSRestangular', ['Restangular', function(Restangular) {
+            return Restangular.withConfig(function(RestangularConfigurer) {
+                RestangularConfigurer.setBaseUrl('http://apis.map.qq.com/ws');
+            });
+        }])
+        .factory('OSMWSRestangular', ['Restangular', function(Restangular) {
+            return Restangular.withConfig(function(RestangularConfigurer) {
+                RestangularConfigurer.setBaseUrl('http://nominatim.openstreetmap.org');
+            });
+        }])
     ;
 })();

@@ -12,12 +12,21 @@
 @import './maps/popular/maps.popular.scss';
 @import './maps/geojson/geojson.scss';
 @import './maps/app.maps.scss';
+@import './settings/settings.scss';
+@import './settings/map/map.scss';
 
 body {
   font-family: Microsoft YaHei;
+  background: #F5F5F5;
+  overflow: hidden;
 }
 
-#menu.md-raised {
+md-content.md-default-theme {
+   background-color: initial;
+}
+
+/* menu styles */
+#menu {
   position: absolute;
   top: 10px;
   left: 50px;
@@ -26,19 +35,31 @@ body {
   background-color: white;
 }
 
-.md-sidenav-right.md-locked-open {
+.md-button.md-icon-button.md-mini {
+  line-height: 40px;
+  width: 40px;
+  height: 40px;
+}
+
+.maps-sidenav.md-sidenav-right.md-locked-open {
   max-width: 500px;
   width: 500px;
 }
 
+/** z-index */
 .md-dialog-container {
-  z-index: 1002;
+  z-index: 1004;
 }
 
 md-bottom-sheet {
-  z-index: 1001;
+  z-index: 1004;
 }
 
+md-backdrop.md-bottom-sheet-backdrop {
+  z-index: 1003;
+}
+
+/**  */
 md-input-container.md-icon-float {
 
   margin-top: -16px;
@@ -60,3 +81,12 @@ md-input-container.md-icon-float {
     padding-top: 20px;
   }
 }
+
+md-tabs {
+  overflow: hidden;
+}
+
+.md-toolbar-content {
+  margin: 0 7px;
+}
+

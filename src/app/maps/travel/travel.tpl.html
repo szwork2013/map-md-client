@@ -1,19 +1,34 @@
 <md-toolbar md-scroll-shrink
             class="md-tall md-accent">
     <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Menu"
+                   ng-click="toggleLeftBar()">
+            <md-icon md-svg-icon="navigation:menu"></md-icon>
+        </md-button>
         <h3>
             <span>{{travel.title}}</span>
         </h3>
+        <span flex=""></span>
+        <md-button class="md-icon-button" aria-label="More"
+                   ng-click="showGridBottomSheet($event)">
+            <md-icon md-svg-icon="more_vert"></md-icon>
+        </md-button>
     </div>
-    <p>
-        {{travel.description}}
-    </p>
+    <div class="md-toolbar-content">
+        <user-profile user="travel.user"
+                      flex>
+        </user-profile>
+    </div>
 </md-toolbar>
-<md-content style="height: 600px;">
-    <md-tabs md-selected="selectedIndex" md-border-bottom>
+<md-content flex layout="column">
+    <md-tabs md-selected="selectedIndex"
+             md-border-bottom
+             flex>
         <md-tab ng-repeat="spot in travel.spots"
                 ng-disabled="spot.disabled"
-                label="{{spot.title}}">
+                md-on-select="onSpotSelect(spot)"
+                label="{{spot.title}}"
+                class="photo-wall">
             <div>
                 <div ng-bind="spot.description"></div>
                 <br/>

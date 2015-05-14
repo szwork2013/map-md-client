@@ -6,7 +6,8 @@
 
     angular.module('app.home')
         .controller('SigninCtrl',
-        ['$scope', '$log', '$mdDialog', '$mmdUtil', 'Oauth2Service', 'Users', 'Authenticated', SigninController]);
+        ['$scope', '$log', '$mdDialog', '$mmdUtil', 'Oauth2Service', 'Users', 'Authenticated',
+            SigninController]);
 
     /**
      * 用户登录控制器
@@ -35,7 +36,7 @@
         $scope.submit = function () {
             $scope.message = '';
             $scope.loading  = true;
-            Oauth2Service.token_user($scope.user).then(function(res) {
+            Oauth2Service.oauthUser($scope.user).then(function(res) {
                 $scope.loading  = false;
                 $scope.answer(res);
             }, function(error) {

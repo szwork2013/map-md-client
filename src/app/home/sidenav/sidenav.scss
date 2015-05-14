@@ -1,5 +1,5 @@
 .md-sidenav-left {
-  z-index: 1001;
+  z-index: 1004;
   .md-tall {
     height: 180px;
     max-height: 180px;
@@ -17,4 +17,8 @@
       float: left;
     }
   }
+}
+
+md-backdrop.md-sidenav-backdrop {
+  z-index: 1003;
 }

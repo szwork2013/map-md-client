@@ -17,9 +17,10 @@
     function Oauth2Service($window, $q, MainRestangular, $mmdUtil) {
 
         return {
-            token_user: token_user,
-            tokenRefresh: tokenRefresh,
+            oauthUser: oauthUser,
+            refreshToken: refreshToken,
             refresh: refresh,
+            removeToken: removeToken,
             getStorageToken: getStorageToken
         };
 
@@ -27,7 +28,7 @@
          * 用户名登录oauth2授权
          * @param user {username: '用户名', password: '密码'}
          */
-        function token_user(user) {
+        function oauthUser(user) {
             var deferred = $q.defer();
             var oauth = {
                 grant_type: 'password',
@@ -69,18 +70,18 @@
          *
          * @param token {refresh_token: ''}
          */
-        function tokenRefresh(refreshToken) {
+        function refreshToken(refresh_token) {
             var deferred = $q.defer();
-            if(!refreshToken) {
+            if(!refresh_token) {
                 var token = JSON.parse($window.localStorage.getItem(accessTokenName));
                 if(token && token.refresh_token) {
-                    refreshToken = token.refresh_token;
+                    refresh_token = token.refresh_token;
                 }
             }
             var oauth = {
                 grant_type: 'refresh_token',
                 client_id: 'my-trusted-client',
-                refresh_token: refreshToken
+                refresh_token: refresh_token
             };
             MainRestangular.one('oauth')
                 .customPOST($mmdUtil.param(oauth),
@@ -104,12 +105,16 @@
                 if(token.expires_time && Date.parse(token.expires_time) > new Date()) {
                     deferred.resolve(token.token_type + " " + token.access_token);
                 }else {
-                    return tokenRefresh(token.refresh_token);
+                    return refreshToken(token.refresh_token);
                 }
             }else {
                 deferred.reject(token);
             }
             return deferred.promise;
+        }
+
+        function removeToken() {
+            $window.localStorage.removeItem(accessTokenName);
         }
 
         function getStorageToken() {

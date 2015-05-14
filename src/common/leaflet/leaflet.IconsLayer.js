@@ -4,6 +4,8 @@
 (function() {
     L.IconsLayer = L.LayerGroup.extend({
 
+        includes: L.Mixin.Events,
+
         initialize: function (options) {
             var self = this;
             self._opts = angular.extend({auto: true, clickable: true}, options);

@@ -1,4 +1,6 @@
 .photo-card-wall, [mmd-photo-card-wall], mmd-photo-card-wall {
+  overflow: hidden;
+
   mmd-photo-card {
     position: relative;
     display: inline-block;
@@ -60,5 +62,11 @@
         }
       }
     }
+  }
+}
+
+.photo-wall {
+  md-tab-content {
+    overflow-y: scroll;
   }
 }

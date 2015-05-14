@@ -1,13 +1,11 @@
 <md-bottom-sheet class="md-grid">
     <md-list>
         <md-item ng-repeat="item in items" ui-sref-active="active">
-            <a ui-sref="{{item.link}}">
-                <md-button class="md-grid-item-content"
-                        >
-                    <md-icon md-svg-src="{{item.icon}}"></md-icon>
-                    <div class="md-grid-text"> {{ item.name }} </div>
-                </md-button>
-            </a>
+            <md-button class="md-grid-item-content"
+                    ng-click="listItemClick($index)">
+                <md-icon md-svg-src="{{item.icon}}"></md-icon>
+                <div class="md-grid-text"> {{ item.name }} </div>
+            </md-button>
         </md-item>
     </md-list>
 </md-bottom-sheet>

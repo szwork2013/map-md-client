@@ -4,16 +4,35 @@
 (function() {
     'use strict';
 
-    angular.module('app', ['app.components', 'app.maps', 'app.home'])
+    angular.module('app', ['app.core', 'app.components', 'app.home', 'app.maps', 'app.settings',
+        'ui.router', 'ngMaterial', 'leaflet-directive', 'templates-app', 'templates-common'])
         .config(['$logProvider', '$urlRouterProvider', '$stateProvider',
             function ($logProvider, $urlRouterProvider, $stateProvider) {
                 $urlRouterProvider
-                    .otherwise('/maps');
+                    .when('/', '/maps/popular')
+                    .when('', '/maps/popular');
+                $stateProvider
+                    .state('app', {
+                        abstract: true,
+                        url: '',
+                        views: {
+                            'sidenav': {
+                                templateUrl: 'home/sidenav/sidenav.tpl.html',
+                                controller: 'SidenavCtrl'
+                            },
+                            '': {
+                                template: '<div ui-view flex layout-fill layout="column"></div>',
+                                controller: function(){}
+                            }
+                        },
+                        resolve: {}
+                    })
+                ;
             }])
         .run(['Oauth2Service', 'Authenticated', Run])
 
         .controller('AppCtrl',
-        ['$scope', '$mdSidenav', '$mdBottomSheet', '$mdDialog', '$log', '$q',
+        ['$scope', '$mdSidenav', '$mdBottomSheet', '$mdMedia', '$log', '$q',
             AppCtrl])
         ;
 
@@ -30,15 +49,18 @@
      * @param $scope
      * @param $mdSidenav
      * @param $mdBottomSheet
-     * @param $mdDialog
+     * @param $mdMedia
      * @param $log
      * @param $q
      * @constructor
      */
-    function AppCtrl($scope, $mdSidenav, $mdBottomSheet, $mdDialog, $log, $q ) {
+    function AppCtrl($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $log, $q ) {
         var self = this;
 
         self.toggleList   = toggleUsersList;
+
+        $scope.toggleLeftBar = self.toggleList;
+        $scope.$mdMedia = $mdMedia;
 
         /**
          * First hide the bottomsheet IF visible, then

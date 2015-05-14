@@ -21,11 +21,15 @@
     </md-toolbar>
     <md-content>
         <md-list flex layout="column">
-            <md-button ng-click="navigateTo(setting.extraScreen, $event)"
-                       ng-repeat="item in linkItems"
-                    >
+            <md-button ng-repeat="item in linkItems"
+                       ng-click="navigateTo(item.state, $event)">
                 <md-icon md-svg-icon="{{item.icon}}"></md-icon>
                 <div class="menu-text"> {{ item.name }} </div>
+            </md-button>
+            <md-button ng-show="Authenticated.login"
+                    ng-click="signout()">
+                <md-icon md-svg-icon="action:exit_to_app"></md-icon>
+                <div class="menu-text"> 退出 </div>
             </md-button>
         </md-list>
 

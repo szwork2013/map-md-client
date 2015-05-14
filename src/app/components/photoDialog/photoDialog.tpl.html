@@ -6,16 +6,16 @@
                     <md-icon md-svg-icon="google_plus"></md-icon>
                 </md-button>
                 <h2>
-                    <span>Toolbar with Icon Buttons</span>
+                    <span>{{photo.title}}</span>
                 </h2>
                 <span flex></span>
                 <md-button class="md-icon-button" aria-label="favorite"
                            ng-click="">
-                    <md-icon md-svg-icon="favorite_outline"></md-icon>
+                    <md-icon md-svg-icon="action:favorite_outline"></md-icon>
                 </md-button>
                 <md-button class="md-icon-button" aria-label="Close"
                         ng-click="hide()">
-                    <md-icon md-svg-icon="close"></md-icon>
+                    <md-icon md-svg-icon="navigation:close"></md-icon>
                 </md-button>
             </div>
         </md-toolbar>
@@ -27,8 +27,6 @@
         </md-content>
     </div>
     <div flex="30" layout="column"
-         layout-margin layout-fill
-         layout-align="space-between center"
          class="photo-dialog-info">
         <md-toolbar md-scroll-shrink
                 class="md-tall md-warn md-hue-3">
@@ -40,43 +38,55 @@
             </div>
         </md-toolbar>
 
-        <md-content flex layout-fill class="photo-info-content">
-            <div style="width:100%;">
-                <md-icon md-svg-icon="image:photo_library"></md-icon>
-                </md-icon><md-button class="md-primary" ng-href="#/maps/travel/{{photo.travel_id}}" target="_blank">{{photo.travel_name}}</md-button>
+        <md-content class="photo-info-content"
+                flex layout-fill >
+            <md-list>
+                <md-list-item ng-show="photo.travel_id">
+                    <md-button class="md-primary"
+                               ng-href="#/maps/travel/{{photo.travel_id}}"
+                               target="_blank">
+                        <md-icon md-svg-icon="image:photo_library"></md-icon>
+                        {{photo.travel_name}}
+                    </md-button>
+                </md-list-item>
+                <md-list-item>
+                    <p class="">{{photo.description}}</p>
+                </md-list-item>
+                <md-list-item>
+                    <md-button class="md-primary"
+                               ng-href="{{googleUrl}}"
+                               target="_blank">
+                        <md-icon md-svg-icon="social:location_city"></md-icon>
+                        {{photo.point.address}}
+                    </md-button>
+                </md-list-item>
+                <md-list-item>
 
-                <h6>{{photo.title}}</h6>
-                <p class="">{{photo.description}}</p>
-
-                <md-icon md-svg-icon="social:location_city"></md-icon>
-                <md-button class="md-primary" ng-href="{{googleUrl}}" target="_blank">{{photo.point.address}}</md-button>
-                <br>
-                <md-icon md-svg-icon="maps:place"></md-icon>
-                <md-button class="md-primary" ng-href="{{googleUrl}}" target="_blank">{{photo.point.lat | number}}, {{photo.point.lng | number}}</md-button>
-                <md-list>
-                    <md-subheader md-no-sticky>Camera info</md-subheader>
-                    <md-list-item ng-repeat="info in cameraInfos">
-                        <button class="md-no-style md-button md-default-theme">
-                            <div class="md-list-item-inner">
-                                <md-icon md-svg-icon="{{info.icon}}"></md-icon>
-                                <span>{{info.value}}</span>
-                                <md-tooltip>
-                                    {{info.name}}
-                                </md-tooltip>
-                            </div>
-                        </button>
-                    </md-list-item>
-                </md-list>
+                    <md-button class="md-primary" ng-href="{{googleUrl}}"
+                               target="_blank">
+                        <md-icon md-svg-icon="maps:place"></md-icon>
+                        {{photo.point.lat | number}}, {{photo.point.lng | number}}
+                    </md-button>
+                </md-list-item>
 
                 <md-divider></md-divider>
+                <md-subheader md-no-sticky>相机信息</md-subheader>
+                <md-list-item ng-repeat="info in cameraInfos">
+                    <md-icon md-svg-icon="{{info.icon}}"></md-icon>
+                    <p>{{info.value}}</p>
+                    <md-tooltip>
+                        {{info.name}}
+                    </md-tooltip>
+                </md-list-item>
+            </md-list>
 
-                <mmd-comments comments="comments">
-
-                </mmd-comments>
-            </div>
-
+            <md-divider></md-divider>
+            <mmd-comments comments="comments"></mmd-comments>
         </md-content>
 
-        <post-comment></post-comment>
+        <post-comment
+                type="photo"
+                entity-id="photo.id"
+                on-saved="commentSaved"></post-comment>
     </div>
 </md-dialog>

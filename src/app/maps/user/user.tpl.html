@@ -1,1 +1,25 @@
-<div ui-view></div>
+<md-toolbar md-scroll-shrink
+            class="md-tall md-accent">
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Menu"
+                   ng-click="toggleLeftBar()">
+            <md-icon md-svg-icon="navigation:menu"></md-icon>
+        </md-button>
+        <h3>
+            <span>{{travel.title}}</span>
+        </h3>
+        <span flex=""></span>
+        <md-button class="md-icon-button" aria-label="More"
+                   ng-click="showGridBottomSheet($event)">
+            <md-icon md-svg-icon="more_vert"></md-icon>
+        </md-button>
+    </div>
+    <div class="md-toolbar-content">
+        <user-profile user="user"
+                      flex>
+        </user-profile>
+    </div>
+</md-toolbar>
+<md-content flex layout="column">
+    <!--<md-button ng-click="getLayers()">图层</md-button>-->
+</md-content>

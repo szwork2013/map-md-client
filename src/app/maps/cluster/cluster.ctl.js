@@ -8,7 +8,7 @@
         .config(['$urlRouterProvider', '$stateProvider',
             function ($urlRouterProvider, $stateProvider) {
                 $stateProvider
-                    .state('maps.cluster', {
+                    .state('app.maps.cluster', {
                         url: '/cluster',
                         views: {
                             '': {

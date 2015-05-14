@@ -9,13 +9,9 @@
      * @name app.components.photoDialog
      */
     angular.module('app.components')
-        .factory('$mmdPhotoDialog', ['$mdDialog', '$log', 'Photos', 'Users', MmdPhotoDialogProvider]);
+        .factory('$mmdPhotoDialog', ['$mdDialog', '$log', '$filter', 'Photos', 'Users', MmdPhotoDialogProvider]);
 
-    function MmdPhotoDialogDirective() {
-
-    }
-
-    function MmdPhotoDialogProvider($mdDialog, $log, Photos, Users) {
+    function MmdPhotoDialogProvider($mdDialog, $log, $filter, Photos, Users) {
 
         return {
             show: showPhoto
@@ -41,6 +37,7 @@
          *
          * @param $scope
          * @param $mdDialog
+         * @param photo
          * @constructor
          */
         function PhotoDialogController($scope, $mdDialog, photo) {
@@ -83,8 +80,10 @@
                 });
             });
 
-
-
+            $scope.commentSaved = function(comment) {
+                $scope.comments = $scope.comments || [];
+                $scope.comments.push(comment);
+            };
 
             /**
              * 配置照片的属性和相机信息
@@ -96,7 +95,7 @@
                 $scope.cameraInfos.push({
                     icon: 'today',
                     name: '拍摄日期',
-                    value: cameraInfo.date_time_original
+                    value: $filter('date')(cameraInfo.date_time_original, "yyyy/MM/dd")
                 });
                 $scope.cameraInfos.push({
                     icon: 'image:photo_size',
@@ -111,7 +110,7 @@
                 $scope.cameraInfos.push({
                     icon: 'file:size',
                     name: '文件大小',
-                    value: photo.file_size
+                    value: $filter('bytes')(photo.file_size, 2)
                 });
                 $scope.cameraInfos.push({
                     icon: 'image:camera',
@@ -162,7 +161,7 @@
                 $scope.cameraInfos.push({
                     icon: 'image:exposure',
                     name: '曝光偏差',
-                    value: cameraInfo.exposure_bias
+                    value: /*$filter('number')(*/cameraInfo.exposure_bias/*, 4)*/
                 });
 
             }

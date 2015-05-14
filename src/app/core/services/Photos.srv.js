@@ -26,7 +26,11 @@
                             extractedData = data.comments;
                             break;
                         default :
-                            extractedData = data;
+                            if(data.photos) {
+                                extractedData = data.photos;
+                            }else {
+                                extractedData = data;
+                            }
                     }
                 } else {
                     switch(what) {
@@ -49,6 +53,9 @@
                         case 'travel':
                             extractedData = data.travel;
                             break;
+                        case 'comment':
+                            extractedData = data.comment;
+                            break;
                         default :
                             extractedData = data;
                     }
@@ -58,7 +65,8 @@
         }])
         .factory('Photos', ['Restangular', PhotoServiceFactory])
         .factory('Users', ['Restangular', UsersServiceFactory])
-        .factory('Panoramios', ['Restangular', PanoramiosServiceFactory]);
+        .factory('Panoramios', ['Restangular', PanoramiosServiceFactory])
+        .factory('Comments', ['Restangular', CommentsServiceFactory]);
 
     function PhotoServiceFactory(Restangular) {
         var photoService = Restangular.service('photo');
@@ -82,10 +90,17 @@
 
     function UsersServiceFactory(Restangular) {
         var userService = Restangular.service('user');
+
+        //Restangular.extendModel('user', function(model) {
+        //    model.getPhotos = function(pageSize, pageNo) {
+        //        return this.all('photos', pageSize+'/'+pageNo).getList();
+        //    };
+        //});
+
         return {
             me: getMe,
-            get: getUser
-
+            get: getUser,
+            getPhotos: getPhotos
         };
 
         function getMe() {
@@ -95,9 +110,31 @@
         function getUser(id) {
             return userService.one(id).one('openinfo').get();
         }
+
+        function getPhotos(id, pageSize, pageNo) {
+            return userService.one(id).one('photos', pageSize).all(pageNo).getList();
+
+        }
     }
 
     function PanoramiosServiceFactory(Restangular) {
         return Restangular.service('panoramio/photo');
     }
+
+    function CommentsServiceFactory(Restangular) {
+        var commentService = Restangular.service('comment');
+        return {
+            create: createComment
+        };
+
+        /**
+         * 创建评论
+         * @param comment {type: type, entity_id: id, content: content}
+         * @returns {*|{}}
+         */
+        function createComment(comment) {
+            return commentService.post(comment);
+        }
+    }
+
 })();

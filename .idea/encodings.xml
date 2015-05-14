@@ -1,4 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+    <file url="file://$PROJECT_DIR$/src/assets/svg/action/ic_done_24px.svg" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/assets/svg/action/ic_exit_to_app_24px.svg" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/assets/svg/editor/ic_insert_comment_24px.svg" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/assets/svg/editor/ic_mode_comment_24px.svg" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/assets/svg/editor/ic_mode_edit_24px.svg" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/assets/svg/editor/ic_publish_24px.svg" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/vendor/Leaflet.heat" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/vendor/Leaflet.markercluster/README.md" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/vendor/Leaflet.markercluster/bower.json" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/vendor/Leaflet.markercluster/dist" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/vendor/Leaflet.markercluster/package.json" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/vendor/Leaflet.markercluster/spec" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/vendor/Leaflet.markercluster/src" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/vendor/angular-material/LICENSE" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/vendor/angular-material/README.md" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/vendor/angular-material/angular-material-mocks.js" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/vendor/angular-material/angular-material.css" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/vendor/angular-material/angular-material.js" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/vendor/angular-material/angular-material.min.css" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/vendor/angular-material/angular-material.min.js" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/vendor/angular-material/bower.json" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/vendor/angular-material/index.js" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/vendor/angular-material/package.json" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/../samples/angular-leaflet-directive-master/examples/0603-mixed-layers-overlays-geojson-example.html" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
 </project>

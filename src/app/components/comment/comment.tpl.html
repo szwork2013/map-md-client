@@ -1,10 +1,21 @@
 <div >
-    <md-input-container flex>
-        <label>Biography</label>
-        <textarea ng-model="comment.content" columns="1" md-maxlength="1000"></textarea>
+    <md-input-container flex ng-show="state == status.writing">
+        <label>评论</label>
+        <textarea ng-model="comment.content" columns="1" md-maxlength="1000"
+                ng-disable="state == status.saving"></textarea>
     </md-input-container>
 
-    <md-button class="md-fab add-comment" aria-label="Eat cake">
-        <md-icon md-svg-src="communication:comment"></md-icon>
+    <md-button class="md-fab add-comment" aria-label="发表评论"
+               ng-click="changeState()">
+        <md-icon ng-if="state == status.ready"
+                md-svg-src="communication:comment"></md-icon>
+        <md-icon ng-if="state == status.writing"
+                 md-svg-src="editor:mode_edit"></md-icon>
+        <md-progress-circular ng-if="state == status.saving"
+                class="md-warn md-hue-3" md-mode="indeterminate"></md-progress-circular>
+        <md-icon ng-if="state == status.saved"
+                 md-svg-src="action:done"
+                ></md-icon>
+
     </md-button>
 </div>

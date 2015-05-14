@@ -1,24 +1,58 @@
-<div flex layout="row">
-    <md-content flex style="width: 60%;">
+<div flex layout="row" class="maps-view">
+    <md-content flex>
         <leaflet id="main-map" defaults="defaults" center="center"
                  markers="markers"
                  geojson="geojson"
                  layers="layers"
                  legend="legend"
                  paths="paths"
-                 url-hash-center="yes"
-                 style="width: 100%; height: 100%;position: absolute;"></leaflet>
+                 url-hash-center="yes"></leaflet>
+        <div class="leaflet-control geocoder-control md-primary"
+                ng-controller="MapsGeoSearch as mgs">
+            <md-tabs md-selected="selectedIndex"
+                     md-border-bottom
+                     flex>
+                <md-tab md-on-select="onTabSelect(1)"
+                        label="内"
+                        class="photo-wall"></md-tab>
+                <md-tab md-on-select="onTabSelect(2)"
+                        label="外"
+                        class="photo-wall"></md-tab>
+            </md-tabs>
+            <form ng-submit="geoSearch(search)">
+                <md-input-container>
+                    <input type="text" ng-model="search" class="geocoder-control-input">
+                </md-input-container>
+            </form>
+            <p ng-show="message">{{message}}</p>
+            <md-list class="geocoder-control-suggestions">
+                <md-list-item ng-repeat="res in ress"
+                              ng-click="locate(res)"
+                              class="geocoder-control-suggestion geocoder-control-selected">
+                    {{res.location.lat}},{{res.location.lng}} {{res.display_name}}
+                </md-list-item>
+            </md-list>
+        </div>
+        <md-button id="maps-sidenav-menu"
+                   class="md-raised md-mini md-icon-button menu"
+                   ng-click="toggleRightSidenav()"
+                   aria-label="Show maps sidenav"
+                   ng-show="$mdMedia('sm')"
+                >
+            <md-icon md-svg-icon="navigation:menu"></md-icon>
+        </md-button>
     </md-content>
 
     <md-sidenav flex layout="column" md-is-locked-open="$mdMedia('gt-sm')"
-                class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+                class="md-sidenav-right md-whiteframe-z2 maps-sidenav" md-component-id="right">
         <md-toolbar class="md-theme-indigo" ng-hide="config.noToolbar">
             <div class="md-toolbar-tools">
-                <md-button class="md-icon-button" aria-label="Settings">
-                    <md-icon md-svg-icon="menu"></md-icon>
+                <md-button class="md-icon-button" aria-label="Settings"
+                           ng-click="toggleLeftBar()">
+                    <md-icon md-svg-icon="navigation:menu"></md-icon>
                 </md-button>
                 <h2>
-                    <span>Toolbar with Icon Buttons</span>
+                    <span>地图图片</span>
                 </h2>
                 <span flex></span>
                 <md-button class="md-icon-button" aria-label="Favorite"
@@ -31,7 +65,8 @@
                 </md-button>
             </div>
         </md-toolbar>
-        <div flex layout="column" ui-view>
+        <div flex layout="column" ui-view
+                class="maps-info-view">
         </div>
     </md-sidenav>
 </div>

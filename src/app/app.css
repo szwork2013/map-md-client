@@ -20,7 +20,7 @@ md-bottom-sheet.md-grid md-item {
       width: 48px; }
 
 .md-sidenav-left {
-  z-index: 1001; }
+  z-index: 1004; }
   .md-sidenav-left .md-tall {
     height: 180px;
     max-height: 180px; }
@@ -31,78 +31,88 @@ md-bottom-sheet.md-grid md-item {
   .md-sidenav-left md-list md-icon {
     float: left; }
 
-.sign-dialog .message {
-  height: 35px;
-  text-align: center; }
-.sign-dialog .signining {
-  position: absolute;
-  width: 100%;
-  height: 100%; }
+md-backdrop.md-sidenav-backdrop {
+  z-index: 1003; }
 
-.photo-card-wall mmd-photo-card, [mmd-photo-card-wall] mmd-photo-card, mmd-photo-card-wall mmd-photo-card {
-  position: relative;
-  display: inline-block;
-  margin: 1px;
-  background-color: grey;
-  -webkit-transition: all linear 0.3s;
-  -moz-transition: all linear 0.3s;
-  -ms-transition: all linear 0.3s;
-  -o-transition: all linear 0.3s;
-  transition: all linear 0.3s; }
-  .photo-card-wall mmd-photo-card img, [mmd-photo-card-wall] mmd-photo-card img, mmd-photo-card-wall mmd-photo-card img {
+.sign-dialog {
+  z-index: 1010; }
+  .sign-dialog .message {
+    height: 35px;
+    text-align: center; }
+  .sign-dialog .signining {
+    position: absolute;
+    width: 100%;
+    height: 100%; }
+
+.photo-card-wall, [mmd-photo-card-wall], mmd-photo-card-wall {
+  overflow: hidden; }
+  .photo-card-wall mmd-photo-card, [mmd-photo-card-wall] mmd-photo-card, mmd-photo-card-wall mmd-photo-card {
+    position: relative;
+    display: inline-block;
+    margin: 1px;
+    background-color: grey;
     -webkit-transition: all linear 0.3s;
     -moz-transition: all linear 0.3s;
     -ms-transition: all linear 0.3s;
     -o-transition: all linear 0.3s;
     transition: all linear 0.3s; }
-  .photo-card-wall mmd-photo-card .action-container, [mmd-photo-card-wall] mmd-photo-card .action-container, mmd-photo-card-wall mmd-photo-card .action-container {
-    position: absolute;
-    bottom: 0;
-    height: 40%;
-    width: 100%;
-    overflow: hidden;
-    -webkit-transition: height 0.3s ease-out;
-    transition: height 0.3s ease-out; }
-    .photo-card-wall mmd-photo-card .action-container .action, [mmd-photo-card-wall] mmd-photo-card .action-container .action, mmd-photo-card-wall mmd-photo-card .action-container .action {
-      -webkit-transform: translate(0, 100%);
-      -ms-transform: translate(0, 100%);
-      transform: translate(0, 100%); }
-  .photo-card-wall mmd-photo-card .ponm-photo-footer, [mmd-photo-card-wall] mmd-photo-card .ponm-photo-footer, mmd-photo-card-wall mmd-photo-card .ponm-photo-footer {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    border: 5px solid transparent;
-    background-color: rgba(128, 128, 128, 0.5);
-    color: white;
-    font-size: 10px;
-    overflow: hidden;
-    -webkit-transition: background-color 0.3s ease-in;
-    transition: background-color 0.3s ease-in; }
-    .photo-card-wall mmd-photo-card .ponm-photo-footer .description, [mmd-photo-card-wall] mmd-photo-card .ponm-photo-footer .description, mmd-photo-card-wall mmd-photo-card .ponm-photo-footer .description {
-      color: white; }
-  .photo-card-wall mmd-photo-card .action, [mmd-photo-card-wall] mmd-photo-card .action, mmd-photo-card-wall mmd-photo-card .action {
-    -webkit-transition: transform 0.3s ease-in;
-    transition: transform 0.3s ease-in; }
-  .photo-card-wall mmd-photo-card.ng-enter, [mmd-photo-card-wall] mmd-photo-card.ng-enter, mmd-photo-card-wall mmd-photo-card.ng-enter {
-    -webkit-animation: enter_sequence 300ms ease-out;
-    /* Safari/Chrome */
-    animation: enter_sequence 300ms ease-out;
-    /* IE10+ and Future Browsers */ }
-  .photo-card-wall mmd-photo-card.ng-leave, [mmd-photo-card-wall] mmd-photo-card.ng-leave, mmd-photo-card-wall mmd-photo-card.ng-leave {
-    -webkit-animation: leave_sequence 300ms ease-out;
-    /* Safari/Chrome */
-    animation: leave_sequence 300ms ease-out;
-    /* IE10+ and Future Browsers */ }
-  .photo-card-wall mmd-photo-card:hover .action, .photo-card-wall mmd-photo-card.hover .action, [mmd-photo-card-wall] mmd-photo-card:hover .action, [mmd-photo-card-wall] mmd-photo-card.hover .action, mmd-photo-card-wall mmd-photo-card:hover .action, mmd-photo-card-wall mmd-photo-card.hover .action {
-    -webkit-transform: translate(0, 0);
-    -ms-transform: translate(0, 0);
-    transform: translate(0, 0);
-    opacity: 1; }
-  .photo-card-wall mmd-photo-card:hover .action-container:hover, .photo-card-wall mmd-photo-card:hover .action-container.hover, .photo-card-wall mmd-photo-card.hover .action-container:hover, .photo-card-wall mmd-photo-card.hover .action-container.hover, [mmd-photo-card-wall] mmd-photo-card:hover .action-container:hover, [mmd-photo-card-wall] mmd-photo-card:hover .action-container.hover, [mmd-photo-card-wall] mmd-photo-card.hover .action-container:hover, [mmd-photo-card-wall] mmd-photo-card.hover .action-container.hover, mmd-photo-card-wall mmd-photo-card:hover .action-container:hover, mmd-photo-card-wall mmd-photo-card:hover .action-container.hover, mmd-photo-card-wall mmd-photo-card.hover .action-container:hover, mmd-photo-card-wall mmd-photo-card.hover .action-container.hover {
-    height: 100%; }
-    .photo-card-wall mmd-photo-card:hover .action-container:hover .ponm-photo-footer, .photo-card-wall mmd-photo-card:hover .action-container.hover .ponm-photo-footer, .photo-card-wall mmd-photo-card.hover .action-container:hover .ponm-photo-footer, .photo-card-wall mmd-photo-card.hover .action-container.hover .ponm-photo-footer, [mmd-photo-card-wall] mmd-photo-card:hover .action-container:hover .ponm-photo-footer, [mmd-photo-card-wall] mmd-photo-card:hover .action-container.hover .ponm-photo-footer, [mmd-photo-card-wall] mmd-photo-card.hover .action-container:hover .ponm-photo-footer, [mmd-photo-card-wall] mmd-photo-card.hover .action-container.hover .ponm-photo-footer, mmd-photo-card-wall mmd-photo-card:hover .action-container:hover .ponm-photo-footer, mmd-photo-card-wall mmd-photo-card:hover .action-container.hover .ponm-photo-footer, mmd-photo-card-wall mmd-photo-card.hover .action-container:hover .ponm-photo-footer, mmd-photo-card-wall mmd-photo-card.hover .action-container.hover .ponm-photo-footer {
-      background-color: rgba(128, 128, 128, 0.8); }
+    .photo-card-wall mmd-photo-card img, [mmd-photo-card-wall] mmd-photo-card img, mmd-photo-card-wall mmd-photo-card img {
+      -webkit-transition: all linear 0.3s;
+      -moz-transition: all linear 0.3s;
+      -ms-transition: all linear 0.3s;
+      -o-transition: all linear 0.3s;
+      transition: all linear 0.3s; }
+    .photo-card-wall mmd-photo-card .action-container, [mmd-photo-card-wall] mmd-photo-card .action-container, mmd-photo-card-wall mmd-photo-card .action-container {
+      position: absolute;
+      bottom: 0;
+      height: 40%;
+      width: 100%;
+      overflow: hidden;
+      -webkit-transition: height 0.3s ease-out;
+      transition: height 0.3s ease-out; }
+      .photo-card-wall mmd-photo-card .action-container .action, [mmd-photo-card-wall] mmd-photo-card .action-container .action, mmd-photo-card-wall mmd-photo-card .action-container .action {
+        -webkit-transform: translate(0, 100%);
+        -ms-transform: translate(0, 100%);
+        transform: translate(0, 100%); }
+    .photo-card-wall mmd-photo-card .ponm-photo-footer, [mmd-photo-card-wall] mmd-photo-card .ponm-photo-footer, mmd-photo-card-wall mmd-photo-card .ponm-photo-footer {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      border: 5px solid transparent;
+      background-color: rgba(128, 128, 128, 0.5);
+      color: white;
+      font-size: 10px;
+      overflow: hidden;
+      -webkit-transition: background-color 0.3s ease-in;
+      transition: background-color 0.3s ease-in; }
+      .photo-card-wall mmd-photo-card .ponm-photo-footer .description, [mmd-photo-card-wall] mmd-photo-card .ponm-photo-footer .description, mmd-photo-card-wall mmd-photo-card .ponm-photo-footer .description {
+        color: white; }
+    .photo-card-wall mmd-photo-card .action, [mmd-photo-card-wall] mmd-photo-card .action, mmd-photo-card-wall mmd-photo-card .action {
+      -webkit-transition: transform 0.3s ease-in;
+      transition: transform 0.3s ease-in; }
+    .photo-card-wall mmd-photo-card.ng-enter, [mmd-photo-card-wall] mmd-photo-card.ng-enter, mmd-photo-card-wall mmd-photo-card.ng-enter {
+      -webkit-animation: enter_sequence 300ms ease-out;
+      /* Safari/Chrome */
+      animation: enter_sequence 300ms ease-out;
+      /* IE10+ and Future Browsers */ }
+    .photo-card-wall mmd-photo-card.ng-leave, [mmd-photo-card-wall] mmd-photo-card.ng-leave, mmd-photo-card-wall mmd-photo-card.ng-leave {
+      -webkit-animation: leave_sequence 300ms ease-out;
+      /* Safari/Chrome */
+      animation: leave_sequence 300ms ease-out;
+      /* IE10+ and Future Browsers */ }
+    .photo-card-wall mmd-photo-card:hover .action, .photo-card-wall mmd-photo-card.hover .action, [mmd-photo-card-wall] mmd-photo-card:hover .action, [mmd-photo-card-wall] mmd-photo-card.hover .action, mmd-photo-card-wall mmd-photo-card:hover .action, mmd-photo-card-wall mmd-photo-card.hover .action {
+      -webkit-transform: translate(0, 0);
+      -ms-transform: translate(0, 0);
+      transform: translate(0, 0);
+      opacity: 1; }
+    .photo-card-wall mmd-photo-card:hover .action-container:hover, .photo-card-wall mmd-photo-card:hover .action-container.hover, .photo-card-wall mmd-photo-card.hover .action-container:hover, .photo-card-wall mmd-photo-card.hover .action-container.hover, [mmd-photo-card-wall] mmd-photo-card:hover .action-container:hover, [mmd-photo-card-wall] mmd-photo-card:hover .action-container.hover, [mmd-photo-card-wall] mmd-photo-card.hover .action-container:hover, [mmd-photo-card-wall] mmd-photo-card.hover .action-container.hover, mmd-photo-card-wall mmd-photo-card:hover .action-container:hover, mmd-photo-card-wall mmd-photo-card:hover .action-container.hover, mmd-photo-card-wall mmd-photo-card.hover .action-container:hover, mmd-photo-card-wall mmd-photo-card.hover .action-container.hover {
+      height: 100%; }
+      .photo-card-wall mmd-photo-card:hover .action-container:hover .ponm-photo-footer, .photo-card-wall mmd-photo-card:hover .action-container.hover .ponm-photo-footer, .photo-card-wall mmd-photo-card.hover .action-container:hover .ponm-photo-footer, .photo-card-wall mmd-photo-card.hover .action-container.hover .ponm-photo-footer, [mmd-photo-card-wall] mmd-photo-card:hover .action-container:hover .ponm-photo-footer, [mmd-photo-card-wall] mmd-photo-card:hover .action-container.hover .ponm-photo-footer, [mmd-photo-card-wall] mmd-photo-card.hover .action-container:hover .ponm-photo-footer, [mmd-photo-card-wall] mmd-photo-card.hover .action-container.hover .ponm-photo-footer, mmd-photo-card-wall mmd-photo-card:hover .action-container:hover .ponm-photo-footer, mmd-photo-card-wall mmd-photo-card:hover .action-container.hover .ponm-photo-footer, mmd-photo-card-wall mmd-photo-card.hover .action-container:hover .ponm-photo-footer, mmd-photo-card-wall mmd-photo-card.hover .action-container.hover .ponm-photo-footer {
+        background-color: rgba(128, 128, 128, 0.8); }
+
+.photo-wall md-tab-content {
+  overflow-y: scroll; }
 
 .photo-dialog-left {
   box-shadow: 1px 1px 5px grey;
@@ -114,24 +124,14 @@ md-bottom-sheet.md-grid md-item {
   .photo-dialog-info md-icon {
     color: rgba(0, 0, 0, 0.54); }
   .photo-dialog-info .photo-info-content {
-    overflow-x: hidden;
-    background-color: #e8e8e8; }
-  .photo-dialog-info md-list md-list-item .md-button.md-no-style {
-    width: 100%; }
-  .photo-dialog-info md-list md-list-item .md-list-item-inner {
-    text-align: left; }
-    .photo-dialog-info md-list md-list-item .md-list-item-inner md-icon {
-      margin-right: 12px;
-      margin-top: 5px;
-      margin-bottom: 5px;
-      box-sizing: content-box; }
+    padding: 5px;
+    overflow-x: hidden; }
   .photo-dialog-info .add-comment {
     position: absolute;
     bottom: 10px;
     right: 20px; }
   .photo-dialog-info post-comment {
     position: absolute;
-    height: 120px;
     bottom: 0;
     width: 100%;
     box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.26);
@@ -203,6 +203,16 @@ user-profile {
     .comments .media.comment .media-body .action {
       float: right; }
     .comments .media.comment .media-body .content {
+      white-space: pre-wrap;
+      /* css-3 */
+      white-space: -moz-pre-wrap;
+      /* Mozilla, since 1999 */
+      white-space: -pre-wrap;
+      /* Opera 4-6 */
+      white-space: -o-pre-wrap;
+      /* Opera 7 */
+      word-wrap: break-word;
+      /* Internet Explorer 5.5+ */
       clear: both;
       padding: 0;
       margin: 0;
@@ -234,10 +244,7 @@ div.country {
   font: 14px/16px Arial, Helvetica, sans-serif;
   font-size: 2em;
   font-weight: bold;
-  position: absolute;
-  top: .5em;
   right: 1em;
-  z-index: 100;
   padding: .2em .5em;
   line-height: 1.1em;
   text-align: center; }
@@ -259,13 +266,99 @@ div.country {
     margin-right: 8px;
     opacity: 0.7; }
 
-md-sidenav.md-sidenav-right {
+#main-map {
+  position: absolute;
+  width: 100%;
+  height: 100%; }
+
+.geocoder-control {
+  max-width: 500px;
+  top: 10px;
+  left: 100px;
+  padding: 5px;
+  box-shadow: 0px 0px 5px grey;
+  border-radius: 5px;
+  background-color: white; }
+  .geocoder-control md-input-container {
+    padding: 2px; }
+  .geocoder-control md-tab-item {
+    padding: 2px 5px; }
+
+#maps-sidenav-menu {
+  z-index: 10;
+  position: absolute;
+  bottom: 40px;
+  right: 10px; }
+
+.maps-view md-backdrop.md-sidenav-backdrop {
+  z-index: 1001; }
+.maps-view md-sidenav.md-sidenav-right {
+  z-index: 1002;
   overflow: hidden; }
 
-body {
-  font-family: Microsoft YaHei; }
+.footer {
+  height: 200px;
+  background-color: #212121;
+  text-align: center;
+  vertical-align: middle;
+  color: grey;
+  width: 100%; }
 
-#menu.md-raised {
+.masthead {
+  position: relative;
+  margin-bottom: -90px;
+  min-height: 340px;
+  height: 340px;
+  background-color: #00BCD4;
+  box-shadow: initial; }
+
+.settings-pane {
+  position: relative;
+  z-index: 10; }
+  .settings-pane .subpage-container md-card {
+    background-color: white; }
+
+@media (min-width: 992px) {
+  .settings-pane {
+    margin: 0 50px; }
+    .settings-pane .subpage-container {
+      margin: 0 150px; } }
+@media (min-width: 768px) {
+  .settings-pane {
+    margin: 0 40px; }
+    .settings-pane .subpage-container {
+      margin: 0 100px; } }
+@media (max-width: 768px) {
+  .settings-pane {
+    margin: 0 10px; }
+    .settings-pane .subpage-container {
+      margin: 0 50px; } }
+.masthead-container {
+  min-height: 268px;
+  height: 268px;
+  width: 100%;
+  max-width: 944px;
+  margin: 0 auto;
+  position: relative;
+  padding: 10px 0 100px 0; }
+  .masthead-container .masthead-meta {
+    width: 100%; }
+
+.settings-map-container {
+  height: 400px; }
+  .settings-map-container #settings-map {
+    width: 100%; }
+
+body {
+  font-family: Microsoft YaHei;
+  background: #F5F5F5;
+  overflow: hidden; }
+
+md-content.md-default-theme {
+  background-color: initial; }
+
+/* menu styles */
+#menu {
   position: absolute;
   top: 10px;
   left: 50px;
@@ -273,16 +366,26 @@ body {
   color: grey;
   background-color: white; }
 
-.md-sidenav-right.md-locked-open {
+.md-button.md-icon-button.md-mini {
+  line-height: 40px;
+  width: 40px;
+  height: 40px; }
+
+.maps-sidenav.md-sidenav-right.md-locked-open {
   max-width: 500px;
   width: 500px; }
 
+/** z-index */
 .md-dialog-container {
-  z-index: 1002; }
+  z-index: 1004; }
 
 md-bottom-sheet {
-  z-index: 1001; }
+  z-index: 1004; }
 
+md-backdrop.md-bottom-sheet-backdrop {
+  z-index: 1003; }
+
+/**  */
 md-input-container.md-icon-float {
   margin-top: -16px;
   transition: margin-top 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); }
@@ -296,5 +399,11 @@ md-input-container.md-icon-float {
   md-input-container.md-icon-float > md-icon + input {
     margin-left: 36px;
     padding-top: 20px; }
+
+md-tabs {
+  overflow: hidden; }
+
+.md-toolbar-content {
+  margin: 0 7px; }
 
 /*# sourceMappingURL=app.css.map */
