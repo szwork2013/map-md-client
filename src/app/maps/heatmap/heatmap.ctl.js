@@ -4,15 +4,16 @@
 (function() {
     'use strict';
 
-    angular.module('app.maps.geojson.heatmap', [])
+    angular.module('app.maps.heatmap', ['app.maps.heatmap.user', 'app.maps.heatmap.travel'])
         .config(['$urlRouterProvider', '$stateProvider',
             function ($urlRouterProvider, $stateProvider) {
                 $stateProvider
-                    .state('app.maps.geojson.heatmap', {
+                    .state('app.maps.heatmap', {
+                        abstract: true,
                         url: '^/heatmap',
                         views: {
                             '': {
-                                templateUrl: 'maps/geojson/heatmap/heatmap.tpl.html',
+                                templateUrl: 'maps/heatmap/heatmap.tpl.html',
                                 controller: 'MapsHeatmapCtrl'
                             }
                         },
@@ -23,24 +24,26 @@
                         }
                     });
             }])
-        .controller('MapsHeatmapCtrl', ['$scope', '$log', 'leafletData', '$http', 'mapCode', MapsHeatmapCtrl])
+        .controller('MapsHeatmapCtrl', ['$scope', '$log', 'mapCode', MapsHeatmapCtrl])
     ;
 
-    function MapsHeatmapCtrl($scope, $log, leafletData, $http, mapCode) {
+    function MapsHeatmapCtrl($scope, $log, mapCode) {
 
         // sidebar config
         if($scope.setMapBarConfig) {
             $scope.setMapBarConfig({noToolbar: true});
         }
 
-        $http.get("json/heat-points.json").success(function(data) {
+        $scope.heatMap = {};
+        $scope.setHeatMap = function(name, data) {
+
             $scope.layers.overlays = {
                 heat: {
-                    name: 'Heat Map',
+                    name: name,
                     type: 'heat',
                     data: data,
                     layerOptions: {
-                        radius: 20,
+                        radius: 50,
                         blur: 10
                         //gradient: {
                         //    0.4: 'lightgreen',
@@ -53,10 +56,12 @@
             };
 
             center();
-        });
+
+            $scope.heatMap.size = data.length;
+        };
 
         function center() {
-            leafletData.getMap().then(function(map) {
+            $scope.getMap().then(function(map) {
                 var latlngs = [];
                 var points = $scope.layers.overlays.heat.data;
                 for (var k in points) {
@@ -69,6 +74,14 @@
         if(mapCode) {
             $scope.setMapLayer(mapCode);
         }
+
+        $scope.removeHeatMap = function(name) {
+            angular.forEach($scope.layers.overlays, function(overlay, key) {
+                if(overlay.type == "heat" && overlay.name == name) {
+                    delete $scope.layers.overlays[key];
+                }
+            });
+        };
 
         $scope.$on('$destroy', function(e) {
             delete $scope.layers.overlays.heat;

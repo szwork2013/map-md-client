@@ -15,11 +15,16 @@
     function QQWebapiFactory($window, $q, QQWSRestangular, $mmdUtil) {
 
         return {
-            geocoder: geocoder
+            geocoder: geocoder,
+            suggestion: suggestion
         };
 
         function geocoder(address) {
             return QQWSRestangular.one('geocoder', 'v1').get({address: address});
+        }
+
+        function suggestion(keyword) {
+            return QQWSRestangular.one('place', 'v1').one('suggestion').get({keyword: keyword});
         }
     }
 })();

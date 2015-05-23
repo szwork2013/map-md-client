@@ -4,14 +4,18 @@
 @import './home/home.scss';
 @import './home/sidenav/sidenav.scss';
 @import './home/signin/signin.scss';
+@import './home/footer/footer.scss';
 @import './components/photoCardWall/photoCardWall.scss';
 @import './components/photoDialog/photoDialog.scss';
 @import './components/photoSlider/photoSlider.scss';
 @import './components/user/profile/profile.scss';
 @import './components/comment/comment.scss';
+@import './components/search/search.scss';
 @import './maps/popular/maps.popular.scss';
 @import './maps/geojson/geojson.scss';
 @import './maps/app.maps.scss';
+@import './maps/upload/upload.scss';
+@import './maps/travel/travel.scss';
 @import './settings/settings.scss';
 @import './settings/map/map.scss';
 
@@ -90,3 +94,12 @@ md-tabs {
   margin: 0 7px;
 }
 
+pre {
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+.md-select-menu-container.md-active {
+  z-index: 1002;
+  background-color: white;
+}

@@ -1,0 +1,19 @@
+<md-toolbar class="md-tall md-warn md-hue-3">
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Menu"
+                   ng-click="toggleLeftBar()">
+            <md-icon md-svg-icon="navigation:menu"></md-icon>
+        </md-button>
+        <h3>
+            <span>热点图</span>
+        </h3>
+        <span flex=""></span>
+        <md-button class="md-icon-button" aria-label="More"
+                   ng-click="showGridBottomSheet($event)">
+            <md-icon md-svg-icon="more_vert"></md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<md-content>
+    <div layout="column" ui-view></div>
+</md-content>

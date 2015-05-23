@@ -6,7 +6,7 @@
     'use strict';
 
     angular.module('app.core.services')
-        .factory('Travels', ['Restangular', TravelsServiceFactory])
+        .factory('Travels', ['ApiRestangular', TravelsServiceFactory])
     ;
 
     function TravelsServiceFactory(Restangular) {

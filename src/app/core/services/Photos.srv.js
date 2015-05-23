@@ -7,7 +7,6 @@
 
     angular.module('app.core.services', ['restangular'])
         .config(['RestangularProvider', function(RestangularProvider) {
-            RestangularProvider.setBaseUrl('http://www.photoshows.cn/api/rest');
 
             // add a response intereceptor
             RestangularProvider.addResponseInterceptor(
@@ -63,10 +62,10 @@
                 return extractedData;
             });
         }])
-        .factory('Photos', ['Restangular', PhotoServiceFactory])
-        .factory('Users', ['Restangular', UsersServiceFactory])
-        .factory('Panoramios', ['Restangular', PanoramiosServiceFactory])
-        .factory('Comments', ['Restangular', CommentsServiceFactory]);
+        .factory('Photos', ['ApiRestangular', PhotoServiceFactory])
+        .factory('Users', ['ApiRestangular', UsersServiceFactory])
+        .factory('Panoramios', ['ApiRestangular', PanoramiosServiceFactory])
+        .factory('Comments', ['ApiRestangular', CommentsServiceFactory]);
 
     function PhotoServiceFactory(Restangular) {
         var photoService = Restangular.service('photo');

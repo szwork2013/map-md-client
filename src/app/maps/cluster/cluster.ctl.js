@@ -4,57 +4,54 @@
 (function() {
     'use strict';
 
-    angular.module('app.maps.cluster', [])
+    angular.module('app.maps.cluster', ['app.maps.cluster.user'])
         .config(['$urlRouterProvider', '$stateProvider',
             function ($urlRouterProvider, $stateProvider) {
                 $stateProvider
                     .state('app.maps.cluster', {
-                        url: '/cluster',
-                        views: {
-                            '': {
-                                templateUrl: 'maps/cluster/cluster.tpl.html',
-                                controller: 'MapsClusterCtrl'
-                            }
-                        },
+                        abstract: true,
+                        url: '^/cluster',
+                        templateUrl: 'maps/cluster/cluster.tpl.html',
+                        controller: 'MapsClusterCtrl',
                         resolve: {}
                     });
             }])
-        .controller('MapsClusterCtrl', ['$scope', '$log', 'leafletData', '$http', MapsClusterCtrl])
+        .controller('MapsClusterCtrl', ['$scope', '$log', '$mmdLeafletUtil', MapsClusterCtrl])
     ;
 
-    function MapsClusterCtrl($scope, $log, leafletData, $http) {
+    function MapsClusterCtrl($scope, $log, $mmdLeafletUtil) {
 
-        var addressPointsToMarkers = function(points) {
-            return points.map(function(ap) {
-                return {
-                    layer: 'realworld',
-                    lat: ap[0],
-                    lng: ap[1]
-                };
+        // 图片图标组层
+        var clusterGroup = L.markerClusterGroup();
+        $scope.getMap().then(function(map) {
+            map.addLayer(clusterGroup);
+        });
+
+        $scope.addLayer = function(photo) {
+            $scope.getMap().then(function(map) {
+                if (angular.isArray(photo)) {
+                    angular.forEach(photo, function (photo, key) {
+                        if(photo.point) {
+                            clusterGroup.addLayer($mmdLeafletUtil.photoMarker(photo, map));
+                        }
+                    });
+                } else if (angular.isObject(photo)) {
+                    if(photo.point) {
+                        clusterGroup.addLayer($mmdLeafletUtil.photoMarker(photo, map));
+                    }
+                }
             });
         };
 
-        var realworld = {
-                name: "Real World markers",
-                type: "markercluster",
-                visible: false
-            };
+        $scope.clear = function() {
+            clusterGroup.clearLayers();
+        };
 
-        leafletData.getMap('main-map').then(function(map) {
-
-            $http.get("json/realworld.10.json").success(function(addressPoints) {
-                var markers = L.markerClusterGroup({ chunkedLoading: true });
-                for (var i = 0; i < addressPoints.length; i++) {
-                    var a = addressPoints[i];
-                    var title = a[2];
-                    var marker = L.marker(L.latLng(a[0], a[1]), { title: title });
-                    markers.addLayer(marker);
-                }
-                map.addLayer(markers);
-                //$scope.setMarkers(addressPointsToMarkers(data));
-                $scope.data = addressPoints;
+        $scope.$on('$destroy', function(e) {
+            $scope.clear();
+            $scope.getMap().then(function(map) {
+                map.removeLayer(clusterGroup);
             });
         });
-
     }
 })();

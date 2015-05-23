@@ -1,0 +1,33 @@
+<div class="geocoder-control md-primary">
+    <!--<md-tabs md-selected="selectedIndex"-->
+             <!--md-border-bottom-->
+             <!--flex>-->
+        <!--<md-tab md-on-select="onTabSelect(1)"-->
+                <!--label="内"-->
+                <!--class="photo-wall"></md-tab>-->
+        <!--<md-tab md-on-select="onTabSelect(2)"-->
+                <!--label="外"-->
+                <!--class="photo-wall"></md-tab>-->
+    <!--</md-tabs>-->
+    <!--<md-switch ng-model="loc" aria-label="Switch Loc" style="float: left;">-->
+        <!--wai-->
+    <!--</md-switch>-->
+    <md-autocomplete
+            ng-disabled="isDisabled"
+            md-no-cache="noCache"
+            md-selected-item="selectedItem"
+            md-search-text-change="searchTextChange(searchText)"
+            md-search-text="searchText"
+            md-selected-item-change="selectedItemChange(item)"
+            md-items="item in geoSearch(searchText)"
+            md-item-text="item.display_name"
+            md-min-length="0"
+            placeholder="搜索">
+        <md-item-template>
+            <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.display_name}}</span>
+        </md-item-template>
+        <md-not-found>
+            No matches found for "{{searchText}}".
+        </md-not-found>
+    </md-autocomplete>
+</div>

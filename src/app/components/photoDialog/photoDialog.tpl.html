@@ -1,5 +1,10 @@
-<md-dialog aria-label="Photo Dialog" flex="100" layout-fill layout="row">
-    <div flex="70" layout="column" class="photo-dialog-left">
+<md-dialog aria-label="Photo Dialog"
+           layout-fill
+           layout="row"
+           layout-sm="column">
+    <div flex="70"
+         layout="column"
+         class="photo-dialog-left">
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <md-button class="md-icon-button" aria-label="Settings">
@@ -19,14 +24,15 @@
                 </md-button>
             </div>
         </md-toolbar>
-        <md-content flex layout-fill layout="row">
+        <md-content flex layout-fill layout="row" style="overflow: hidden;">
             <mmd-photo-slider flex layout-fill
                     mmd-photo="photo">
 
             </mmd-photo-slider>
         </md-content>
     </div>
-    <div flex="30" layout="column"
+    <div flex="30"
+         layout="column"
          class="photo-dialog-info">
         <md-toolbar md-scroll-shrink
                 class="md-tall md-warn md-hue-3">

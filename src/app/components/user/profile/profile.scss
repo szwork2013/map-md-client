@@ -1,6 +1,8 @@
 user-profile {
-  font-size: .8em !important;
+  //font-size: .8em !important;
   font-family: Microsoft YaHei;
+  max-height: 100%;
+  overflow: hidden;
 }
 
 .md-avatar {

@@ -87,16 +87,12 @@
                     travelCLayers.addSpot(spot);
                 });
 
-                //map.on('photoClick', onMapPhotoClicked);
+                $scope.onSpotSelect(travel.spots[$scope.selectedIndex]);
             });
         }
 
         function sortPhotos(a, b) {
             return a.date_time - b.date_time;
-        }
-
-        function onMapPhotoClicked(ev) {
-            $mmdPhotoDialog.show({target: ev.originEvent.target._icon}, {id: ev.photoId});
         }
 
         $scope.onSpotSelect = function(spot) {
@@ -105,7 +101,6 @@
 
         $scope.$on('$destroy', function(e) {
 
-            //travelCLayers.remove();
             $scope.getMap().then(function(map) {
                 map.removeControl(travelCLayers);
             });

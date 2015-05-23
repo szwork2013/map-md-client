@@ -1,12 +1,14 @@
 <md-card>
     <md-card-content>
-        <div flex layout="row" layout-wrap
-                class="settings-map-container">
+        <div flex
+             layout="column"
+             layout-wrap
+             class="settings-map-container">
             <leaflet id="settings-map"
-                     defaults="defaults"
-                     center="center"
-                     layers="layers"
-                    flex
+                    defaults="defaults"
+                    center="center"
+
+                     flex
                      hide-sm></leaflet>
 
             <div flex="20">
@@ -15,4 +17,35 @@
         </div>
 
     </md-card-content>
+
+    <div class="md-actions" layout="row" layout-align="end center">
+        <md-button class="md-raised md-primary">保存</md-button>
+        <md-button>取消</md-button>
+    </div>
+</md-card>
+
+<md-card>
+    <md-card-content>
+        <div flex
+             layout="column"
+             layout-wrap
+             class="settings-map-container">
+            <leaflet id="min-map"
+                     defaults="defaults"
+                     center="center"
+
+                     flex
+                     hide-sm></leaflet>
+
+            <div flex="20">
+
+            </div>
+        </div>
+
+    </md-card-content>
+
+    <div class="md-actions" layout="row" layout-align="end center">
+        <md-button class="md-raised md-primary">保存</md-button>
+        <md-button>取消</md-button>
+    </div>
 </md-card>

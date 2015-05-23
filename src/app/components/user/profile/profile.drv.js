@@ -10,11 +10,12 @@
     function UserProfileDirective(staticCtx) {
         return {
             restrict: 'EA',
-            link: link,
+            transclude: true,
             scope: {
                 user: "=user"
             },
-            templateUrl: 'components/user/profile/profile.tpl.html'
+            templateUrl: 'components/user/profile/profile.tpl.html',
+            link: link
         };
 
         function link(scope, element, attrs) {

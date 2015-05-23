@@ -43,6 +43,8 @@
                 $scope.loading  = false;
                 if(error.status == 400) {
                     $scope.message = '用户名密码错误';
+                }else {
+                    $scope.message = '网络错误';
                 }
             });
 

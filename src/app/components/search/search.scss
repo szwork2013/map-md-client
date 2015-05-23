@@ -1,0 +1,45 @@
+.geocoder-control {
+  position: absolute;
+  max-width: 500px;
+  top: 5px;
+  left: 50px;
+  right: 100px;
+  padding: 5px;
+
+  md-input-container {
+    padding: 2px;
+  }
+
+  md-tabs-canvas {
+    height: 25px;
+    md-pagination-wrapper {
+      height: 25px;
+    }
+  }
+
+  md-tab-item {
+    padding: 0 5px;
+  }
+
+  md-list {
+    max-height: 30%;
+    overflow-y: auto;
+    md-list-item {
+      min-height: 25px;
+      margin: 5px 0;
+      md-button {
+        line-height: 1em;
+        min-height: 25px;
+        height: 25px;
+      }
+
+      md-button:hover {
+        background-color: lightblue;
+      }
+      .md-list-item-inner {
+        line-height: 1em;
+        min-height: 25px;
+      }
+    }
+  }
+}

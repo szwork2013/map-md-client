@@ -20,7 +20,8 @@
         </user-profile>
     </div>
 </md-toolbar>
-<md-content flex layout="column">
+<md-content flex layout="column"
+        class="travel">
     <md-tabs md-selected="selectedIndex"
              md-border-bottom
              flex>
@@ -28,10 +29,10 @@
                 ng-disabled="spot.disabled"
                 md-on-select="onSpotSelect(spot)"
                 label="{{spot.title}}"
-                class="photo-wall">
+                class="spot photo-wall">
             <div>
-                <div ng-bind="spot.description"></div>
-                <br/>
+                <div layout-margin
+                     ng-bind="spot.description"></div>
                 <md-content>
                     <div mmd-photo-card-wall layout-fill flex
                          mmd-wall-options="{targetHeight: 160, fadeSpeed: 0, allowPartialLastRow: true}">

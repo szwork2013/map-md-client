@@ -5,8 +5,7 @@
     'use strict';
 
     angular.module('app.maps.geojson',
-        ['app.maps.geojson.choropleth',
-         'app.maps.geojson.heatmap'])
+        ['app.maps.geojson.choropleth'])
         .config(['$urlRouterProvider', '$stateProvider',
             function ($urlRouterProvider, $stateProvider) {
                 $stateProvider

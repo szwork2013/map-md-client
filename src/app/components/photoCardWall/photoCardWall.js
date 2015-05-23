@@ -4,6 +4,7 @@
 (function() {
     'use strict';
 
+    var LOG_TAG = "Photo-card-wall: ";
     /**
      * @ngdoc module
      * @name app.components.photoCard
@@ -64,7 +65,7 @@
             });
 
             // 收到指定事件时更新布局
-            scope.$on('mmd.photo.wall.resize', function (e) {
+            scope.$on('mmd-photo-wall-resize', function (e) {
                 updateWall();
             });
 
@@ -75,13 +76,16 @@
                 }
             });
 
+            var updatePromise;
             function updateWall() {
                 //$log.debug("collage images");
 
-                var updatePromise = $timeout(function () {
+                $timeout.cancel(updatePromise);
+                updatePromise = $timeout(function () {
                     if (options.imagesLoaded && $window.imagesLoaded) {
                         var imgLoad = $window.imagesLoaded && $window.imagesLoaded(element);
                         imgLoad.on('always', function (e) {
+                            $log.debug(LOG_TAG + "image load 布局");
                             collage();
                             $timeout(function () {
                                 scope.$apply(function () {
@@ -89,6 +93,7 @@
                             }, options.delayTime);
                         });
                     } else {
+                        $log.debug(LOG_TAG + "直接布局");
                         collage();
                     }
                 }, options.delayTime);
@@ -97,7 +102,7 @@
             // Here we apply the actual CollagePlus plugin
             function collage() {
                 element.removeWhitespace().collagePlus(options);
-                scope.$emit("ponm.photo.fluid.resized");
+                scope.$emit("mmd-photo-fluid-resized");
             }
         }
     }

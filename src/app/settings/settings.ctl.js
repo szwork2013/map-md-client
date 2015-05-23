@@ -33,8 +33,6 @@
 
         $scope.linkItems = [
             {name: '账户', icon: 'action:account_box', state: 'app.settings.account'},
-            {name: '地图', icon: 'maps:map', state: 'app.settings.map'},
-            {name: '地图', icon: 'maps:map', state: 'app.settings.map'},
             {name: '地图', icon: 'maps:map', state: 'app.settings.map'}
         ];
 

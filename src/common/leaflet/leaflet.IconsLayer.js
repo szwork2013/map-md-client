@@ -48,10 +48,6 @@
         _onMapChanged: function (e) {
             var self = this;
 
-            //if (!self._opts.auto) {
-            //    return;
-            //}
-
             var bounds = self.getBounds(),
                 level = self.getLevel(),
                 size = self.getSize();
@@ -74,7 +70,7 @@
                 }
                 self.fire("loaded");
 
-                if (data.length > 0) {
+                if (data) {
                     var photoIds = [];
                     var photos = {};
                     $.each(data, function (index, photo) {
@@ -144,9 +140,15 @@
             }
             self.addLayer(marker);
         },
-        staticCtx: "http://static.photoshows.cn",
+        trigger: function() {
+            var self = this;
+            if(self._map) {
+                self._map.fire('moveend');
+            }
+        },
+        //staticCtx: "http://static.photoshows.cn",
         getIconUrl : function(photoOssKey) {
-            return this.staticCtx + "/" + photoOssKey + "@!panor-lg";
+            return this._opts.staticCtx + "/" + photoOssKey + "@!panor-lg";
         },
 
         hideLayer: function (photoId) {

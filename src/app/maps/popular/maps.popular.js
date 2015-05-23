@@ -22,6 +22,8 @@
             MapsPopularCtrl])
         ;
 
+    var LOG_TAG = "Maps-popular: ";
+
     /**
      *
      * @param $scope
@@ -42,14 +44,15 @@
 
         // sidebar config
         if($scope.setMapBarConfig) {
-            $scope.setMapBarConfig({noToolbar: false});
+            $scope.setMapBarConfig({noToolbar: false, title: "浏览热门图片"});
         }
 
         leafletData.getMap('main-map').then(function(map) {
 
             var markerLayer =
                 L.iconsLayer({
-                    auto: true
+                    auto: true,
+                    staticCtx: staticCtx
                 }).setReadData(function(bounds, level, size) {
                     var deferred = $q.defer();
                     Panoramios.getList(
@@ -146,6 +149,8 @@
 
             self.layers = L.control.layers({}, overlays).addTo(map);
             self.markerLayer = markerLayer;
+
+            markerLayer.trigger();
             //self.circleMarkers = circleMarkers;
         });
 
@@ -155,8 +160,13 @@
          */
         function onMapPhotosChanged(e) {
             $scope.photos = $mmdUtil.Array.mergeRightist($scope.photos || [], e.photos, "id");
-            $scope.$broadcast('mmd.photo.wall.resize');
+            $log.debug(LOG_TAG + "photo wall changed");
+            $scope.$broadcast('mmd-photo-wall-resize');
         }
+
+        $scope.$on('mmd-photo-fluid-resized', function(e) {
+            $log.debug(LOG_TAG + "photo wall resized");
+        });
 
         function onMapPhotoClicked(ev) {
             $mmdPhotoDialog.show({target: ev.originEvent.target._icon}, ev.photo);
