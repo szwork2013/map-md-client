@@ -1,0 +1,45 @@
+md-content.gpx-list {
+  md-list-item {
+    padding: 0;
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+.track {
+  .md-input-container {
+    padding: 40px 0 0;
+    label {
+      position: absolute;
+      top: -10px;
+    }
+  }
+
+  md-list {
+    md-divider {
+      position: relative;
+    }
+  }
+
+  md-radio-group {
+    float: left;
+  }
+  md-radio-button {
+    display: inline-flex;
+    md-icon {
+      float: left;
+    }
+    p {
+      float: left;
+      margin: 0;
+    }
+  }
+}
+
+
+.md-button.md-fab {
+  md-progress-circular {
+    left: -2px;
+  }
+}

@@ -19,25 +19,34 @@
                         }
                     });
             }])
-        .controller('MapsClusterUserCtrl', ['$scope', '$log', 'Users', 'userId', MapsClusterUserController]);
+        .controller('MapsClusterUserCtrl', ['$scope', '$log', 'Users', 'userId', 'Authenticated',
+            MapsClusterUserController]);
 
     var LOG_TAG = "Maps-Cluster-User: ";
 
-    function MapsClusterUserController($scope, $log, Users, userId) {
+    function MapsClusterUserController($scope, $log, Users, userId, Authenticated) {
 
         // sidebar config
         if($scope.setMapBarConfig) {
             $scope.setMapBarConfig({noToolbar: false, title: "用户的图片"});
         }
 
-        $scope.userId = userId;
-
         // configs
-        var pageSize = 100;
+        $scope.loadMoreDisabled = false;
+        $scope.photosLimitTo = 20;
+        var pageSize = 100, limitPageSize = 20;
+        var photos = [];
 
-        $scope.photos = [];
-
-        init();
+        // Get user's id for initial this controller
+        $scope.userId = userId;
+        if(!$scope.userId) {
+            Authenticated.getUser().then(function(user) {
+                $scope.userId = userId = user.id;
+                init();
+            });
+        }else {
+            init();
+        }
 
         function init() {
             // 获取用户信息
@@ -45,7 +54,7 @@
                 $scope.user = user;
             });
 
-            $scope.photos = [];
+            photos = [];
 
             // 开始调用获取用户图片
             callGetPhotos(userId, 1);
@@ -57,13 +66,13 @@
          * @param pageNo
          */
         function callGetPhotos(userId, pageNo) {
-            Users.getPhotos(userId, pageSize, pageNo).then(function(photos) {
-                $scope.photos = $scope.photos.concat(photos);
-                addClusterMarkers(photos);
-                if(photos.length && photos.length == pageSize) {
+            Users.getPhotos(userId, pageSize, pageNo).then(function(data) {
+                photos = photos.concat(data);
+                addClusterMarkers(data);
+                if(data.length && data.length == pageSize) {
                     callGetPhotos(userId, pageNo+1);
                 }else {
-                    $log.debug(LOG_TAG + "photos length = " + $scope.photos.length);
+                    $scope.photos = photos;
                 }
             });
         }
@@ -75,6 +84,15 @@
         function addClusterMarkers(photos) {
             $scope.addLayer(photos);
         }
+
+        $scope.loadMorePhotos = function() {
+            $scope.photosLimitTo = $scope.photosLimitTo + limitPageSize;
+            $log.debug(LOG_TAG + "load more..." + $scope.photosLimitTo);
+            if($scope.photos && $scope.photosLimitTo > $scope.photos.length) {
+                $scope.loadMoreDisabled = true;
+            }
+            $scope.$broadcast('mmd-photo-wall-resize');
+        };
 
         $scope.$on('$destroy', function(e) {
             $scope.clear();

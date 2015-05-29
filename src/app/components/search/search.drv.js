@@ -43,6 +43,8 @@
                         QQWebapi.suggestion(text).then(function(res) {
                             if(res.status === 0) {
                                 deferred.resolve(decodeQQSuggestion(res.data));
+                            }else {
+                                deferred.resolve([]);
                             }
 
                             //if(scope.ress.length) {

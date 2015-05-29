@@ -5,7 +5,8 @@
     'use strict';
 
     angular.module('app', ['app.core', 'app.components', 'app.home', 'app.maps', 'app.settings',
-        'ui.router', 'ngMaterial', 'leaflet-directive', 'templates-app', 'templates-common'])
+        'ui.router', 'ngMaterial', 'leaflet-directive', 'templates-app', 'templates-common',
+    'angularMoment'])
         .config(['$logProvider', '$urlRouterProvider', '$stateProvider',
             function ($logProvider, $urlRouterProvider, $stateProvider) {
                 $urlRouterProvider
@@ -32,7 +33,7 @@
         .run(['Oauth2Service', 'Authenticated', Run])
 
         .controller('AppCtrl',
-        ['$scope', '$mdSidenav', '$mdBottomSheet', '$mdMedia', '$log', '$q',
+        ['$scope', '$mdSidenav', '$mdBottomSheet', '$mdMedia', '$log', '$q', 'staticCtx',
             AppCtrl])
         ;
 
@@ -52,15 +53,18 @@
      * @param $mdMedia
      * @param $log
      * @param $q
+     * @param staticCtx
      * @constructor
      */
-    function AppCtrl($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $log, $q ) {
+    function AppCtrl($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $log, $q, staticCtx) {
         var self = this;
 
         self.toggleList   = toggleUsersList;
 
         $scope.toggleLeftBar = self.toggleList;
         $scope.$mdMedia = $mdMedia;
+
+        $scope.staticCtx = staticCtx;
 
         /**
          * First hide the bottomsheet IF visible, then

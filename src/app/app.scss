@@ -1,5 +1,6 @@
 @import "../scss/_variables.scss";
 @import '../scss/_mixins.scss';
+@import '../scss/_icons.scss';
 @import '../common/leaflet/leaflet.scss';
 @import './home/home.scss';
 @import './home/sidenav/sidenav.scss';
@@ -15,6 +16,9 @@
 @import './maps/geojson/geojson.scss';
 @import './maps/app.maps.scss';
 @import './maps/upload/upload.scss';
+@import './maps/track/track.scss';
+@import './maps/track/search/search.scss';
+@import './maps/track/upload/upload.scss';
 @import './maps/travel/travel.scss';
 @import './settings/settings.scss';
 @import './settings/map/map.scss';

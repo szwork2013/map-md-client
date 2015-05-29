@@ -6,15 +6,16 @@
 
     angular.module('app.components.infiniteScroll', [])
         .value('THROTTLE_MILLISECONDS', null)
-        .directive('infiniteScroll', [
-            '$rootScope', '$window', '$timeout', 'THROTTLE_MILLISECONDS', function ($rootScope, $window, $timeout, THROTTLE_MILLISECONDS) {
+        .directive('mmdInfiniteScroll', [
+            '$rootScope', '$window', '$timeout', 'THROTTLE_MILLISECONDS',
+            function ($rootScope, $window, $timeout, THROTTLE_MILLISECONDS) {
                 return {
                     scope: {
-                        infiniteScroll: '&',
-                        infiniteScrollContainer: '=',
-                        infiniteScrollDistance: '=',
-                        infiniteScrollDisabled: '=',
-                        infiniteScrollUseDocumentBottom: '='
+                        infiniteScroll: '&mmdInfiniteScroll',
+                        infiniteScrollContainer: '@mmdInfiniteScrollContainer',
+                        infiniteScrollDistance: '=mmdInfiniteScrollDistance',
+                        infiniteScrollDisabled: '=mmdInfiniteScrollDisabled',
+                        infiniteScrollUseDocumentBottom: '=mmdInfiniteScrollUseDocumentBottom'
                     },
                     link: function (scope, elem, attrs) {
                         var changeContainer, checkWhenEnabled, container, handleInfiniteScrollContainer, handleInfiniteScrollDisabled, handleInfiniteScrollDistance, handleInfiniteScrollUseDocumentBottom, handler, immediateCheck, scrollDistance, scrollEnabled, throttle, useDocumentBottom;

@@ -1,0 +1,15 @@
+.track-list md-list md-list-item {
+  border-bottom: 1px dashed grey; }
+
+.track-detail md-grid-tile.gray {
+  background-color: gray; }
+.track-detail md-grid-tile.green {
+  background-color: green; }
+.track-detail md-grid-tile.yellow {
+  background-color: yellow; }
+.track-detail md-grid-tile.blue {
+  background-color: blue; }
+.track-detail md-grid-tile.red {
+  background-color: red; }
+
+/*# sourceMappingURL=track.css.map */

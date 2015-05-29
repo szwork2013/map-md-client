@@ -47,6 +47,16 @@
             $scope.setMapBarConfig({noToolbar: false, title: "浏览热门图片"});
         }
 
+        $scope.showBottomSheet = function($event) {
+            $scope.showGridBottomSheet($event, [
+                { name: '我的', icon: 'social:person', link: 'app.maps.cluster.user', params:{id:''} },
+                { name: '上传', icon: 'image:camera', link: 'app.maps.upload', params:{id:''} },
+                { name: 'Help', icon: 'action:help' , link: 'app.helps.popular'}
+            ]).then(function(clickedItem) {
+                $scope.alert = clickedItem.name + ' clicked!';
+            });
+        };
+
         leafletData.getMap('main-map').then(function(map) {
 
             var markerLayer =

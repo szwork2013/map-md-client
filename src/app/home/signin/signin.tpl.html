@@ -1,10 +1,14 @@
 <md-dialog class="sign-dialog">
-    <div>
-        <form ng-submit="submit()">
-            <div>
-                <h3>
-                    登录美丽地图
-                </h3>
+    <md-button class="md-icon-button md-icon-close" aria-label="Close"
+               ng-click="cancel()">
+        <md-icon md-svg-icon="navigation:close"></md-icon>
+    </md-button>
+    <form ng-submit="submit()">
+        <md-card>
+            <md-card-content>
+                <h2>
+                    登录 美丽地图
+                </h2>
                 <div class="message" ng-show="message">
                     <span class="md-warn">{{message}}</span>
                 </div>
@@ -21,14 +25,17 @@
                     <md-icon md-svg-src="action:lock" class="pass"></md-icon>
                     <input ng-model="user.password" type="password" required >
                 </md-input-container>
+            </md-card-content>
+            <div class="md-actions" layout="row" layout-align="space-around center"
+                 layout-padding>
+                <div flex="50">
+                    <md-button class="md-raised md-primary"
+                               layout-fill>登录</md-button>
+                </div>
+                <md-button flex>Need an account? -></md-button>
             </div>
-
-            <div layout="row"  layout-align="end center">
-                <md-button class="md-raised md-primary">登录</md-button>
-            </div>
-
-        </form>
-    </div>
+        </md-card>
+    </form>
 
     <div ng-show="loading" class="signining"
          layout="row"  layout-align="center center">

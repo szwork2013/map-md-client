@@ -4,294 +4,509 @@
 (function () {
     'use strict';
 
-    angular.module('app.maps.upload', ['ngFileUpload', 'ngSanitize'])
-        .config(['$logProvider', '$urlRouterProvider', '$stateProvider',
-            function ($logProvider, $urlRouterProvider, $stateProvider) {
+    angular.module('app.maps.upload', ['ngFileUpload', 'ngSanitize', 'blueimp.fileupload', 'ngDragDrop'])
+        .config(['$httpProvider', '$urlRouterProvider', '$stateProvider', 'fileUploadProvider',
+            function ($httpProvider, $urlRouterProvider, $stateProvider, fileUploadProvider) {
 
                 $stateProvider
                     .state('app.maps.upload', {
                         url: '/upload',
                         templateUrl: 'maps/upload/maps.upload.tpl.html',
                         resolve: {},
-                        controller: "MapsUploadCtrl"
+                        controller: "MapsUploadCtrl as mupc"
                     });
+
+                delete $httpProvider.defaults.headers.common['X-Requested-With'];
+                fileUploadProvider.defaults.redirect = window.location.href.replace(
+                    /\/[^\/]*$/,
+                    '/cors/result.html?%s'
+                );
+
+//                if (isOnGitHub) {
+//                    // Demo settings:
+                angular.extend(fileUploadProvider.defaults, {
+//                autoUpload: false,
+//                autoUpload: !window.dev,
+
+                    // Enable image resizing, except for Android and Opera,
+                    // which actually support image resizing, but fail to
+                    // send Blob objects via XHR requests:
+//                        disableImageResize: /Android(?!.*Chrome)|Opera/
+//                            .test(window.navigator.userAgent),
+                    maxFileSize: 10000000,
+//                        loadImageMaxFileSize: 10000000,
+//                        imageQuality: 2000000,
+                    acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+//                        disableImageResize: /Android(?!.*Chrome)|Opera/
+//                            .test(window.navigator && navigator.userAgent),
+                    //previewMaxWidth: 200,
+                    //previewMaxHeight: 200,
+                    //previewCrop: true, // Force cropped images,
+                    previewCanvas: false,
+
+                    previewCrop: false
+//                        disableImageMetaDataLoad: true,
+//                        imageMinHeight: 1098,
+//                        imageMaxWidth: 5000,
+//                        imageMaxHeight: 2000
+
+                });
             }])
         .controller('MapsUploadCtrl',
-        ['$scope', '$mdSidenav', '$log', '$q', 'Restangular',
+        ['$scope', 'fileUpload', '$log', '$q', 'QQWebapi',
             MapsUploadCtrl])
-        .controller('trackCtl',
-        ['$scope', '$log', '$q', 'Restangular',
-            TrackCtl])
+        .controller('MapsFileUploadCtrl',
+        ['$window', '$scope', '$log', '$q', 'fileUpload', '$mmdUtil', MapsFileUploadCtrl])
+        .controller('MapsFileUploadPhotoCtrl',
+        ['$window', '$scope', '$log', '$q', 'Photos', '$mmdUtil', MapsFileUploadPhotoCtrl])
+        .controller('MapsFileUploadDestoryCtrl',
+        ['$window', '$scope', '$log', '$q', 'Photos', '$mmdUtil', MapsFileUploadDestoryCtrl])
+
     ;
 
-    var LOG_TAG = "maps-upload: ";
+    var LOG_TAG = "Maps-Upload: ";
+    var PhotoMarkableControl;
 
-    function MapsUploadCtrl( $scope, $mdSidenav, $log, $q, Restangular) {
+    function MapsUploadCtrl($scope, fileUpload, $log, $q, QQWebapi) {
         var self = this;
 
         $scope.setMapBarConfig({noToolbar: false, title: "上传Track"});
-
-        $scope.tracks = [];
-
-        var ecl;
-        $scope.getMap().then(function(map) {
-            ecl = new ElevationControl(map);
+        var photoMarkableControl;
+        $scope.getMap().then(function (map) {
+            photoMarkableControl = new PhotoMarkableControl().addTo(map);
         });
 
-        $scope.cancel = function(index) {
-            $scope.tracks.splice(index, 1);
-            ecl.remove(index);
-        };
-
-        $scope.fileSelected = function(files, e) {
-            $log.debug(LOG_TAG + "files size = " + files.length);
-
-            var file;
-
-            if(files.length) {
-                //$log.debug(files[0]);
-                file = files[0];
-                var reader = new FileReader();
-                reader.onload = onload;
-                reader.readAsText(file);
-            }
-
-            function onload(e) {
-                $scope.getMap().then(function(map) {
-
-                    var el = ecl.newEcl();
-
-                    var track = {};
-
-                    var gjl = L.geoJson(null, {
-                        onEachFeature: el.addData.bind(el)
-                    });
-
-                    var runLayer;
-                    if(file.type == "application/vnd.google-earth.kml+xml") {
-                        gjl = L.geoJson(null, {
-                            onEachFeature: function(data, layer) {
-                                if(data.geometry.type == 'Point') {
-                                    if(data.properties.name) {
-                                        track.name = data.properties.name;
-                                        layer.bindPopup("<p>"+data.properties.name+"</p><pre>"+data.properties.description+"</pre>");
-                                    }
-                                    if(data.properties.description) {
-                                        track.description = data.properties.description;
-                                    }
-                                }else {
-                                    el.addData.bind(el)(data, layer);
-                                }
-                            }
-                        });
-                        runLayer = omnivore.kml.parse(e.target.result, {}, gjl);
-                        //runLayer = addKml(e.target.result, {}, gjl);
-                    }else if(file.name.match("\\.csv$")) {
-                        runLayer = omnivore.csv.parse(e.target.result, {}, gjl);
-                    }else if(file.name.match("\\.geojson$")) {
-                        runLayer = L.geoJson(JSON.parse(e.target.result), {
-                            onEachFeature: function(data, layer) {
-                                el.addData.bind(el)(data, layer);
-                            }
-
-                        });
-                    }else if(file.name.match("\\.wkt$")) {
-                        gjl = L.geoJson(null, {
-                            onEachFeature: function(data, layer) {
-                                if(data.type == 'MultiPoint') {
-                                    //if(data.properties.name) {
-                                    //    track.name = data.properties.name;
-                                    //    layer.bindPopup("<p>"+data.properties.name+"</p>");
-                                    //}
-                                    //if(data.properties.desc) {
-                                    //    track.description = data.properties.desc;
-                                    //}
-                                    //if(data.properties.time) {
-                                    //    track.time = data.properties.time;
-                                    //}
-                                }
-                                el.addData.bind(el)(data, layer);
-                            }
-                        });
-                        runLayer = omnivore.wkt.parse(e.target.result, {}, gjl);
-                    }else if(file.name.match("\\.gpx$")){
-                        gjl = L.geoJson(null, {
-                            onEachFeature: function(data, layer) {
-                                if(data.geometry.type == 'LineString') {
-                                    if(data.properties.name) {
-                                        track.name = data.properties.name;
-                                        layer.bindPopup("<p>"+data.properties.name+"</p>");
-                                    }
-                                    if(data.properties.desc) {
-                                        track.description = data.properties.desc;
-                                    }
-                                    if(data.properties.time) {
-                                        track.time = data.properties.time;
-                                    }
-
-                                    //if(!data.geometry.coordinates.length) {
-                                    //    data.geometry.coordinates = data.geometry.coordinates.line;
-                                    //}
-                                }
-                                el.addData.bind(el)(data, layer);
-                            }
-                        });
-                        runLayer = omnivore.gpx.parse(e.target.result, {}, gjl);
-                    }else if(file.name.match("\\.polyline$")) {
-                        runLayer = omnivore.polyline.parse(e.target.result, {}, gjl);
-                    }else if(file.name.match("\\.topojson$")) {
-                        runLayer = omnivore.topojson.parse(e.target.result, {}, gjl);
+        // markable photo on map
+        var markingFile;
+        $scope.markable = function (file, e) {
+            $scope.getMap().then(function (map) {
+                photoMarkableControl.cancel();
+                if (markingFile === file) {
+                    file.markable = false;
+                    markingFile = null;
+                    //map.editTools.stopDrawing();
+                } else {
+                    if (markingFile) {
+                        if (!markingFile.marker) {
+                            //map.editTools.stopDrawing();
+                        }
+                        markingFile.markable = false;
                     }
-
-                    gjl.on('click', function(e) {
-                        ecl.activeEcl(el);
-                    });
-
-                    runLayer.addTo(map);
-                    var bounds = runLayer.getBounds();
-                    if(bounds.isValid()) {
-                        map.fitBounds(bounds);
+                    file.markable = true;
+                    markingFile = file;
+                    if (!markingFile.marker) {
+                        photoMarkableControl.marking(file);
+                    } else if (!e) {
+                        map.setView(markingFile.marker.getLatLng());
                     }
-
-                    track.fileName = file.name;
-                    track.fileSize = file.size;
-                    track.type = 1;
-                    track.el = el;
-
-                    $scope.tracks.push(track);
-
-                    ecl.add(gjl, el, file.name);
-                    ecl.activeEcl(el);
-                });
-
-            }
-
-            $scope.active = function(track) {
-                ecl.activeEcl(track.el);
-            };
-
-            $scope.$on('$destroy', function(e) {
-                ecl.clear();
-                $scope.tracks = [];
+                }
             });
         };
 
-        function ElevationControl(map) {
+        $scope.removeMarker = function (file) {
+            if (markingFile === file) {
+                markingFile = null;
+            }
+            photoMarkableControl.removeMarker(file);
+        };
 
-            var activedEcl;
+        $scope.addMarker = function(file) {
+            photoMarkableControl.addMarker(file);
+        };
 
-            var eControls = [], gControls = [];
-            var geojsonControl;
-
-            this.newEcl = function() {
-                return L.control.elevation();
-            };
-
-            this.activeEcl = function(el) {
-                if(activedEcl) {
-                    if(el!==activedEcl) {
-                        map.removeControl(activedEcl);
-                        el.addTo(map);
-                        activedEcl = el;
+        $scope.setLocation = function setLocation(file, latLng) {
+            file.setPosition(latLng);
+            QQWebapi.geodecoder(latLng.lat + "," + latLng.lng).then(function (res) {
+                if (res.status === 0) {
+                    latLng.address = res.result.address;
+                    file.setPosition(latLng);
+                    file.setAddress(res.result.address);
+                    if (res.result.pois) {
+                        file.addresses = res.result.pois;
+                        angular.forEach(file.addresses, function (address, key) {
+                            address.display = address.address + " " + address.title;
+                        });
                     }
-                }else {
-                    el.addTo(map);
-                    activedEcl = el;
-                }
-                if(eControls.indexOf(el) > -1) {
-                    var bounds = gControls[eControls.indexOf(el)].getBounds();
-                    if(bounds.isValid()) {
-                        map.fitBounds(bounds);
-                    }
-                }
-            };
 
-            this.deactiveEcl = function(el) {
-                if(activedEcl && el===activedEcl) {
-                    map.removeControl(activedEcl);
-                    activedEcl = null;
-                }
-            };
+                } else {
 
-            this.remove = function(index) {
-                this.deactiveEcl(eControls[index]);
-                eControls.splice(index, 1);
-                map.removeLayer(gControls[index]);
-                geojsonControl.removeLayer(gControls[index]);
-                gControls.splice(index, 1);
-                if(!gControls.length) {
-                    map.removeControl(geojsonControl);
-                    geojsonControl = null;
                 }
-            };
+            });
+        };
 
-            this.add = function(geosjon, el, name) {
-                eControls.push(el);
-                gControls.push(geosjon);
-                geosjon.addTo(map);
-                if(!geojsonControl) {
-                    geojsonControl = L.control.layers({}, {});
-                    map.addControl(geojsonControl);
+        $scope.$on('$destroy', function (e) {
+            $scope.getMap().then(function (map) {
+                map.removeControl(photoMarkableControl);
+            });
+        });
+
+        PhotoMarkableControl = L.Control.Layers.extend({
+            options: {
+                position: 'topright',
+                draw: {},
+                edit: false
+            },
+            _marking: false,
+            _marker: null,
+            _markFile: null,
+            initialize: function (options) {
+                L.Control.Layers.prototype.initialize.call(this, options);
+                this._marker = L.marker(L.latLng(0, 0));
+                this._layerGroup = L.layerGroup([]);
+            },
+            _deferred: null,
+            marking: function (file) {
+                var deferred = $q.defer();
+                this._markFile = file;
+                if (!this._marking) {
+                    this._marking = true;
+                    this._marker.addTo(this._map);
                 }
-                geojsonControl.addOverlay(geosjon, name);
-            };
-
-            this.clear = function() {
+                this._deferred = deferred;
+                return this._deferred.promise;
+            },
+            removeMarker: function (file) {
                 var self = this;
-                angular.forEach(eControls, function(el, key) {
-                    self.remove(key);
+                if (file.marker && this._map.hasLayer(file.marker)) {
+                    this._map.removeLayer(file.marker);
+                    self._layerGroup.removeLayer(file.marker);
+                    delete file.marker;
+                }
+                return file;
+            },
+            addMarker: function(file) {
+                if(!file.marker) {
+                    this.createMarker(file, L.latLng(file.position));
+                }
+            },
+            cancel: function () {
+                var self = this;
+                if (self._marking) {
+                    self._marker.setLatLng(L.latLng(0, 0));
+                    self._map.removeLayer(self._marker);
+                }
+                self._marking = false;
+                self._deferred = null;
+            },
+            onAdd: function (map) {
+                var self = this;
+                var container = L.Control.Layers.prototype.onAdd.call(this, map);
+                map.on('mousemove', function (e) {
+                    if (self._marking) {
+                        self._marker.setLatLng(e.latlng);
+                    }
                 });
-            };
+                map.on('click', function (e) {
+                    if (self._marking) {
+                        var marker = self.createMarker(self._markFile, e.latlng);
+                        self._deferred.resolve(marker);
+                        self.cancel();
+                    }
+                });
+                self._layerGroup.addTo(map);
+                self.addOverlay(self._layerGroup, "图片位置标注");
+                return container;
+            },
+            onRemove: function () {
+                var self = this;
+                self._layerGroup.clearLayers();
+            },
+            createMarker: function (file, latlng) {
+                var self = this;
+                var marker = L.marker(latlng, {
+                    draggable: true
+                });
+                marker.addTo(self._map);
+                self._layerGroup.addLayer(marker);
+                marker.on('dragend', function (e) {
+                    $scope.setLocation(file, e.target.getLatLng());
+                });
+                file.marker = marker;
+                $scope.setLocation(file, latlng);
+                return marker;
+            }
+        });
+    }
+
+    function MapsFileUploadCtrl($window, $scope, $log, $q, fileUpload, $mmdUtil) {
+
+        var self = this;
+
+        self.cancel = function (index) {
+            $scope.files.splice(index, 1);
+        };
+
+        self.fileSelected = function (files, e) {
+            $scope.add({files: files});
+        };
+
+        self.submit = function (file) {
+            file.$submit();
+        };
+
+        function getToken() {
+            var token = JSON.parse($window.localStorage.getItem('accessToken'));
+            if (token && token.access_token) {
+                return 'Bearer ' + token.access_token;
+            } else {
+                return '';
+            }
+        }
+
+        $scope.options = {
+
+            autoUpload: false,
+
+            url: "http://localhost:8080/api/rest/photo/upload",
+            headers: {
+                Authorization: getToken()
+            },
+
+            submit: function(e, data) {
+                $log.debug("submit "+data.files[0].name);
+                data.files[0].uploading = true;
+            },
+
+            formData: function () {
+                var lat = 0,
+                    lng = 0,
+                    address = '',
+                    vendor = "gps";
+                if (this.files[0].position) {
+                    lat = this.files[0].position.lat || 0;
+                    lng = this.files[0].position.lng || 0;
+                    address = this.files[0].position.address || '';
+                }
+                return [{
+                        name: "lat",
+                        value: lat
+                    },{
+                        name: "lng",
+                        value: lng
+                    },{
+                        name: "address",
+                        value: address
+                    },{
+                        name: "vendor",
+                        value: vendor
+                    },{
+                        name: "title",
+                        value: this.files[0].title
+                }, {
+                    name: "description",
+                    value: this.files[0].description
+                }
+                ];
+            },
+            done: function (e, data) {
+                data.files[0].uploaded = true;
+                var photo = data.result;
+                extractProps(data.files[0], photo);
+            },
+            fail: function (e, data) {
+                data.files[0].uploading = false;
+                if (data.result) {
+                    data.files[0].$cancel = function () {
+                        data.files[0].$destroy();
+                    };
+                } else {
+                    fileUpload.defaults.fail(e, data);
+                }
+            }
+        };
+
+        /**
+         * 从server返回的图片属性中抽取信息给file
+         *
+         * @param file
+         * @param photo
+         */
+        function extractProps(file, photo) {
+            file.photoId = photo.id;
+            file.is360 = photo.is360;
+
+            if (!file.lat &&
+                photo.point &&
+                photo.point.lat !== 0 &&
+                photo.point.lng !== 0) {
+                file.setPosition(photo.point);
+            }
+
+            angular.extend(file.photo, photo);
+
+            if (!file.address) {
+                $scope.$emit('photoAdd', file.photo);
+            }
+        }
+
+        if (!fileUpload.defaults.autoUpload) {
+            // TODO DEBUG
+            $scope.options.add =
+                function (e, data) {
+                    if (e.isDefaultPrevented()) {
+                        return false;
+                    }
+                    // call default add method
+                    fileUpload.defaults.add(e, data);
+                    // load image's gps info
+                    var file = data.files[0];
+                    file.uuid = $mmdUtil.uuid();
+                    file.photo = {
+                        id: file.uuid,
+                        uuid: file.uuid
+                    };
+                    file.position = {};
+                    file.setPosition = function (position) {
+                        position.latPritty = $mmdUtil.map.GPS.convert(position.lat);
+                        position.lngPritty = $mmdUtil.map.GPS.convert(position.lng);
+                        this.position = angular.extend(this.position, position);
+                        return this.position;
+                    };
+
+                    loadImage.parseMetaData(file, function (data) {
+                        if (data.exif) {
+                            var position = {};
+                            var lat = data.exif.getText('GPSLatitude');
+                            if (lat && lat != "undefined") {
+                                position.lat = Number(lat);
+                                if (!position.lat) {
+                                    position.lat = $mmdUtil.map.GPS.convert(lat);
+                                }
+                            }
+
+                            var lng = data.exif.getText('GPSLongitude');
+                            if (lng && lng != "undefined") {
+                                position.lng = Number(lng);
+                                if (!position.lng) {
+                                    position.lng = $mmdUtil.map.GPS.convert(lng);
+                                }
+                            }
+                            if(position.lat && position.lng) {
+                                file.setPosition(position);
+                                $scope.addMarker(file);
+                            }
+                        }
+                    });
+                };
         }
     }
 
     /**
      *
+     * @param $window
      * @param $scope
      * @param $log
      * @param $q
-     * @param Restangular
+     * @param Photos
+     * @param $mmdUtil
      * @constructor
      */
-    function TrackCtl($scope, $log, $q, Restangular) {
-
+    function MapsFileUploadPhotoCtrl($window, $scope, $log, $q, Photos, $mmdUtil) {
         var self = this;
 
-        this.trackTypes = [{
-            id: 'maps:place',
-            name: "地点",
-            value: 'place'
-        }];
+        var file = $scope.file;
+        file.addresses = [];
+        file.setAddress = function (address) {
+            self.searchText = address;
+        };
 
-        self.difficulties = [{
-                name: "简单",
-                value: '1'
-            },
-            {
-                name: "适中",
-                value: '2'
-            },
-            {
-                name: "困难",
-                value: '3'
-            },
-            {
-                name: "非常困难",
-                value: '4'
-            },
-            {
-                name: "砖家级",
-                value: '5'
-            }];
+        self.remove = function (file) {
+            $scope.removeMarker(file);
+            file.$cancel();
+        };
 
-        self.privacy = [{
-            name: "公开",
-            value: 0
-            }, {
-                name: "隐私",
-                value: 1
+        // list of `state` value/display objects
+        self.querySearch = querySearch;
+        self.selectedItemChange = selectedItemChange;
+        self.searchTextChange = searchTextChange;
+
+        /**
+         * Search for states... use $timeout to simulate
+         * remote dataservice call.
+         */
+        function querySearch(query) {
+            return file.addresses || [];
+        }
+
+        function searchTextChange(text) {
+            $log.info('Text changed to ' + text);
+            file.position.address = text;
+        }
+
+        function selectedItemChange(item) {
+            $log.info('Item changed to ' + JSON.stringify(item));
+            if(item) {
+                file.position.address = item.display;
             }
-        ];
+        }
+
+        self.tagsSearch = tagsSearch;
+        self.vegetables = loadVegetables();
+        self.selectedTags = [];
+        /**
+         * Search for vegetables.
+         */
+        function tagsSearch(query) {
+            var results = query ? self.vegetables.filter(createFilterFor(query)) : [];
+            return results;
+        }
+
+        /**
+         * Create filter function for a query string
+         */
+        function createFilterFor(query) {
+            var lowercaseQuery = angular.lowercase(query);
+            return function filterFn(vegetable) {
+                return (vegetable._lowername.indexOf(lowercaseQuery) > -1) ||
+                    (vegetable._lowertype.indexOf(lowercaseQuery) > -1);
+            };
+        }
+
+        function loadVegetables() {
+            var veggies = [
+                {
+                    'name': '大山',
+                    'type': '自然'
+                },
+                {
+                    'name': '大川',
+                    'type': '自然'
+                },
+                {
+                    'name': '山川',
+                    'type': '自然'
+                },
+                {
+                    'name': 'Lettuce',
+                    'type': 'Composite'
+                },
+                {
+                    'name': 'Spinach',
+                    'type': 'Goosefoot'
+                }
+            ];
+            return veggies.map(function (veg) {
+                veg._lowername = veg.name.toLowerCase();
+                veg._lowertype = veg.type.toLowerCase();
+                return veg;
+            });
+        }
     }
 
+    function MapsFileUploadDestoryCtrl($window, $scope, $log, $q, Photos, $mmdUtil) {
+        var self = this;
+        var file = $scope.file;
+
+        file.$destroy = function () {
+            if (this.photo.id) {
+                self.destroying = true;
+                Photos.remove(this.photo.id).then(function (data) {
+                    $scope.removeMarker(file);
+                    $scope.clear(file);
+                }, function(error) {
+                    self.destroying = false;
+                });
+            }
+        };
+    }
 })();

@@ -1,3 +1,17 @@
+.pictogram {
+  background-image: url("./images/wikiloc-pictograms_v3.png");
+  display: block;
+  height: 40px;
+  text-indent: -1000em;
+  width: 40px;
+  float: left; }
+
+.activity-1 {
+  background-position: 0 -40px; }
+
+.activity-43 {
+  background-position: 0 -1160px; }
+
 .icon-marker img {
   border: 2px solid white;
   width: 34px;
@@ -29,13 +43,26 @@ md-bottom-sheet.md-grid md-item {
     .md-sidenav-left .button-signin button {
       width: 100%; }
   .md-sidenav-left md-list md-icon {
-    float: left; }
+    float: left;
+    margin: 5px 10px 3px 0; }
+  .md-sidenav-left md-list.md-default-theme md-list-item.md-clickable button:hover {
+    background-color: lightgray; }
 
 md-backdrop.md-sidenav-backdrop {
   z-index: 1003; }
 
+@media (max-width: 768px) {
+  .sign-dialog {
+    width: 40%; } }
 .sign-dialog {
-  z-index: 1010; }
+  z-index: 1010;
+  width: 35%; }
+  .sign-dialog .md-icon-button.md-icon-close {
+    position: absolute;
+    right: 0;
+    top: 0; }
+    .sign-dialog .md-icon-button.md-icon-close md-icon {
+      color: rgba(255, 255, 255, 0.5); }
   .sign-dialog .message {
     height: 35px;
     text-align: center; }
@@ -44,6 +71,17 @@ md-backdrop.md-sidenav-backdrop {
     width: 100%;
     height: 100%;
     top: 0; }
+  .sign-dialog md-card {
+    margin: 0; }
+  .sign-dialog md-card-content {
+    background-color: #3887be;
+    color: white; }
+    .sign-dialog md-card-content h2 {
+      text-align: center; }
+  .sign-dialog md-input-container.md-default-theme > md-icon {
+    color: white; }
+  .sign-dialog .md-primary.md-button.md-default-theme {
+    background-color: #3887be; }
 
 mmd-footer {
   height: 200px;
@@ -164,8 +202,7 @@ mmd-photo-slider .slider, [mmd-photo-slider] .slider {
     height: 100%; }
     mmd-photo-slider .slider .slide img, [mmd-photo-slider] .slider .slide img {
       max-width: 100%;
-      max-height: 100%;
-      width: 100%; }
+      max-height: 100%; }
     mmd-photo-slider .slider .slide.slide-left, [mmd-photo-slider] .slider .slide.slide-left {
       left: -100%;
       right: 100%; }
@@ -328,20 +365,97 @@ div.country {
   bottom: 40px;
   right: 10px; }
 
-.maps-view md-backdrop.md-sidenav-backdrop {
-  z-index: 1001; }
 .maps-view md-sidenav.md-sidenav-right {
-  z-index: 1002;
   overflow: hidden; }
 
-md-content.gpx-list.md-default-theme {
+.upload-file-form md-progress-linear {
+  z-index: 1; }
+  .upload-file-form md-progress-linear .md-container {
+    top: 0; }
+
+.upload-photo-card md-autocomplete.md-default-theme {
+  background-color: initial; }
+  .upload-photo-card md-autocomplete.md-default-theme md-autocomplete-wrap {
+    box-shadow: initial; }
+.upload-photo-card md-autocomplete input {
+  border-color: rgba(0, 0, 0, 0.12);
+  border-width: 0 0 1px 0;
+  border-style: solid; }
+.upload-photo-card .upload-photo-addr {
+  margin: 5px; }
+.upload-photo-card .photo-markable {
+  position: relative;
+  float: left;
+  padding: 3px;
+  cursor: pointer; }
+  .upload-photo-card .photo-markable md-icon {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    color: lightsalmon;
+    z-index: 1;
+    display: none; }
+  .upload-photo-card .photo-markable .photo-thumbnail {
+    min-width: 80px;
+    min-height: 80px; }
+    .upload-photo-card .photo-markable .photo-thumbnail img {
+      width: initial; }
+  .upload-photo-card .photo-markable.active md-icon {
+    display: block; }
+.upload-photo-card .preview.drag-marker {
+  position: fixed;
+  z-index: 9000; }
+  .upload-photo-card .preview.drag-marker .marker {
+    position: absolute;
+    z-index: 9000;
+    width: 30px;
+    height: 40px;
+    background-image: url("./images/marker-icon.png");
+    background-repeat: no-repeat; }
+  .upload-photo-card .preview.drag-marker img {
+    opacity: 0;
+    filter: alpha(opacity=0); }
+
+md-content.upload-list.md-default-theme {
   background-color: #F5F5F5; }
-  md-content.gpx-list.md-default-theme .caption {
+  md-content.upload-list.md-default-theme .caption {
     background-color: #6575cf;
     color: white; }
-md-content.gpx-list .track-list {
+md-content.upload-list .upload-content {
   position: absolute;
   min-height: 100%; }
+
+.track-list md-list md-list-item {
+  border-bottom: 1px dashed grey; }
+
+.track-detail md-grid-tile.gray {
+  background-color: gray; }
+.track-detail md-grid-tile.green {
+  background-color: green; }
+.track-detail md-grid-tile.yellow {
+  background-color: yellow; }
+.track-detail md-grid-tile.blue {
+  background-color: blue; }
+.track-detail md-grid-tile.red {
+  background-color: red; }
+
+md-content.upload-list .track-list {
+  position: absolute;
+  min-height: 100%; }
+md-content.upload-list md-list-item {
+  padding: 0; }
+  md-content.upload-list md-list-item md-card {
+    width: 100%; }
+
+.track-search .search-form {
+  margin: 0 10px; }
+.track-search md-autocomplete.md-default-theme {
+  background-color: initial;
+  box-shadow: initial; }
+.track-search fieldset {
+  border: 0;
+  padding: 0; }
+
 md-content.gpx-list md-list-item {
   padding: 0; }
   md-content.gpx-list md-list-item md-card {
@@ -363,6 +477,9 @@ md-content.gpx-list md-list-item {
   .track md-radio-button p {
     float: left;
     margin: 0; }
+
+.md-button.md-fab md-progress-circular {
+  left: -2px; }
 
 .travel .spot-desc {
   padding: 10px; }

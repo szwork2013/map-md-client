@@ -1,0 +1,65 @@
+<md-toolbar md-scroll-shrink
+            class="md-tall md-accent track-search">
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Menu"
+                   ng-click="toggleLeftBar()">
+            <md-icon md-svg-icon="navigation:menu"></md-icon>
+        </md-button>
+        <h3>
+            <span>Track</span>
+        </h3>
+        <span flex="">
+            <form ng-submit="$event.preventDefault()"
+                    class="search-form">
+                <md-autocomplete
+                        ng-disabled="ctrl.isDisabled"
+                        md-selected-item="ctrl.selectedItem"
+                        md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                        md-search-text="ctrl.searchText"
+                        md-selected-item-change="ctrl.selectedItemChange(item)"
+                        md-items="item in ctrl.querySearch(ctrl.searchText)"
+                        md-item-text="item.name"
+                        md-min-length="0"
+                        placeholder="搜索路线?">
+                    <md-item-template>
+                        <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.name}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        No matches found for "{{ctrl.searchText}}".
+                    </md-not-found>
+                </md-autocomplete>
+            </form>
+        </span>
+        <md-button class="md-icon-button" aria-label="More"
+                   ng-click="showTrackBottomSheet($event)">
+            <md-icon md-svg-icon="more_vert"></md-icon>
+        </md-button>
+    </div>
+    <div class="md-toolbar-content">
+        <!--<fieldset class="standard">
+            <legend>Using <code>ng-model</code></legend>
+            <div layout="row" layout-wrap>
+                <div flex="50">
+                    <md-checkbox ng-model="data.cb1" aria-label="Checkbox 1">
+                        Checkbox 1: {{ data.cb1 }}
+                    </md-checkbox>
+                </div>
+
+            </div>
+        </fieldset>-->
+    </div>
+</md-toolbar>
+<md-content flex
+            class="track-list">
+    <md-list>
+        <md-list-item class="md-3-line"
+                      ng-repeat="track in ctrl.tracks"
+                ng-click="ctrl.displayTrack(track)">
+            <md-icon md-font-icon="pictogram activity-{{track.activity}}" alt="activity-1"></md-icon>
+            <div class="md-list-item-text">
+                <h3> {{ track.name }} </h3>
+                <p> {{ track.id }} </p>
+            </div>
+        </md-list-item>
+    </md-list>
+</md-content>

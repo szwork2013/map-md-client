@@ -1,5 +1,48 @@
-<user-profile user="user"
-              flex
-        layout-margin>
-    <span>{{photos.length}}张图片</span>
-</user-profile>
+<md-toolbar class="md-accent md-tall" md-scroll-shrink>
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings"
+                   ng-click="toggleLeftBar()">
+            <md-icon md-svg-icon="navigation:menu"></md-icon>
+        </md-button>
+        <h2>
+            <span>用户图片</span>
+        </h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="More"
+                   ng-click="showBottomSheet($event)">
+            <md-icon md-svg-icon="more_vert"></md-icon>
+        </md-button>
+    </div>
+    <div class="md-toolbar-content">
+        <user-profile user="user">
+            <span>{{photos.length}}张图片</span>
+        </user-profile>
+    </div>
+</md-toolbar>
+
+<md-content layout-fill
+            flex
+            >
+<!-- mmd-infinite-scroll="loadMorePhotos()"
+            mmd-infinite-scroll-distance="1"
+            mmd-infinite-scroll-container="md-content[mmd-infinite-scroll]"
+            mmd-infinite-scroll-disabled="loadMoreDisabled"
+            mmd-infinite-scroll-immediate-check="false" flex layout-fill -->
+    <div mmd-photo-card-wall layout-fill flex
+         mmd-wall-options="{targetHeight: 160, fadeSpeed: 0, allowPartialLastRow: true}">
+        <mmd-photo-card ng-repeat="photo in photos | limitTo:photosLimitTo"
+                        mmd-photo-id = "photo.id"
+                        mmd-photo-color = "photo.color"
+                        mmd-photo-url = "{{staticCtx}}/{{photo.oss_key}}@!photo-preview-sm"
+                        mmd-photo-size = "photo"
+                        mmd-photo-is360 = "photo.is360"
+                        mmd-photo-address = "photo.point.address"
+                        mmd-photo-description = "photo.description"
+                >
+        </mmd-photo-card>
+    </div>
+    <md-button flex
+               ng-if="!loadMoreDisabled&&photos.length"
+               ng-click="loadMorePhotos()">加载更多</md-button>
+</md-content>
+

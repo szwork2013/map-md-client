@@ -1,0 +1,16 @@
+.track-search {
+  .search-form {
+    margin: 0 10px;
+  }
+  md-autocomplete {
+    &.md-default-theme {
+      background-color: initial;
+      box-shadow: initial;
+    }
+  }
+
+  fieldset {
+    border: 0;
+    padding: 0;
+  }
+}

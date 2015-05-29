@@ -33,9 +33,6 @@
                     }
                 } else {
                     switch(what) {
-                        case 'photo':
-                            extractedData = data.prop;
-                            break;
                         case 'openinfo':
                             if(data.open_info) {
                                 extractedData = data.open_info;
@@ -65,7 +62,8 @@
         .factory('Photos', ['ApiRestangular', PhotoServiceFactory])
         .factory('Users', ['ApiRestangular', UsersServiceFactory])
         .factory('Panoramios', ['ApiRestangular', PanoramiosServiceFactory])
-        .factory('Comments', ['ApiRestangular', CommentsServiceFactory]);
+        .factory('Comments', ['ApiRestangular', CommentsServiceFactory])
+        .factory('Tracks', ['LocalRestangular', TrackServiceFactory]);
 
     function PhotoServiceFactory(Restangular) {
         var photoService = Restangular.service('photo');
@@ -76,14 +74,25 @@
             model.getComments = function() {
                 return this.all('comment').getList();
             };
+            model.favorite = function() {
+                return this.one('like').get();
+            };
+            model.unFavorite = function() {
+                return this.one('like').remove();
+            };
             return model;
         });
         return {
-            get: getPhoto
+            get: getPhoto,
+            remove: removePhoto
         };
 
         function getPhoto(id) {
             return photoService.one(id).get();
+        }
+
+        function removePhoto(id) {
+            return photoService.one(id).remove();
         }
     }
 
@@ -133,6 +142,24 @@
          */
         function createComment(comment) {
             return commentService.post(comment);
+        }
+    }
+
+    function TrackServiceFactory(Restangular) {
+
+        var trackService = Restangular.service('track');
+
+        return {
+            get: getTrack,
+            search: search
+        };
+
+        function getTrack(id) {
+            return trackService.one(id).get();
+        }
+
+        function search(text) {
+            return trackService.one().all('tracks').getList();
         }
     }
 

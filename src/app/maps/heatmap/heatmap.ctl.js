@@ -11,12 +11,8 @@
                     .state('app.maps.heatmap', {
                         abstract: true,
                         url: '^/heatmap',
-                        views: {
-                            '': {
-                                templateUrl: 'maps/heatmap/heatmap.tpl.html',
-                                controller: 'MapsHeatmapCtrl'
-                            }
-                        },
+                        templateUrl: 'maps/heatmap/heatmap.tpl.html',
+                        controller: 'MapsHeatmapCtrl',
                         resolve: {
                             mapCode: ['$stateParams', function($stateParams){
                                 return $stateParams.mc;
@@ -43,14 +39,18 @@
                     type: 'heat',
                     data: data,
                     layerOptions: {
-                        radius: 50,
-                        blur: 10
-                        //gradient: {
-                        //    0.4: 'lightgreen',
-                        //    0.65: 'green',
-                        //    1:    'red'
-                        //}
+                        "maxOpacity": 0.8,
+                        "scaleRadius": true,
+                        radius: 20,
+                        blur: 10,
+                        "useLocalExtrema": true,
+                        gradient: {
+                            '.5': 'blue',
+                            '.8': 'red',
+                            '.95': 'white'
+                        }
                     },
+                    max: 8,
                     visible: true
                 }
             };

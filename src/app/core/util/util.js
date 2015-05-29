@@ -240,6 +240,54 @@
                         var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
                         return v.toString(16);
                     });
+                },
+
+                number: function(value) {
+                    //if(angular.isString(value)) {
+                    //    return Number(value.replace(/,/gi, ''));
+                    //}else {
+                    //    return Number(value);
+                    //}
+                },
+
+                map: {
+                   GPS: {
+                       convert: function (input) {
+                            var output, dms, degree, minute, second;
+                            if ((typeof input == 'string') && input.constructor == String) {
+                                var res = input.search(/[0-9]+,[0-9]+,[0-9]+\.[0-9]+/);
+                                if (res !== -1) {
+                                    dms = input.split(",");
+                                    output = Number(dms[0]) + ( Number(dms[1]) + Number(dms[2]) / 60 ) / 60;
+        //                    output = dms[0] + "°" + dms[1] + "\'" + dms[2] + "\"";
+                                } else {
+                                    res = input.search(/[0-9]+°[0-9]+'([0-9]+|[0-9]+\.[0-9]+)"/);
+                                    if (res !== -1) {
+                                        dms = input.split("°");
+                                        degree = Number(dms[0]);
+                                        dms = dms[1].split("\'");
+                                        minute = Number(dms[0]);
+                                        dms = dms[1].split("\"");
+                                        second = Number(dms[0]);
+                                        output = degree + ( minute + second / 60 ) / 60;
+                                    } else {
+                                        res = input.search(/[0-9]+,[0-9]+,[0-9]+/);
+                                        if (res !== -1) {
+                                            dms = input.split(",");
+                                            output = Number(dms[0]) + ( Number(dms[1]) + Number(dms[2]) / 60 ) / 60;
+                                        }
+                                    }
+                                }
+                            } else if ((typeof input == 'number') && input.constructor == Number) {
+                                degree = Math.floor(input);
+                                minute = Math.floor((input - degree) * 60);
+                                second = ((input - degree) * 60 - minute) * 60;
+                                second = second.toPrecision(6);
+                                output = degree + "°" + minute + "\'" + second + "\"";
+                            }
+                            return output;
+                        }
+                    }
                 }
             };
         }])

@@ -1,122 +1,171 @@
-<md-button class="md-fab md-primary md-fab-bottom-right" aria-label="上传"
-           ngf-select
-           ngf-change="fileSelected($files, $event)">
-    <md-icon md-svg-src="file:upload"></md-icon>
-</md-button>
-<md-content class="gpx-list" flex layout="column">
+<md-toolbar class="md-accent">
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings"
+                   ng-click="toggleLeftBar()">
+            <md-icon md-svg-icon="navigation:menu"></md-icon>
+        </md-button>
+        <h2>
+            <span>上传照片</span>
+        </h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="More"
+                   ng-click="showTrackBottomSheet($event)">
+            <md-icon md-svg-icon="more_vert"></md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
 
-    <div flex layout="column"
-         class="track-list">
-        <md-card class="caption">
-            <md-card-content>
-                <p><b>选择包含​​GPS航迹(tracklogs)和航点(waypoints)的档案上传</b></p>
-            </md-card-content>
-        </md-card>
-        <md-list flex>
-            <md-list-item ng-repeat="track in tracks">
-                <md-card class="track"
-                         ng-mouseup="active(track)">
-                    <md-card-content ng-controller="trackCtl as tc">
-                        <h3 class="md-title">{{track.fileName}}</h3>
-                        <p>
-                            时间：{{track.time}} 文件大小：{{track.fileSize}}
-                        </p>
-                        <form name="myForm">
-                            <md-input-container>
-                                <label>名称</label>
-                                <input ng-model="track.name">
+<div id="fileupload" class="upload-file-form"
+      file-upload="options"
+      ng-class="{'fileupload-processing': processing() || loadingFiles}"
+      ng-controller="MapsFileUploadCtrl as mfuc"
+      flex layout="column" layout-fill>
+    <md-button class="md-fab md-primary md-fab-bottom-right" aria-label="上传"
+               ngf-select
+               ngf-multiple="true"
+               ngf-capture="'camera'"
+               ngf-change="mfuc.fileSelected($files, $event)"
+               accept="image/*" required="">
+        <md-icon md-svg-src="file:upload"></md-icon>
+    </md-button>
+    <div ng-switch="processing()">
+        <div ng-switch-when="true">
+            <md-button  class="md-fab md-primary md-fab-bottom-left"
+                        aria-label="取消"
+                        ng-click="cancel()">
+                <md-icon md-svg-src="file:cloud_off"></md-icon>
+            </md-button>
+        </div>
+        <div ng-switch-default>
+            <md-button class="md-fab md-primary md-fab-bottom-left"
+                       aria-label="保存"
+                       ng-show="queue.length"
+                       ng-click="submit()">
+                <md-icon md-svg-src="file:cloud_upload"></md-icon>
+            </md-button>
+        </div>
+    </div>
+
+    <div file-upload-progress="progress()" ng-show="active()">
+        <md-progress-linear md-mode="determinate"
+                            value="{{num}}">
+        </md-progress-linear>
+    </div>
+<md-content flex layout="column" layout-fill class="upload-list">
+
+        <div flex layout="column" class="upload-content">
+            <md-card class="caption">
+                <md-card-content>
+                    <p><b>选择照片上传</b></p>
+                </md-card-content>
+            </md-card>
+            <md-list flex>
+                <md-list-item ng-repeat="file in queue"
+                        ng-controller="MapsFileUploadPhotoCtrl as mupc">
+                    <md-card class="upload-photo-card">
+
+                        <div file-upload-progress="file.$progress()">
+                            <md-progress-linear class="md-accent"
+                                                md-mode="determinate"
+                                                value="{{num}}">
+                            </md-progress-linear>
+                        </div>
+
+                        <div flex layout="row" class="upload-photo-addr">
+                            <div class="photo-markable"
+                                 ng-class="{'active': file.markable}"
+                                 ng-click="markable(file)"
+                                    >
+                                <md-icon md-svg-icon="maps:place"></md-icon>
+                                <div ng-switch="!!file.thumbnailUrl" class="photo-thumbnail">
+                                    <div class="preview" ng-switch-when="true">
+                                        <a ng-href="{{file.url}}" title="{{file.name}}"
+                                           download="{{file.name}}" gallery>
+                                            <img ng-src="{{file.thumbnailUrl}}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="preview" ng-switch-default
+                                         file-upload-color-preview="file.preview"
+                                         >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div flex layout="column">
+                                <div>
+                                    <label>经纬度:</label><span>{{file.position.latPritty}}</span>
+                                    <span>{{file.position.lngPritty}}</span>
+                                </div>
+                                <md-autocomplete
+                                        md-selected-item="mupc.selectedItem"
+                                        md-search-text-change="mupc.searchTextChange(mupc.searchText)"
+                                        md-search-text="mupc.searchText"
+                                        md-selected-item-change="mupc.selectedItemChange(item)"
+                                        md-items="item in mupc.querySearch(mupc.searchText)"
+                                        md-item-text="item.display"
+                                        md-min-length="0"
+                                        md-floating-label="地址">
+                                        <span md-highlight-text="mupc.searchText">{{item.display}}</span>
+                                </md-autocomplete>
+
+                            </div>
+
+                        </div>
+
+                        <md-card-content>
+                            <md-input-container md-no-float>
+                                <input ng-model="file.title" placeholder="title">
                             </md-input-container>
                             <md-input-container flex>
                                 <label>描述</label>
-                            <textarea ng-model="track.description" columns="1"
-                                      md-maxlength="10000"></textarea>
+                                    <textarea ng-model="file.description" columns="1"
+                                              md-maxlength="150"></textarea>
                             </md-input-container>
 
-                            <md-list>
-                                <md-subheader class="md-no-sticky">活动类别</md-subheader>
-                                <md-list-item class="md-3-line">
-                                    <md-radio-group ng-model="track.type">
-                                        <md-radio-button value="{{type.value}}"
-                                                         class="md-primary"
-                                                         ng-repeat="type in tc.trackTypes">
-                                            <md-icon md-svg-icon="{{type.id}}"></md-icon>
-                                            <p>{{type.name}}</p>
-                                        </md-radio-button>
-                                    </md-radio-group>
-                                </md-list-item>
+                            <md-chips ng-model="mupc.selectedTags" md-autocomplete-snap>
+                                <md-autocomplete
+                                        md-selected-item="mupc.selectedTag"
+                                        md-search-text="mupc.tag"
+                                        md-items="item in mupc.tagsSearch(mupc.tag)"
+                                        md-item-text="item.name"
+                                        placeholder="Search for a vegetable">
+                                    <span md-highlight-text="mupc.tag">{{item.name}} :: {{item.type}}</span>
+                                </md-autocomplete>
+                                <md-chip-template>
+        <span>
+          <strong>{{$chip.name}}</strong>
+          <em>({{$chip.type}})</em>
+        </span>
+                                </md-chip-template>
+                            </md-chips>
+                        </md-card-content>
 
-                                <md-divider ></md-divider>
-                                <md-subheader class="md-no-sticky">难易度</md-subheader>
-                                <md-list-item class="md-3-line">
-                                    <md-radio-group ng-model="track.difficulty">
-                                        <md-radio-button value="{{type.value}}"
-                                                         class="md-primary"
-                                                         ng-repeat="type in tc.difficulties">
-                                            <p>{{type.name}}</p>
-                                        </md-radio-button>
-                                    </md-radio-group>
-                                </md-list-item>
+                        <div class="md-actions" layout="row" layout-align="end center">
+                            <div ng-show="!file.uploading&&!file.uploaded">
+                                <md-button class="md-raised md-primary"
+                                           ng-click="mfuc.submit(file)">保存
+                                </md-button>
+                            </div>
+                            <div ng-show="!file.uploaded">
+                                <md-button ng-click="mupc.remove(file)">取消
+                                </md-button>
+                            </div>
+                            <div ng-show="file.uploaded">
+                                <md-button class="md-warn"
+                                           ng-controller="MapsFileUploadDestoryCtrl as mfudc"
+                                           ng-disabled="mfudc.destroying"
+                                           ng-click="file.$destroy()">删除
+                                </md-button>
+                            </div>
 
-                                <md-divider ></md-divider>
-                                <md-subheader class="md-no-sticky">隐私权设定</md-subheader>
-                                <md-list-item class="md-3-line">
-                                    <md-radio-group ng-model="track.privacy">
-                                        <md-radio-button value="{{privacy.value}}"
-                                                         class="md-primary"
-                                                         ng-repeat="privacy in tc.privacy">
-                                            <p>{{privacy.name}}</p>
-                                        </md-radio-button>
-                                    </md-radio-group>
-                                </md-list-item>
-                            </md-list>
-                            <!--<md-input-container flex>
-                                <label>活动类别</label>
-                                <md-radio-group ng-model="track.type">
-                                    <md-radio-button value="{{type.value}}"
-                                                     class="md-primary"
-                                                     ng-repeat="type in tc.trackTypes">
-                                        <md-icon md-svg-icon="{{type.id}}"></md-icon>
-                                        <p>{{type.name}}</p>
-                                    </md-radio-button>
-                                </md-radio-group>
-                                <md-divider></md-divider>
-                            </md-input-container>
+                        </div>
+                    </md-card>
+                </md-list-item>
+            </md-list>
 
-                            <md-input-container flex>
-                                <label>难易度</label>
-                                <md-radio-group ng-model="track.difficulty">
-                                    <md-radio-button value="{{type.value}}"
-                                                     class="md-primary"
-                                                     ng-repeat="type in tc.difficulties">
-                                        <p>{{type.name}}</p>
-                                    </md-radio-button>
-                                </md-radio-group>
-                                <md-divider></md-divider>
-                            </md-input-container>
-
-                            <md-input-container flex>
-                                <label>隐私权设定</label>
-                                <md-radio-group ng-model="track.privacy">
-                                    <md-radio-button value="{{privacy.value}}"
-                                                     class="md-primary"
-                                                     ng-repeat="privacy in tc.privacy">
-                                        <p>{{privacy.name}}</p>
-                                    </md-radio-button>
-                                </md-radio-group>
-                            </md-input-container>-->
-                        </form>
-                    </md-card-content>
-                    <div class="md-actions" layout="row" layout-align="end center">
-                        <md-button class="md-raised md-primary">保存</md-button>
-                        <md-button class="md-raised"
-                                   ng-click="cancel($index)">取消</md-button>
-                    </div>
-                </md-card>
-            </md-list-item>
-
-        </md-list>
-        <mmd-footer layout="column">
-        </mmd-footer>
-    </div>
+            <mmd-footer layout="column">
+            </mmd-footer>
+        </div>
 
 </md-content>
+</div>

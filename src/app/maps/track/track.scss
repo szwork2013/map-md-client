@@ -1,0 +1,46 @@
+.track-list {
+  md-list {
+    md-list-item {
+      border-bottom: 1px dashed grey;
+    }
+    &.md-default-theme {
+      md-list-item {
+
+      }
+    }
+  }
+}
+
+.track-detail {
+  md-grid-tile {
+    &.gray {
+      background-color: gray;
+    }
+    &.green {
+      background-color: green;
+    }
+    &.yellow {
+      background-color: yellow;
+    }
+    &.blue {
+      background-color: blue;
+    }
+    &.red {
+      background-color: red;
+    }
+  }
+}
+
+md-content.upload-list {
+  .track-list {
+    position: absolute;
+    min-height: 100%;
+  }
+
+  md-list-item {
+    padding: 0;
+    md-card {
+      width: 100%;
+    }
+  }
+}

@@ -112,6 +112,12 @@ module.exports = function ( grunt ) {
             dest: '<%= build_dir %>/json/',
             cwd: 'src/json',
             expand: true
+          },
+          {
+            src: [ '**' ],
+            dest: '<%= build_dir %>/vendor/fontawesome',
+            cwd: 'vendor/fontawesome',
+            expand: true
           }
        ]   
       },

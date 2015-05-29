@@ -1,6 +1,22 @@
+@media (max-width: $screen-sm-min ) {
+  .sign-dialog {
+    width: 40%;
+  }
+}
 
 .sign-dialog {
   z-index: 1010;
+  width: 35%;
+
+  .md-icon-button.md-icon-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    md-icon {
+      color: rgba(255,255,255,.5);
+    }
+  }
+
   .message {
     height: 35px;
     text-align: center;
@@ -11,4 +27,27 @@
     height: 100%;
     top: 0;
   }
+
+  md-card {
+    margin: 0;
+  }
+
+  md-card-content {
+    background-color: rgb(56, 135, 190);
+    color: white;
+    h2 {
+      text-align: center;
+    }
+  }
+
+  md-input-container.md-default-theme {
+    > md-icon {
+      color: white;
+    }
+  }
+
+  .md-primary.md-button.md-default-theme {
+    background-color: rgb(56, 135, 190);
+  }
+
 }

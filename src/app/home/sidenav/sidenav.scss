@@ -15,8 +15,19 @@
   md-list {
     md-icon {
       float: left;
+      margin: 5px 10px 3px 0;
+    }
+
+    &.md-default-theme {
+      md-list-item.md-clickable {
+        button:hover {
+          background-color: lightgray;
+        }
+      }
     }
   }
+
+
 }
 
 md-backdrop.md-sidenav-backdrop {

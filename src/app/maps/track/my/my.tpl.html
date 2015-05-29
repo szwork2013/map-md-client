@@ -1,0 +1,30 @@
+<md-toolbar class="md-accent">
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings"
+                   ng-click="toggleLeftBar()">
+            <md-icon md-svg-icon="navigation:menu"></md-icon>
+        </md-button>
+        <h2>
+            <span>我的航线</span>
+        </h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="More"
+                   ng-click="showTrackBottomSheet($event)">
+            <md-icon md-svg-icon="more_vert"></md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<md-content flex
+            class="track-list">
+    <md-list>
+        <md-list-item class="md-3-line"
+                      ng-repeat="track in mtmc.tracks"
+                      ng-click="mtmc.displayTrack(track)">
+            <md-icon md-font-icon="pictogram activity-{{track.activity}}" alt="activity-1"></md-icon>
+            <div class="md-list-item-text">
+                <h3> {{ track.name }} </h3>
+                <p> {{ track.id }} </p>
+            </div>
+        </md-list-item>
+    </md-list>
+</md-content>

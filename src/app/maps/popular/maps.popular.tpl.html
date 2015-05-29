@@ -1,3 +1,19 @@
+<md-toolbar class="md-accent">
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings"
+                   ng-click="toggleLeftBar()">
+            <md-icon md-svg-icon="navigation:menu"></md-icon>
+        </md-button>
+        <h2>
+            <span>热门图片</span>
+        </h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="More"
+                   ng-click="showBottomSheet($event)">
+            <md-icon md-svg-icon="more_vert"></md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
 <md-content mmd-infinite-scroll="loadMorePhotos()"
      mmd-infinite-scroll-distance="1"
      mmd-infinite-scroll-disabled="loadMoreDisabled"

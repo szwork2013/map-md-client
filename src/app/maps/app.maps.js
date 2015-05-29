@@ -4,11 +4,9 @@
 (function () {
     'use strict';
 
-    var GeoSearchControl;
-
     angular.module('app.maps',
-        [ 'app.maps.popular', 'app.maps.upload', 'app.maps.user', 'app.maps.cluster',
-            'app.maps.geojson', 'app.maps.travel', 'app.maps.heatmap'])
+        [ 'app.maps.popular', 'app.maps.user', 'app.maps.cluster', 'app.maps.upload',
+            'app.maps.geojson', 'app.maps.travel', 'app.maps.heatmap', 'app.maps.track'])
 
         .config(['$logProvider', '$urlRouterProvider', '$stateProvider',
             function ($logProvider, $urlRouterProvider, $stateProvider) {
@@ -39,25 +37,18 @@
             'leafletData', '$mmdPhotoDialog', 'LocationSearchManager', 'LocationHashManager', '$location', 'mapCode',
             '$state',
             MapsCtrl])
-        .controller('GridBottomSheetCtrl', ['$scope', '$mdBottomSheet', '$state', GridBottomSheetCtrl])
+        .controller('GridBottomSheetCtrl', ['$scope', '$mdBottomSheet', '$state', 'items', GridBottomSheetCtrl])
         .controller('DialogController', ['$scope', '$mdDialog', DialogController])
-        //.controller('MapsGeoSearch', ['$scope', '$log', 'QQWebapi', 'OSMWS', MapsGeoSearch])
     ;
 
-    var LOG_TAG = "maps: ";
+    var LOG_TAG = "Maps: ";
 
-    function GridBottomSheetCtrl($scope, $mdBottomSheet, $state) {
-        $scope.items = [
-            { name: '上传Track', icon: 'maps:directions_walk', link: 'app.maps.upload' },
-            { name: '浏览图片', icon: 'image:photo', link: 'app.maps.popular' },
-            { name: '我的图片', icon: 'social:person' , link: 'app.maps.user'},
-            { name: 'Geojson', icon: 'social:person' , link: 'app.maps.geojson.choropleth'},
-            { name: '热力图', icon: 'maps:heatmap' , link: 'app.maps.heatmap.user'}
-        ];
+    function GridBottomSheetCtrl($scope, $mdBottomSheet, $state, items) {
+        $scope.items = items;
 
         $scope.listItemClick = function($index) {
             var clickedItem = $scope.items[$index];
-            $state.go(clickedItem.link);
+            $state.go(clickedItem.link, clickedItem.params);
             $mdBottomSheet.hide(clickedItem);
         };
     }
@@ -90,15 +81,15 @@
         var self = this;
 
         self.toggleRight = $scope.toggleRightSidenav = toggleRight;
+        $scope.closeRightSidenav = closeRightSidenav;
 
-        $scope.showGridBottomSheet = function($event) {
-            $scope.alert = '';
-            $mdBottomSheet.show({
+        $scope.showGridBottomSheet = function($event, items) {
+            //$scope.alert = '';
+            return $mdBottomSheet.show({
                 templateUrl: 'home/bottom-sheet-grid.tpl.html',
                 controller: 'GridBottomSheetCtrl',
-                targetEvent: $event
-            }).then(function(clickedItem) {
-                $scope.alert = clickedItem.name + ' clicked!';
+                targetEvent: $event,
+                locals: {items: items}
             });
         };
 
@@ -123,23 +114,27 @@
             });
         }
 
+        function closeRightSidenav() {
+            $mdSidenav('right')
+                .close()
+                .then(function(){
+                    $log.debug('closed');
+                });
+        }
+
         $scope.stateGo = function(state, params) {
             $state.go(state, params);
         };
 
         angular.extend($scope, {
             defaults: {
-                tileLayer: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                path: {
-                    weight: 10,
-                    color: '#800000',
-                    opacity: 1
-                }
+            },
+            options: {
+                drawControl: true
+                //editable: true
             }
         });
 
-        // TODO
-        //L.FeatureGroup.EVENTS = "";
         angular.extend($scope, {
             center: {
                 lat: 34,
@@ -294,15 +289,18 @@
 
             map.on('photoClick', onMapPhotoClicked);
 
+            L.control.locate({
+                icon: "fa fa-dot-circle-o"
+            }).addTo(map);
 
-            L.easyButton('fa-compass',
+            L.easyButton('fa-angle-right',
                 function (){
                     $scope.toggleLeftBar();
                 },
                 'Interact with the map'
             ).addTo(map);
 
-            L.easyButton('fa-compass',
+            L.easyButton('fa-angle-left',
                 function (){
                     $scope.toggleRightSidenav();
                 },
@@ -310,6 +308,7 @@
                     position: 'bottomright'
                 }
             ).addTo(map);
+
         });
 
         function onMapPhotoClicked(ev) {

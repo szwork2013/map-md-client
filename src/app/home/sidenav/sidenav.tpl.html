@@ -8,6 +8,7 @@
             <div ng-switch-when="true" flex layout-fill>
                 <user-profile user="Authenticated.user"
                               flex layout-fill>
+                    {{Authenticated.user.username}}
                 </user-profile>
             </div>
 
@@ -21,16 +22,17 @@
     </md-toolbar>
     <md-content>
         <md-list flex layout="column">
-            <md-button ng-repeat="item in linkItems"
-                       ng-click="navigateTo(item.state, $event)">
+            <md-list-item ng-repeat="item in linkItems"
+                          ng-click="navigateTo(item.state, $event)">
                 <md-icon md-svg-icon="{{item.icon}}"></md-icon>
-                <div class="menu-text"> {{ item.name }} </div>
-            </md-button>
-            <md-button ng-show="Authenticated.login"
+                <p> {{ item.name }}  </p>
+            </md-list-item>
+
+            <md-list-item ng-show="Authenticated.login"
                     ng-click="signout()">
                 <md-icon md-svg-icon="action:exit_to_app"></md-icon>
-                <div class="menu-text"> 退出 </div>
-            </md-button>
+                <p> 退出 </p>
+            </md-list-item>
         </md-list>
 
         <md-button ng-click="close()" class="md-primary" hide-gt-md>

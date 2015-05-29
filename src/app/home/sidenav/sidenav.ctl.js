@@ -16,7 +16,9 @@
         $scope.Authenticated = Authenticated;
 
         $scope.linkItems = [
-            {name: '地图', icon: 'maps:map', state: 'app.maps.popular'},
+            {name: '热门图片', icon: 'maps:map', state: 'app.maps.popular'},
+            {name: 'Track', icon: 'maps:directions_walk', state: 'app.maps.track.search'},
+            {name: 'Colorth Map', icon: 'image:photo_album', state: 'app.photos'},
             {name: '图片', icon: 'image:photo_album', state: 'app.photos'},
             {name: '设置', icon: 'action:settings_applications', state: 'app.settings.account'}
         ];

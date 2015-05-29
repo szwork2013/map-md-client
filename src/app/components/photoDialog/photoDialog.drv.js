@@ -86,6 +86,22 @@
             };
 
             /**
+             * favorite photo
+             * @param photo
+             */
+            $scope.favorite = function(photo) {
+                if (photo.like) {
+                    photo.unFavorite().then(function() {
+                        photo.like = false;
+                    });
+                }else {
+                    photo.favorite().then(function() {
+                        photo.like = true;
+                    });
+                }
+            };
+
+            /**
              * 配置照片的属性和相机信息
              * @param photo
              * @param cameraInfo
@@ -93,7 +109,7 @@
             function setCameraInfos(photo, cameraInfo) {
                 $scope.cameraInfos = [];
                 $scope.cameraInfos.push({
-                    icon: 'today',
+                    icon: 'action:today',
                     name: '拍摄日期',
                     value: $filter('date')(cameraInfo.date_time_original, "yyyy/MM/dd")
                 });

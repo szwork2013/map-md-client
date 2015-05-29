@@ -16,11 +16,16 @@
 
         return {
             geocoder: geocoder,
+            geodecoder: geodecoder,
             suggestion: suggestion
         };
 
         function geocoder(address) {
             return QQWSRestangular.one('geocoder', 'v1').get({address: address});
+        }
+
+        function geodecoder(location) {
+            return QQWSRestangular.one('geocoder', 'v1').get({location: location, get_poi: 1});
         }
 
         function suggestion(keyword) {

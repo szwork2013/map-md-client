@@ -15,8 +15,13 @@
                 </h2>
                 <span flex></span>
                 <md-button class="md-icon-button" aria-label="favorite"
-                           ng-click="">
-                    <md-icon md-svg-icon="action:favorite_outline"></md-icon>
+                           ng-click="favorite(photo)"
+                        ng-switch="photo.like">
+                    <md-icon ng-switch-when="true"
+                             style="color: lightcoral;"
+                             md-svg-icon="action:favorite"></md-icon>
+                    <md-icon ng-switch-default
+                             md-svg-icon="action:favorite_outline"></md-icon>
                 </md-button>
                 <md-button class="md-icon-button" aria-label="Close"
                         ng-click="hide()">

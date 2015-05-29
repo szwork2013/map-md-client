@@ -1,4 +1,78 @@
-md-content.gpx-list {
+.upload-file-form {
+  md-progress-linear{
+    z-index: 1;
+    .md-container {
+      top: 0;
+    }
+  }
+}
+.upload-photo-card {
+
+  md-autocomplete {
+    &.md-default-theme {
+      background-color: initial;
+      md-autocomplete-wrap {
+        box-shadow: initial;
+      }
+    }
+    input {
+      border-color: rgba(0,0,0,0.12);
+      border-width: 0 0 1px 0;
+      border-style: solid;
+    }
+  }
+
+  .upload-photo-addr {
+    margin: 5px;
+  }
+
+  .photo-markable {
+    position: relative;
+    float: left;
+    padding: 3px;
+    cursor: pointer;
+    md-icon {
+      position: absolute;
+      right: 1px;
+      top: 1px;
+      color: lightsalmon;
+      z-index: 1;
+      display: none;
+    }
+
+    .photo-thumbnail {
+      min-width: 80px;
+      min-height: 80px;
+      img {
+        width: initial;
+      }
+    }
+
+    &.active {
+      md-icon {
+        display: block;
+      }
+    }
+  }
+
+  .preview.drag-marker {
+    position: fixed;
+    z-index: 9000;
+    .marker {
+      position: absolute;
+      z-index: 9000;
+      width: 30px;
+      height: 40px;
+      background-image: url("./images/marker-icon.png");
+      background-repeat: no-repeat;
+    }
+    img {
+      @include opacity(0);
+    }
+  }
+}
+
+md-content.upload-list {
   &.md-default-theme {
     background-color: #F5F5F5;
     .caption {
@@ -7,45 +81,8 @@ md-content.gpx-list {
     }
   }
 
-  .track-list {
+  .upload-content {
     position: absolute;
     min-height: 100%;
-  }
-
-  md-list-item {
-    padding: 0;
-    md-card {
-      width: 100%;
-    }
-  }
-}
-
-.track {
-  .md-input-container {
-    padding: 40px 0 0;
-    label {
-      position: absolute;
-      top: -10px;
-    }
-  }
-
-  md-list {
-    md-divider {
-      position: relative;
-    }
-  }
-
-  md-radio-group {
-    float: left;
-  }
-  md-radio-button {
-    display: inline-flex;
-    md-icon {
-      float: left;
-    }
-    p {
-      float: left;
-      margin: 0;
-    }
   }
 }

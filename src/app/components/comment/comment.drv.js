@@ -6,7 +6,19 @@
 
     angular.module('app.components')
         .directive('mmdComment', ['UrlService', MmdCommentDirective])
-        .directive('postComment', ['UrlService', 'Comments', '$timeout', PostCommentDirective]);
+        .directive('postComment', ['UrlService', 'Comments', '$timeout', PostCommentDirective])
+        .directive('focusOn', ['$timeout', function($timeout) {
+            return {
+                restrict : 'A',
+                link : function($scope,$element,$attr) {
+                    $scope.$watch($attr.focusOn,function(_focusVal) {
+                        $timeout(function() {
+                            return (_focusVal ? $element.focus() : $element.blur());
+                        });
+                    });
+                }
+            };
+        }]);
 
     function MmdCommentDirective(UrlService) {
 

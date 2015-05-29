@@ -1,0 +1,31 @@
+md-content.gpx-list.md-default-theme {
+  background-color: #F5F5F5; }
+  md-content.gpx-list.md-default-theme .caption {
+    background-color: #6575cf;
+    color: white; }
+md-content.gpx-list .track-list {
+  position: absolute;
+  min-height: 100%; }
+md-content.gpx-list md-list-item {
+  padding: 0; }
+  md-content.gpx-list md-list-item md-card {
+    width: 100%; }
+
+.track .md-input-container {
+  padding: 40px 0 0; }
+  .track .md-input-container label {
+    position: absolute;
+    top: -10px; }
+.track md-list md-divider {
+  position: relative; }
+.track md-radio-group {
+  float: left; }
+.track md-radio-button {
+  display: inline-flex; }
+  .track md-radio-button md-icon {
+    float: left; }
+  .track md-radio-button p {
+    float: left;
+    margin: 0; }
+
+/*# sourceMappingURL=upload.css.map */
