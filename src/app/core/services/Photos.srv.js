@@ -60,7 +60,7 @@
             });
         }])
         .factory('Photos', ['ApiRestangular', PhotoServiceFactory])
-        .factory('Users', ['ApiRestangular', UsersServiceFactory])
+
         .factory('Panoramios', ['ApiRestangular', PanoramiosServiceFactory])
         .factory('Comments', ['ApiRestangular', CommentsServiceFactory])
         .factory('Tracks', ['LocalRestangular', TrackServiceFactory]);
@@ -93,35 +93,6 @@
 
         function removePhoto(id) {
             return photoService.one(id).remove();
-        }
-    }
-
-    function UsersServiceFactory(Restangular) {
-        var userService = Restangular.service('user');
-
-        //Restangular.extendModel('user', function(model) {
-        //    model.getPhotos = function(pageSize, pageNo) {
-        //        return this.all('photos', pageSize+'/'+pageNo).getList();
-        //    };
-        //});
-
-        return {
-            me: getMe,
-            get: getUser,
-            getPhotos: getPhotos
-        };
-
-        function getMe() {
-            return userService.one().get();
-        }
-
-        function getUser(id) {
-            return userService.one(id).one('openinfo').get();
-        }
-
-        function getPhotos(id, pageSize, pageNo) {
-            return userService.one(id).one('photos', pageSize).all(pageNo).getList();
-
         }
     }
 

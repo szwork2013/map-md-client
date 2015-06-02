@@ -25,8 +25,6 @@
 
         var self = this;
 
-        $scope.setMapBarConfig({noToolbar: true});
-
         self.searchTextChange = function(text) {
             if(text) {
                 Tracks.search(text).then(function(tracks) {

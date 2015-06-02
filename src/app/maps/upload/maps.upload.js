@@ -4,7 +4,7 @@
 (function () {
     'use strict';
 
-    angular.module('app.maps.upload', ['ngFileUpload', 'ngSanitize', 'blueimp.fileupload', 'ngDragDrop'])
+    angular.module('app.maps.upload', ['ngFileUpload', 'ngSanitize', 'blueimp.fileupload'])
         .config(['$httpProvider', '$urlRouterProvider', '$stateProvider', 'fileUploadProvider',
             function ($httpProvider, $urlRouterProvider, $stateProvider, fileUploadProvider) {
 
@@ -61,7 +61,6 @@
         ['$window', '$scope', '$log', '$q', 'Photos', '$mmdUtil', MapsFileUploadPhotoCtrl])
         .controller('MapsFileUploadDestoryCtrl',
         ['$window', '$scope', '$log', '$q', 'Photos', '$mmdUtil', MapsFileUploadDestoryCtrl])
-
     ;
 
     var LOG_TAG = "Maps-Upload: ";
@@ -69,8 +68,16 @@
 
     function MapsUploadCtrl($scope, fileUpload, $log, $q, QQWebapi) {
         var self = this;
+        $scope.showBottomSheet = function($event) {
+            $scope.showGridBottomSheet($event, [
+                { name: '我的图片', icon: 'social:person', link: 'app.maps.cluster.user', params:{id:''} },
+                { name: '上传Track', icon: 'maps:directions_walk', link: 'app.maps.track.upload' },
+                { name: 'Help', icon: 'action:help' , link: 'app.helps.upload'}
+            ]).then(function(clickedItem) {
+                $scope.alert = clickedItem.name + ' clicked!';
+            });
+        };
 
-        $scope.setMapBarConfig({noToolbar: false, title: "上传Track"});
         var photoMarkableControl;
         $scope.getMap().then(function (map) {
             photoMarkableControl = new PhotoMarkableControl().addTo(map);

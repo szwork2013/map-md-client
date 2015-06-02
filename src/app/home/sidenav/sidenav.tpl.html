@@ -4,18 +4,21 @@
                 class="md-tall md-hue-3">
         <span flex></span>
         <div class="md-toolbar-tools md-toolbar-tools-bottom"
-                ng-switch="Authenticated.login">
+                ng-switch="Authenticate.login">
             <div ng-switch-when="true" flex layout-fill>
-                <user-profile user="Authenticated.user"
+                <user-profile user="Authenticate.user"
                               flex layout-fill>
-                    {{Authenticated.user.username}}
+                    {{Authenticate.user.username}}
                 </user-profile>
             </div>
 
             <div ng-switch-default
-                    class="button-signin">
+                 class="button-signin"
+                 layout="row" layout-align="space-around center">
                 <md-button class="md-accent" ng-click="signin($event)"
                         >登录</md-button>
+                <md-button class="md-accent" ng-click="signup($event)"
+                        >注册</md-button>
             </div>
 
         </div>
@@ -28,7 +31,7 @@
                 <p> {{ item.name }}  </p>
             </md-list-item>
 
-            <md-list-item ng-show="Authenticated.login"
+            <md-list-item ng-show="Authenticate.login"
                     ng-click="signout()">
                 <md-icon md-svg-icon="action:exit_to_app"></md-icon>
                 <p> 退出 </p>

@@ -25,10 +25,15 @@
 
     function MapsHeatmapCtrl($scope, $log, mapCode) {
 
-        // sidebar config
-        if($scope.setMapBarConfig) {
-            $scope.setMapBarConfig({noToolbar: true});
-        }
+        $scope.showBottomSheet = function($event) {
+            $scope.showGridBottomSheet($event, [
+                { name: '我的', icon: 'social:person', link: 'app.maps.cluster.user', params:{id:''} },
+                { name: '上传', icon: 'image:camera', link: 'app.maps.upload', params:{id:''} },
+                { name: 'Help', icon: 'action:help' , link: 'app.helps.heatmap'}
+            ]).then(function(clickedItem) {
+                $scope.alert = clickedItem.name + ' clicked!';
+            });
+        };
 
         $scope.heatMap = {};
         $scope.setHeatMap = function(name, data) {

@@ -24,7 +24,7 @@
                         }
                     });
             }])
-        .controller('MapsUserCtrl', ['$scope', '$stateParams', '$log', 'Authenticated', 'Users', '$mmdLeafletUtil',
+        .controller('MapsUserCtrl', ['$scope', '$stateParams', '$log', 'Authenticate', 'Users', '$mmdLeafletUtil',
             MapsUserController]);
 
     var LOG_TAG = "MAPS-USER: ";
@@ -34,19 +34,19 @@
      * @param $scope
      * @param $stateParams
      * @param $log
-     * @param Authenticated
+     * @param Authenticate
      * @param Users
      * @param $mmdLeafletUtil
      * @constructor
      */
-    function MapsUserController($scope, $stateParams, $log, Authenticated, Users, $mmdLeafletUtil) {
+    function MapsUserController($scope, $stateParams, $log, Authenticate, Users, $mmdLeafletUtil) {
 
         // configs
         var pageSize = 100;
 
         var userId = $stateParams.id;
         if(!userId) {
-            Authenticated.getUser().then(function(user) {
+            Authenticate.getUser().then(function(user) {
                 userId = user.id;
                 init();
             });

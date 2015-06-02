@@ -19,17 +19,22 @@
                         }
                     });
             }])
-        .controller('MapsClusterUserCtrl', ['$scope', '$log', 'Users', 'userId', 'Authenticated',
+        .controller('MapsClusterUserCtrl', ['$scope', '$log', 'Users', 'userId', 'Authenticate',
             MapsClusterUserController]);
 
     var LOG_TAG = "Maps-Cluster-User: ";
 
-    function MapsClusterUserController($scope, $log, Users, userId, Authenticated) {
+    function MapsClusterUserController($scope, $log, Users, userId, Authenticate) {
 
-        // sidebar config
-        if($scope.setMapBarConfig) {
-            $scope.setMapBarConfig({noToolbar: false, title: "用户的图片"});
-        }
+        $scope.showBottomSheet = function($event) {
+            $scope.showGridBottomSheet($event, [
+                { name: '我的热点', icon: 'social:person', link: 'app.maps.heatmap.user', params:{id:''} },
+                { name: '上传', icon: 'image:camera', link: 'app.maps.upload', params:{id:''} },
+                { name: 'Help', icon: 'action:help' , link: 'app.helps.cluster'}
+            ]).then(function(clickedItem) {
+                $scope.alert = clickedItem.name + ' clicked!';
+            });
+        };
 
         // configs
         $scope.loadMoreDisabled = false;
@@ -40,7 +45,7 @@
         // Get user's id for initial this controller
         $scope.userId = userId;
         if(!$scope.userId) {
-            Authenticated.getUser().then(function(user) {
+            Authenticate.getUser().then(function(user) {
                 $scope.userId = userId = user.id;
                 init();
             });

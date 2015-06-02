@@ -1,0 +1,53 @@
+<md-dialog class="sign-dialog">
+    <md-button class="md-icon-button md-icon-close" aria-label="Close"
+               ng-click="cancel()">
+        <md-icon md-svg-icon="navigation:close"></md-icon>
+    </md-button>
+    <form name="signupForm" ng-submit="submit()">
+        <md-card>
+            <md-card-content>
+                <h2>
+                    注册 美丽地图
+                </h2>
+                <div class="message" ng-show="message">
+                    <span class="md-warn">{{message}}</span>
+                </div>
+
+                <div flex layout="column">
+                    <md-input-container class="md-icon-float" >
+                        <label>用户名</label>
+                        <md-icon md-svg-src="social:person" class="name"></md-icon>
+                        <input ng-model="user.username" type="text" ng-required="true" >
+                    </md-input-container>
+                    <md-input-container class="md-icon-float" >
+                        <label>邮箱</label>
+                        <md-icon md-svg-src="communication:email" class="email"></md-icon>
+                        <input ng-model="user.email" type="email" ng-required="true">
+                    </md-input-container>
+                    <md-input-container class="md-icon-float" >
+                        <label>密码</label>
+                        <md-icon md-svg-src="action:lock" class="pass"></md-icon>
+                        <input ng-model="user.password" type="password" ng-required="true" >
+                    </md-input-container>
+                </div>
+            </md-card-content>
+
+            <div class="md-actions" layout="row" layout-align="space-around center"
+                 layout-padding>
+                <div flex layout="row" layout-align="center center">
+                    <md-button flex class="md-primary" ng-href=""
+                               ng-click="Authenticate.openSignin($event)"><- 登录</md-button>
+                </div>
+                <div flex="50">
+                    <md-button class="md-raised md-primary"
+                               layout-fill>注册</md-button>
+                </div>
+            </div>
+        </md-card>
+    </form>
+
+    <div ng-show="loading" class="signining"
+         layout="row"  layout-align="center center">
+        <md-progress-circular class="md-warn md-hue-3" md-mode="indeterminate"></md-progress-circular>
+    </div>
+</md-dialog>

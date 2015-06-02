@@ -11,7 +11,14 @@ var exampleAPIcodes = {
 		"Penil": 'anypossible.l3d50cm5',
 		"Satellite": 'anypossible.m5n45i9h',
 		"SatelliteStreets": 'anypossible.m5n4g7e0',
-		"Light": 'anypossible.m5n4df89'
+		"Light": 'anypossible.m5n4df89',
+		"DaithStar": 'examples.3hqcl3di',
+		"MarsSatellite":'mapbox.mars-satellite',
+		"Dark":'anypossible.mb7nb4do',
+		"Streets":'anypossible.mb7ojm5k',
+		"Outdoors":'anypossible.mb7p2034',
+		"Hike":'anypossible.mb7p5k3m',
+		"Pirate":'anypossible.mb7p8g4g'
 	}
 };
 

@@ -9,7 +9,8 @@
             'app.components.infiniteScroll',
             'app.components.photoCard',
             'app.components.photoSlider',
-            'app.components.search'
+            'app.components.search',
+            'app.components.saveAs'
         ]);
 
 })();

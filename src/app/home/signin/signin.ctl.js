@@ -4,9 +4,9 @@
 (function() {
     'use strict';
 
-    angular.module('app.home')
+    angular.module('app.home.signin', [])
         .controller('SigninCtrl',
-        ['$scope', '$log', '$mdDialog', '$mmdUtil', 'Oauth2Service', 'Users', 'Authenticated',
+        ['$scope', '$log', '$mdDialog', '$mmdUtil', 'Oauth2Service', 'Users', 'Authenticate',
             SigninController]);
 
     /**
@@ -17,10 +17,11 @@
      * @param $mmdUtil
      * @param Oauth2Service
      * @param Users
-     * @param Authenticated
+     * @param Authenticate
      * @constructor
      */
-    function SigninController($scope, $log, $mdDialog, $mmdUtil, Oauth2Service, Users, Authenticated) {
+    function SigninController($scope, $log, $mdDialog, $mmdUtil, Oauth2Service, Users, Authenticate) {
+        $scope.Authenticate = Authenticate;
         $scope.user = {username: '', password: ''};
 
         $scope.hide = function() {
@@ -33,11 +34,12 @@
             $mdDialog.hide(answer);
         };
 
-        $scope.submit = function () {
+        $scope.submit = function (user) {
             $scope.message = '';
             $scope.loading  = true;
-            Oauth2Service.oauthUser($scope.user).then(function(res) {
+            Oauth2Service.oauthUser(user).then(function(res) {
                 $scope.loading  = false;
+                Authenticate.getUser();
                 $scope.answer(res);
             }, function(error) {
                 $scope.loading  = false;
@@ -47,7 +49,12 @@
                     $scope.message = '网络错误';
                 }
             });
+        };
 
+        $scope.signup = function(ev) {
+            Authenticate.openSignup(ev).then(function(user) {
+                $scope.submit(user);
+            });
         };
     }
 })();

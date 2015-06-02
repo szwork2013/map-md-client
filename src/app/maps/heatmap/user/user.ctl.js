@@ -19,22 +19,28 @@
                         }
                     });
             }])
-        .controller('MapsHeatmapUserCtrl', ['$scope', '$log', 'userId', 'Users',
+        .controller('MapsHeatmapUserCtrl', ['$scope', '$log', 'userId', 'Users', 'Authenticate',
             MapsHeatmapUserCtrl])
     ;
 
     var LOG_TAG = "Maps-Heatmap-User: ";
 
-    function MapsHeatmapUserCtrl($scope, $log, userId, Users) {
-
-        $scope.userId = userId;
+    function MapsHeatmapUserCtrl($scope, $log, userId, Users, Authenticate) {
 
         // configs
         var pageSize = 100;
-
         $scope.photos = [];
 
-        init();
+        // Get user's id for initial this controller
+        $scope.userId = userId;
+        if(!$scope.userId) {
+            Authenticate.getUser().then(function(user) {
+                $scope.userId = userId = user.id;
+                init();
+            });
+        }else {
+            init();
+        }
 
         function init() {
             // 获取用户信息

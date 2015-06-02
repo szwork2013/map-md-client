@@ -5,17 +5,29 @@
              layout-wrap
              class="settings-map-container">
             <leaflet id="settings-map"
-                    defaults="defaults"
-                    center="center"
-
+                     defaults="defaults"
+                     center="center"
                      flex
                      hide-sm></leaflet>
 
-            <div flex="20">
+            <div layout="row">
+                <md-tabs md-selected="selectedIndex" md-dynamic-height md-border-bottom flex layout-fill>
+                    <md-tab ng-repeat="provider in providers"
+                            md-on-select="changeTiles(provider)"
+                            ng-disabled="provider.disabled">
+                        <md-tab-label layout="row">
+                            <div layout="row">
+                                <md-checkbox ng-model="provider.used" aria-label="{{provider.name}}"></md-checkbox>
+                                <div flex>
+                                    <span>{{provider.name}}</span>
+                                </div>
+                            </div>
 
+                        </md-tab-label>
+                    </md-tab>
+                </md-tabs>
             </div>
         </div>
-
     </md-card-content>
 
     <div class="md-actions" layout="row" layout-align="end center">

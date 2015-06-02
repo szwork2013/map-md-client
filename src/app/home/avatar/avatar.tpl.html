@@ -1,0 +1,50 @@
+<md-dialog class="sign-dialog avatar-dislog">
+    <md-button class="md-icon-button md-icon-close" aria-label="Close"
+               ng-click="cancel()">
+        <md-icon md-svg-icon="navigation:close"></md-icon>
+    </md-button>
+    <md-card flex layout-fill layout="column">
+        <md-card-content flex layout="column">
+            <h2>
+                上传头像
+            </h2>
+            <div class="message" ng-show="message">
+                <span class="md-warn">{{message}}</span>
+            </div>
+
+            <div flex layout="column" >
+                <div class="row image-selector">
+                    <md-button class="md-raised"
+                               ngf-select
+                               ngf-max-size='1000000'
+                               ngf-capture="'camera'"
+                               ngf-change="fileSelected($files, $event)"
+                               accept="image/*" required="">选择(小于1M)</md-button>
+                </div>
+                <div class="alert-row" ng-show="!!imageUrl">
+                    <div class="alert alert-info">在图片上框选出你的头像</div>
+                </div>
+                <img-cropped src='{{imageUrl}}'
+                             cropped='cropped'
+                             flex layout-fill layout="column"></img-cropped>
+            </div>
+        </md-card-content>
+
+        <div class="md-actions" layout="row" layout-align="space-around center"
+             layout-padding>
+            <div flex layout="row" layout-align="center center">
+            </div>
+            <div flex="50">
+                <md-button class="md-raised md-primary"
+                           ng-disabled="saving"
+                           layout-fill
+                        ng-click="submit()">上传</md-button>
+            </div>
+        </div>
+    </md-card>
+
+    <div ng-show="loading" class="signining"
+         layout="row"  layout-align="center center">
+        <md-progress-circular class="md-warn md-hue-3" md-mode="indeterminate"></md-progress-circular>
+    </div>
+</md-dialog>

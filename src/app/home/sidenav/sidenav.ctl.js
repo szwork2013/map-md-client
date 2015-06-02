@@ -4,16 +4,17 @@
 (function () {
     'use strict';
 
-    angular.module('app.home', [])
+    angular.module('app.home.sidenav', [] )
         .controller('SidenavCtrl',
-        ['$rootScope', '$scope', '$mdSidenav', '$mdDialog', '$log', '$q', 'Authenticated',
-            'Oauth2Service', '$state', SidenavCtrl]);
+        ['$scope', '$mdSidenav', '$log', '$q', 'Authenticate', 'Oauth2Service', '$state',
+            SidenavCtrl]);
 
-    function SidenavCtrl($rootScope, $scope, $mdSidenav, $mdDialog, $log, $q, Authenticated,
-                         Oauth2Service, $state) {
+    var LOG_TAG = "Home-Sidenav: ";
+
+    function SidenavCtrl($scope, $mdSidenav, $log, $q, Authenticate, Oauth2Service, $state) {
         var self = this;
 
-        $scope.Authenticated = Authenticated;
+        $scope.Authenticate = Authenticate;
 
         $scope.linkItems = [
             {name: '热门图片', icon: 'maps:map', state: 'app.maps.popular'},
@@ -37,25 +38,23 @@
         };
 
         $scope.signin = function (ev) {
-            $mdDialog.show({
-                controller: 'SigninCtrl',
-                templateUrl: 'home/signin/signin.tpl.html',
-                targetEvent: ev
-            }).then(function (answer) {
-                Authenticated.getUser();
-            }, function () {
+            Authenticate.openSignin(ev).then(function() {
+                $log.debug(LOG_TAG + "signed in");
+
+            }, function() {
+                $log.debug(LOG_TAG + "sign in fail");
             });
         };
 
         $scope.signout = function() {
-            Authenticated.signout();
+            Authenticate.signout();
         };
 
         $scope.$on('auth:loginRequired', function () {
             $log.debug("auth:login required -> token refresh");
             Oauth2Service.refreshToken().then(function () {
                 // init logged user
-                Authenticated.getUser();
+                Authenticate.getUser();
             });
         });
     }

@@ -42,16 +42,11 @@
         self.scope = $scope;
         self.scope.staticCtx = staticCtx;
 
-        // sidebar config
-        if($scope.setMapBarConfig) {
-            $scope.setMapBarConfig({noToolbar: false, title: "浏览热门图片"});
-        }
-
         $scope.showBottomSheet = function($event) {
             $scope.showGridBottomSheet($event, [
                 { name: '我的', icon: 'social:person', link: 'app.maps.cluster.user', params:{id:''} },
                 { name: '上传', icon: 'image:camera', link: 'app.maps.upload', params:{id:''} },
-                { name: 'Help', icon: 'action:help' , link: 'app.helps.popular'}
+                { name: 'Help', icon: 'action:help' , link: 'app.helps.upload'}
             ]).then(function(clickedItem) {
                 $scope.alert = clickedItem.name + ' clicked!';
             });

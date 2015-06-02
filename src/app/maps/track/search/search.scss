@@ -5,7 +5,15 @@
   md-autocomplete {
     &.md-default-theme {
       background-color: initial;
+      md-autocomplete-wrap {
+        box-shadow: initial;
+      }
       box-shadow: initial;
+    }
+    input {
+      border-color: rgba(0,0,0,0.12);
+      border-width: 0 0 1px 0;
+      border-style: solid;
     }
   }
 

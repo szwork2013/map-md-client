@@ -4,11 +4,23 @@
 (function() {
     'use strict';
 
-    angular.module('app', ['app.core', 'app.components', 'app.home', 'app.maps', 'app.settings',
-        'ui.router', 'ngMaterial', 'leaflet-directive', 'templates-app', 'templates-common',
-    'angularMoment'])
-        .config(['$logProvider', '$urlRouterProvider', '$stateProvider',
-            function ($logProvider, $urlRouterProvider, $stateProvider) {
+    angular.module('app', [
+        'app.core',
+        'app.components',
+        'app.home',
+        'app.maps',
+        'app.settings',
+        'ui.router',
+        'ngMaterial',
+        'leaflet-directive',
+        'templates-app',
+        'templates-common',
+        'angularMoment'])
+        .config(['$logProvider', '$urlRouterProvider', '$stateProvider', '$locationProvider',
+            function ($logProvider, $urlRouterProvider, $stateProvider, $locationProvider) {
+
+                //$locationProvider.html5Mode(true).hashPrefix('!');
+
                 $urlRouterProvider
                     .when('/', '/maps/popular')
                     .when('', '/maps/popular');
@@ -30,18 +42,19 @@
                     })
                 ;
             }])
-        .run(['Oauth2Service', 'Authenticated', Run])
+        .run(['$rootScope', 'Oauth2Service', 'Authenticate', '$log', '$location', Run])
 
         .controller('AppCtrl',
-        ['$scope', '$mdSidenav', '$mdBottomSheet', '$mdMedia', '$log', '$q', 'staticCtx',
+        ['$scope', '$mdSidenav', '$mdBottomSheet', '$mdMedia', '$log', '$q', 'UrlService', 'staticCtx',
             AppCtrl])
         ;
 
-    function Run(Oauth2Service, Authenticated) {
+    function Run($rootScope, Oauth2Service, Authenticate, $log, $location) {
+
         // 待刷新token后再获取登录用户
         Oauth2Service.refresh().then(function() {
             // init logged user
-            Authenticated.getUser();
+            Authenticate.getUser();
         });
     }
 
@@ -56,7 +69,7 @@
      * @param staticCtx
      * @constructor
      */
-    function AppCtrl($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $log, $q, staticCtx) {
+    function AppCtrl($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $log, $q, UrlService, staticCtx) {
         var self = this;
 
         self.toggleList   = toggleUsersList;
@@ -64,6 +77,7 @@
         $scope.toggleLeftBar = self.toggleList;
         $scope.$mdMedia = $mdMedia;
 
+        $scope.UrlService = UrlService;
         $scope.staticCtx = staticCtx;
 
         /**

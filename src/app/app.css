@@ -51,9 +51,6 @@ md-bottom-sheet.md-grid md-item {
 md-backdrop.md-sidenav-backdrop {
   z-index: 1003; }
 
-@media (max-width: 768px) {
-  .sign-dialog {
-    width: 40%; } }
 .sign-dialog {
   z-index: 1010;
   width: 35%; }
@@ -80,9 +77,12 @@ md-backdrop.md-sidenav-backdrop {
       text-align: center; }
   .sign-dialog md-input-container.md-default-theme > md-icon {
     color: white; }
-  .sign-dialog .md-primary.md-button.md-default-theme {
+  .sign-dialog .md-raised.md-primary.md-button.md-default-theme {
     background-color: #3887be; }
 
+@media (max-width: 768px) {
+  .sign-dialog {
+    width: 100%; } }
 mmd-footer {
   height: 200px;
   width: 100%;
@@ -93,6 +93,9 @@ mmd-footer {
     color: white; }
     mmd-footer .footer-copyright a {
       color: white; }
+
+.avatar-dislog {
+  height: 100%; }
 
 .photo-card-wall, [mmd-photo-card-wall], mmd-photo-card-wall {
   overflow: hidden; }
@@ -227,7 +230,7 @@ user-profile {
   overflow: hidden; }
 
 .md-avatar {
-  box-shadow: 0px 1px 3px grey;
+  /*box-shadow: 0px 1px 3px grey;*/
   width: 50px;
   height: 50px;
   margin-top: 8px;
@@ -365,8 +368,14 @@ div.country {
   bottom: 40px;
   right: 10px; }
 
+.maps-view md-backdrop.md-sidenav-backdrop {
+  z-index: 1001; }
 .maps-view md-sidenav.md-sidenav-right {
+  z-index: 1002;
   overflow: hidden; }
+
+.md-autocomplete-suggestions {
+  z-index: 1002; }
 
 .upload-file-form md-progress-linear {
   z-index: 1; }
@@ -416,14 +425,16 @@ div.country {
     opacity: 0;
     filter: alpha(opacity=0); }
 
-md-content.upload-list.md-default-theme {
-  background-color: #F5F5F5; }
-  md-content.upload-list.md-default-theme .caption {
-    background-color: #6575cf;
-    color: white; }
-md-content.upload-list .upload-content {
-  position: absolute;
-  min-height: 100%; }
+md-content.upload-list {
+  overflow-x: hidden; }
+  md-content.upload-list.md-default-theme {
+    background-color: #F5F5F5; }
+    md-content.upload-list.md-default-theme .caption {
+      background-color: #6575cf;
+      color: white; }
+  md-content.upload-list .upload-content {
+    position: absolute;
+    min-height: 100%; }
 
 .track-list md-list md-list-item {
   border-bottom: 1px dashed grey; }
@@ -531,6 +542,13 @@ md-content.gpx-list md-list-item {
   padding: 10px 0 100px 0; }
   .masthead-container .masthead-meta {
     width: 100%; }
+
+.img-rounded {
+  border-radius: 5px; }
+
+.avatar_picture {
+  width: 100px;
+  height: 100px; }
 
 .settings-map-container {
   height: 500px; }

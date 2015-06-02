@@ -33,10 +33,9 @@
                 ;
             }])
         .controller('MapsCtrl',
-        ['$scope', '$mdSidenav', '$mdBottomSheet', '$mdDialog', '$log', '$q', '$timeout',
-            'leafletData', '$mmdPhotoDialog', 'LocationSearchManager', 'LocationHashManager', '$location', 'mapCode',
-            '$state',
-            MapsCtrl])
+        ['$rootScope', '$scope', '$mdSidenav', '$mdBottomSheet', '$mdDialog', '$log', '$q', '$timeout',
+            'leafletData', '$mmdPhotoDialog', '$mmdUtil', 'LocationHashManager', '$location', 'mapCode',
+            '$state', MapsCtrl])
         .controller('GridBottomSheetCtrl', ['$scope', '$mdBottomSheet', '$state', 'items', GridBottomSheetCtrl])
         .controller('DialogController', ['$scope', '$mdDialog', DialogController])
     ;
@@ -65,18 +64,29 @@
         };
     }
 
+    var MapLayersManager;
+
     /**
-     * Main map controller for client
+     *
+     * @param $rootScope
      * @param $scope
      * @param $mdSidenav
      * @param $mdBottomSheet
+     * @param $mdDialog
      * @param $log
      * @param $q
+     * @param $timeout
      * @param leafletData
+     * @param $mmdPhotoDialog
+     * @param $mmdUtil
+     * @param LocationHashManager
+     * @param $location
+     * @param mapCode
+     * @param $state
      * @constructor
      */
-    function MapsCtrl( $scope, $mdSidenav, $mdBottomSheet, $mdDialog, $log, $q, $timeout,
-                       leafletData, $mmdPhotoDialog, LocationSearchManager, LocationHashManager, $location, mapCode,
+    function MapsCtrl( $rootScope, $scope, $mdSidenav, $mdBottomSheet, $mdDialog, $log, $q, $timeout,
+                       leafletData, $mmdPhotoDialog, $mmdUtil, LocationHashManager, $location, mapCode,
                        $state) {
         var self = this;
 
@@ -167,7 +177,7 @@
             $scope.paths = paths;
         };
 
-        var currentMap;
+        /**
         var baseMaps = {
             StamenWatercolor: {
                 name: "Stamen Watercolor",
@@ -204,11 +214,7 @@
             },
             EsriWorldImagery: {
                 name: "Esri.WorldImagery",
-                code: "Esri.WorldImagery"
-            },
-            MapQuestOpenAerial: {
-                name: "MapQuestOpen.Aerial",
-                code: 'MapQuestOpen.Aerial',
+                code: "Esri.WorldImagery",
                 overlay: {
                     "MapQuestOpen HybridOverlay": "MapQuestOpen.HybridOverlay"
                 }
@@ -228,30 +234,19 @@
             "MapBoxLight": {
                 name: "MapBox Light",
                 code: 'MapBox.Light'
+            },
+            "MapBoxDaithStar": {
+                name: "MapBox DaithStar",
+                code: 'MapBox.DaithStar'
+            },
+            "MarsSatellite": {
+                name: "MapBox MarsSatellite",
+                code: 'MapBox.MarsSatellite'
             }
         };
+        */
 
-        $scope.setMapLayer = function(mapCode) {
-            var baseLayer;
-            for(var i in baseMaps) {
-                if(baseMaps[i].code == mapCode) {
-                    baseMaps[i].active = true;
-                    if(currentMap) {
-                        baseLayer = currentMap.baseLayer;
-                        currentMap.active = false;
-                    }
-                    currentMap = baseMaps[i];
-                }
-            }
-            if(currentMap && currentMap.baseLayer) {
-                leafletData.getMap('main-map').then(function(map) {
-                    currentMap.baseLayer.addTo(map);
-                    if(baseLayer) {
-                        map.removeLayer(baseLayer);
-                    }
-                });
-            }
-        };
+        var controlLayers = L.control.layersManager({},{},{autoZIndex: false});
 
         leafletData.getMap('main-map').then(function(map) {
 
@@ -260,32 +255,7 @@
                 map.invalidateSize(false);
             }, 500);
 
-            var baseLayers = {}, overlays = {};
-            for(var name in baseMaps) {
-                var provider = baseMaps[name];
-                if(provider.active) {
-                    currentMap = provider;
-                }
-                var baseLayer, overlay;
-                baseLayer = L.tileLayer.provider(provider.code);
-                if(provider.active) {
-                    baseLayer.addTo(map);
-                }
-                provider.baseLayer = baseLayer;
-                provider.overlays = {};
-                for(var i in provider.overlay) {
-                    overlay = L.tileLayer.provider(provider.overlay[i]);
-                    if(provider.active) {
-                        overlay.addTo(map);
-                    }
-                    overlays[i] = overlay;
-                    provider.overlays[i] = overlay;
-                }
-
-                baseLayers[provider.name] = baseLayer;
-            }
-
-            var controlLayers = L.control.layers(baseLayers, overlays).addTo(map);
+            controlLayers.addTo(map);
 
             map.on('photoClick', onMapPhotoClicked);
 
@@ -315,59 +285,118 @@
             $mmdPhotoDialog.show({target: ev.originEvent.target._icon}, {id: ev.photoId});
         }
 
-        //var lhm = new LocationHashManager($scope, $location);
-        //var lsm = new LocationSearchManager($scope, $location);
-        //$scope.$on("centerUrlHash", function(event, centerHash) {
-        //    lsm.set("c", centerHash);
-        //});
+        $scope.$on("centerUrlHash", function(event, centerHash) {
+            $scope.changeMapLocation(centerHash);
+        });
 
-        //lsm.watch("c", function (centerHash) {
-        //    $log.debug(LOG_TAG+centerHash);
-        //    if(centerHash) {
-        //        var center = centerHash.split(":");
-        //        $scope.center.lat = Number(center[0]);
-        //        $scope.center.lng = Number(center[1]);
-        //        $scope.center.zoom = Number(center[2]);
-        //    }
-        //});
-
-        //lhm.watch("mc", function(mapCode) {
-        //    $scope.setMapLayer(mapCode);
-        //});
-
-
-        $scope.config = {
-            title: ""
+        $scope.changeMapLocation = function(centerHash) {
+            $location.hash($mmdUtil.param({ c: centerHash }));
         };
-        $scope.setMapBarConfig = function(config){
-            $scope.config = angular.extend($scope.config, config);
+
+        $scope.setBaseLayer = function(mapCode) {
+            controlLayers.setBaseLayer(mapCode);
         };
+
+        var mapBaseLayer = "AMap.Base", mapOverLayers;
+        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        getLocationSearch();
+        $scope.$on('$locationChangeSuccess', function (e) {
+            //$log.debug('scope $locationChangeSuccess changed!' + new Date());
+            getLocationSearch();
+        });
+
+        function getLocationSearch() {
+            var search = $location.search();
+            if(search.l && search.l!==mapBaseLayer) {
+                controlLayers.setBaseLayer(search.l, search.l);
+                mapBaseLayer = search.l;
+            }
+            if(search.o && search.o!==mapOverLayers) {
+                var overLayers = search.o.split(",");
+                var mapCodes = {};
+                angular.forEach(overLayers, function(overLayer, key) {
+                    mapCodes[overLayer] = overLayer;
+                });
+                controlLayers.setOverLayers(mapCodes);
+                mapOverLayers = search.o;
+            }
+        }
 
         $scope.getMap = function() {
             return leafletData.getMap('main-map');
         };
     }
 
-    //function mapLayersManager(map) {
-    //
-    //    this.map = map;
-    //
-    //    this.control = L.control.layers({}, {}).addTo(map);
-    //
-    //    this.baseLayers = {};
-    //
-    //    this.addBaseLayer = function(code, name) {
-    //        if(!name) {
-    //            name = code;
+    //MapLayersManager = L.Control.Layers.extend({
+    //    _baseLayers: {},
+    //    _overLayers: {},
+    //    _baseLayer: null,
+    //    _overLayer: {},
+    //    onAdd: function(map) {
+    //        var container = L.Control.Layers.prototype.onAdd.call(this, map);
+    //        map.addLayer(this._baseLayer);
+    //        angular.forEach(this._overLayer, function(overLayer, key) {
+    //            map.addLayer(overLayer);
+    //        });
+    //        return container;
+    //    },
+    //    onRemove: function() {
+    //        this._map.removeLayer(this._baseLayer);
+    //    },
+    //    setBaseLayer: function(mapCode, name) {
+    //        if(this._baseLayers[mapCode]) {
+    //            this._changeBaseLayer(this._baseLayers[mapCode]);
+    //        }else {
+    //            var baseLayer = L.tileLayer.provider(mapCode);
+    //            this._changeBaseLayer(baseLayer);
+    //            this._baseLayers[mapCode] = baseLayer;
+    //            this.addBaseLayer(baseLayer, name);
+    //            this._clearOverLayers();
     //        }
-    //        this.baseLayers[name] = L.tileLayer.provider(code);
-    //        this.control.addBaseLayer(this.baseLayers[name]);
-    //    };
+    //    },
+    //    setOverLayers: function(mapCodes) {
+    //        var self = this;
+    //        angular.forEach(this._overLayer, function(overLayer, key) {
+    //            //if(!mapCodes[key]) {
+    //                if(self._map) {
+    //                    self._map.removeLayer(overLayer);
+    //                }
+    //                delete self._overLayer[key];
+    //            //}
+    //        });
+    //        angular.forEach(mapCodes, function(mapCode, key) {
+    //            if(!self._overLayer[key]) {
+    //                if(self._overLayers[mapCode]) {
+    //                    if(self._map) {
+    //                        self._map.addLayer(self._overLayers[mapCode]);
+    //                    }
+    //                    self._overLayer[key] = self._overLayers[mapCode];
+    //                }else {
+    //                    var overLayer = L.tileLayer.provider(mapCode);
+    //                    if(self._map) {
+    //                        self._map.addLayer(overLayer);
+    //                    }
+    //                    self._overLayers[mapCode] = overLayer;
+    //                    self._overLayer[key] = overLayer;
+    //                    self.addOverlay(overLayer, key);
+    //                }
+    //            }
+    //        });
+    //    },
+    //    _changeBaseLayer: function(baseLayer) {
+    //        if(this._map) {
+    //            if(this._baseLayer !== baseLayer) {
+    //                if(this._baseLayer) {
+    //                    this._map.removeLayer(this._baseLayer);
+    //                }
+    //                baseLayer.addTo(this._map);
+    //            }
+    //        }
+    //        this._baseLayer = baseLayer;
+    //    },
+    //    _clearOverLayers: function() {
+    //        //this._overLayer = {};
     //
-    //    this.addGroupLayer = function(baseLayer) {
-    //        this.baseLayers[name] = L.tileLayer.provider(code);
-    //        //this.control
-    //    };
-    //}
-
+    //    }
+    //});
 })();

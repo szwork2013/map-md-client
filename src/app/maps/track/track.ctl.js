@@ -33,8 +33,6 @@
     function MapsTrackCtrl( $scope, $mdSidenav, $log, $q) {
         var self = this;
 
-        $scope.setMapBarConfig({noToolbar: true});
-
         $scope.showTrackBottomSheet = function($event) {
             $scope.showGridBottomSheet($event, [
                 { name: '上传', icon: 'maps:directions_walk', link: 'app.maps.track.upload' },

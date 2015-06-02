@@ -660,7 +660,7 @@
                 style: '8'
             },
             variants: {
-                base: {
+                Base: {
                     options: {
                         variant: 'rd',
                         style: '8'
@@ -673,7 +673,7 @@
                         style: '6'
                     }
                 },
-                roads: {
+                Roads: {
                     options: {
                         variant: 'st',
                         style: '8'

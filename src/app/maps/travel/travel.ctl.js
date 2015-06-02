@@ -51,9 +51,6 @@
 
         getTravel(travelId);
 
-        // sidebar config
-        $scope.setMapBarConfig({noToolbar: true});
-
         var travelCLayers; // travel's control layers
 
         function getTravel(id) {

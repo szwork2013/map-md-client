@@ -5,13 +5,13 @@
     'use strict';
 
     angular.module('app.maps.geojson',
-        ['app.maps.geojson.choropleth'])
+        ['app.maps.geojson.upload', 'app.maps.geojson.choropleth'])
         .config(['$urlRouterProvider', '$stateProvider',
             function ($urlRouterProvider, $stateProvider) {
                 $stateProvider
                     .state('app.maps.geojson', {
                         abstract: true,
-                        url: '/geojson',
+                        url: '^/geojson',
                         views: {
                             '': {
                                 templateUrl: 'maps/geojson/geojson.tpl.html',

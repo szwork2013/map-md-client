@@ -111,7 +111,7 @@ module.exports = {
       'vendor/blueimp-file-upload/js/jquery.fileupload-image.js',
       'vendor/blueimp-file-upload/js/jquery.fileupload-validate.js',
       'vendor/jquery-ui/jquery-ui.min.js',
-      'vendor/angular-dragdrop/src/angular-dragdrop.js'
+      'vendor/Jcrop/js/jquery.Jcrop.js'
     ],
     css: [
       'vendor/angular-material/angular-material.css',
@@ -120,6 +120,7 @@ module.exports = {
       'vendor/Leaflet.markercluster/dist/MarkerCluster.Default.css',
       'vendor/leaflet.elevation/dist/Leaflet.Elevation-0.0.2.css',
       'vendor/leaflet.locatecontrol/dist/L.Control.Locate.min.css',
+      'vendor/Jcrop/css/jquery.Jcrop.css',
       //'vendor/fontawesome/css/font-awesome.css',
       //'vendor/nvd3/nv.d3.css',
       'http://cloud.github.com/downloads/lafeber/world-flags-sprite/flags32.css'

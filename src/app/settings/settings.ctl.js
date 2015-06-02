@@ -25,10 +25,10 @@
                     })
                 ;
             }])
-        .controller('SettingsCtrl', ['$scope', '$state', '$log', '$mdSidenav', SettingsCtrl])
+        .controller('SettingsCtrl', ['$scope', '$state', '$log', '$mdSidenav', '$mdToast', SettingsCtrl])
     ;
 
-    function SettingsCtrl($scope, $state, $log, $mdSidenav) {
+    function SettingsCtrl($scope, $state, $log, $mdSidenav, $mdToast) {
         var self = this;
 
         $scope.linkItems = [
@@ -53,6 +53,26 @@
                 .then(function () {
                     $log.debug("close RIGHT is done");
                 });
+        };
+
+        $scope.toastPosition = {
+            bottom: false,
+            top: true,
+            left: false,
+            right: true
+        };
+        $scope.getToastPosition = function() {
+            return Object.keys($scope.toastPosition)
+                .filter(function(pos) { return $scope.toastPosition[pos]; })
+                .join(' ');
+        };
+        $scope.showMessage = function(content) {
+            var toast = $mdToast.simple()
+                .content(content)
+                .highlightAction(false)
+                .position($scope.getToastPosition());
+            $mdToast.show(toast).then(function() {
+            });
         };
 
     }
