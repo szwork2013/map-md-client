@@ -19,8 +19,7 @@
         $scope.linkItems = [
             {name: '热门图片', icon: 'maps:map', state: 'app.maps.popular'},
             {name: 'Track', icon: 'maps:directions_walk', state: 'app.maps.track.search'},
-            {name: 'Colorth Map', icon: 'image:photo_album', state: 'app.photos'},
-            {name: '图片', icon: 'image:photo_album', state: 'app.photos'},
+            {name: 'GeoJSON', icon: 'image:photo_album', state: 'app.maps.geojson.search'},
             {name: '设置', icon: 'action:settings_applications', state: 'app.settings.account'}
         ];
 
@@ -43,6 +42,12 @@
 
             }, function() {
                 $log.debug(LOG_TAG + "sign in fail");
+            });
+        };
+
+        $scope.signup = function(ev) {
+            Authenticate.openSignup(ev).then(function(user) {
+                $scope.signin(ev);
             });
         };
 

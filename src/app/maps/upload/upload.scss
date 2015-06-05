@@ -72,14 +72,15 @@
   }
 }
 
+md-card.caption {
+  background-color: rgb(101, 117, 207);
+  color: white;
+}
+
 md-content.upload-list {
   overflow-x: hidden;
   &.md-default-theme {
     background-color: #F5F5F5;
-    .caption {
-      background-color: rgb(101, 117, 207);
-      color: white;
-    }
   }
 
   .upload-content {

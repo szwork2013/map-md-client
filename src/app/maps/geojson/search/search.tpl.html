@@ -1,0 +1,34 @@
+<form ng-submit="$event.preventDefault()"
+      class="search-form">
+    <md-autocomplete
+            ng-disabled="mgsc.isDisabled"
+            md-selected-item="mgsc.selectedItem"
+            md-search-text-change="mgsc.searchTextChange(mgsc.searchText)"
+            md-search-text="mgsc.searchText"
+            md-selected-item-change="mgsc.selectedItemChange(item)"
+            md-items="item in mgsc.querySearch(mgsc.searchText)"
+            md-item-text="item.name"
+            md-min-length="0"
+            placeholder="搜索GeoJSON?">
+        <md-item-template>
+            <span md-highlight-text="mgsc.searchText" md-highlight-flags="^i">{{item.name}}</span>
+        </md-item-template>
+        <md-not-found>
+            No matches found for "{{mgsc.searchText}}".
+        </md-not-found>
+    </md-autocomplete>
+</form>
+<md-content flex
+            class="track-list">
+    <md-list>
+        <md-list-item class="md-3-line"
+                      ng-repeat="geoJSON in mgsc.geoJSONs"
+                      ng-click="mgsc.display(geoJSON)">
+            <md-icon md-font-icon="pictogram activity-{{geoJSON.name}}" alt="activity-1"></md-icon>
+            <div class="md-list-item-text">
+                <h3> {{ geoJSON.name }} </h3>
+                <p> {{ geoJSON.description }} </p>
+            </div>
+        </md-list-item>
+    </md-list>
+</md-content>

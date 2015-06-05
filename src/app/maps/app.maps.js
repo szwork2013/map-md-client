@@ -297,8 +297,15 @@
             controlLayers.setBaseLayer(mapCode);
         };
 
-        var mapBaseLayer = "AMap.Base", mapOverLayers;
+        var mapBaseLayer = "MapBox.DaithStar", mapOverLayers;
         controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        mapBaseLayer = "AMap.Base";
+        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        mapBaseLayer = "MapBox.Outdoors";
+        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        mapBaseLayer = "MapBox.Streets";
+        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+
         getLocationSearch();
         $scope.$on('$locationChangeSuccess', function (e) {
             //$log.debug('scope $locationChangeSuccess changed!' + new Date());

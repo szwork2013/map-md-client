@@ -13,6 +13,7 @@
 @import './components/user/profile/profile.scss';
 @import './components/comment/comment.scss';
 @import './components/search/search.scss';
+@import './components/saveAs/saveAs.scss';
 @import './maps/popular/maps.popular.scss';
 @import './maps/geojson/geojson.scss';
 @import './maps/app.maps.scss';
@@ -66,6 +67,10 @@ md-bottom-sheet {
 
 md-backdrop.md-bottom-sheet-backdrop {
   z-index: 1003;
+}
+
+md-toast {
+  z-index: 1005;
 }
 
 /**  */

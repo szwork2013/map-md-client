@@ -248,7 +248,8 @@
             restrict: 'AE',
             replace: false,
             scope: {
-                src: '=?mmdSrc'
+                src: '=?mmdSrc',
+                fileName: '@?mmdFileName'
             },
             link: link,
             templateUrl: 'components/saveAs/saveAs.tpl.html'

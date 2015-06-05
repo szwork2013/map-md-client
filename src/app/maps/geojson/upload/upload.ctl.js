@@ -11,25 +11,31 @@
                     .state('app.maps.geojson.upload', {
                         url: '/upload',
                         templateUrl: 'maps/geojson/upload/upload.tpl.html',
-                        controller: 'MapsGeojsonUploadCtrl'
+                        controller: 'MapsGeojsonUploadCtrl as mguc'
                     });
             }])
-        .controller('MapsGeojsonUploadCtrl', ['$scope', '$log', '$timeout', '$q',
+        .controller('MapsGeojsonUploadCtrl', ['$scope', '$log', '$timeout', '$q', 'GeoJSONs', '$mmdMessage',
             MapsGeojsonUploadCtrl])
     ;
 
     var LOG_TAG = "Maps-Geojson-Upload: ";
 
-    function MapsGeojsonUploadCtrl($scope, $log, $timeout, $q) {
+    function MapsGeojsonUploadCtrl($scope, $log, $timeout, $q, GeoJSONs, $mmdMessage) {
 
-        var geojsonMarkerOptions = {
+        var self = this;
+        $scope.setTitle("上传GeoJSON");
+
+        var defalutStyle = {
+            weight: 1,
             radius: 8,
             fillColor: "green",
             color: "green",
-            weight: 0,
             opacity: 0.5,
-            fillOpacity: 0.5
+            fillOpacity: 0.5,
+            dashArray: 3
         };
+
+        self.geojsons = [];
 
         function getGeojsonFromFile(file) {
             var deferred = $q.defer();
@@ -40,51 +46,80 @@
                     this.deferred.resolve(e.target.result);
                 }
             };
-            $timeout(function () {
-                reader.readAsText(file);
-            });
+            reader.readAsText(file);
             return deferred.promise;
-        }
-
-        function setGeojson(geojson) {
-            $scope.china = JSON.stringify(geojson);
-            try {
-                $scope.setGeojson({
-                    data: geojson,
-                    //style: {
-                    //    weight: 1,
-                    //    color: "#0BF",
-                    //    opacity: 0.5,
-                    //    fillOpacity: 0
-                    //},
-                    resetStyleOnMouseout: true,
-                    pointToLayer: function (feature, latlng) {
-                        return L.circleMarker(latlng, geojsonMarkerOptions);
-                    }
-                });
-            } catch (ex) {
-                $log.debug(LOG_TAG + ex);
-            } finally {
-            }
         }
 
         $scope.fileSelected = function(files, e) {
             if(files.length) {
+                var file = files[0];
+                var geojson = {
+                    style: angular.copy(defalutStyle)
+                };
+
                 $scope.uploading = true;
-            }
-            var counts = 0, china = {"type":"FeatureCollection","features":[]};
-            angular.forEach(files, function(file, key) {
-                getGeojsonFromFile(file).then(function(data) {
-                    counts++;
-                    var geojson = JSON.parse(data);
-                    china.features = china.features.concat(geojson.features);
-                    if(counts === files.length) {
+                $timeout(function () {
+                    getGeojsonFromFile(file).then(function(data) {
                         $scope.uploading = false;
-                        setGeojson(china);
-                    }
+                        geojson.data = JSON.parse(data);
+                        geojson.data.properties = geojson.data.properties || {};
+                        //geojson.data.properties.style = geojson.data.properties.style || {};
+                        //geojson.data.properties.style = angular.extend(geojson.data.properties.style, defalutStyle);
+                        setGeoJSON(geojson);
+                        self.geojsons = [geojson];
+                        self.geoJSON = geojson;
+                    });
                 });
-            });
+            }
+
+            //var counts = 0, china = {"type":"FeatureCollection","features":[]};
+            //angular.forEach(files, function(file, key) {
+            //    getGeojsonFromFile(file).then(function(data) {
+            //        counts++;
+            //        var geojson = JSON.parse(data);
+            //        china.features = china.features.concat(geojson.features);
+            //        if(counts === files.length) {
+            //            $scope.uploading = false;
+            //            setGeojson(china);
+            //        }
+            //    });
+            //});
 
         };
+
+        function onFeatureClick(e, feature) {
+            self.properties = feature.properties;
+            angular.forEach(self.geoJSON.data.features, function(f, key) {
+                if(angular.equals(f, feature)) {
+                    f.properties = f.properties || {};
+                    f.properties.style = f.properties.style || {};
+                    self.style = f.properties.style;
+                }
+            });
+        }
+
+        $scope.$on('leafletDirectiveMap.geojsonClick', function(e) {
+        });
+
+        $scope.$on('leafletDirectiveMap.geojsonMouseover', function(e) {
+        });
+
+        $scope.$on('leafletDirectiveMap.geojsonMouseout', function(e) {
+        });
+
+        function setGeoJSON(geoJSON) {
+            $scope.setGeoJSON(geoJSON, {
+                click: onFeatureClick
+            });
+        }
+
+        self.submit = function(geoJSON) {
+            setGeoJSON(geoJSON);
+            $scope.submit(geoJSON);
+        };
+
+        $scope.$on('$destroy', function(e) {
+            $scope.setGeoJSON({});
+        });
     }
 })();

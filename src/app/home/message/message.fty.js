@@ -28,8 +28,29 @@
                     return $mdToast.show(toast);
                 };
 
+                function saveSuccess(message) {
+                    showMessage("保存成功 " + (message || ''));
+                }
+                function updateSuccess(message) {
+                    showMessage("更新成功 " + (message || ''));
+                }
+                function saveFail(message) {
+                    showMessage("保存失败 " + (message || ''));
+                }
+                function updateFail(message) {
+                    showMessage("更新失败 " + (message || ''));
+                }
+
                 return {
-                    showMessage: showMessage
+                    showMessage: showMessage,
+                    success: {
+                        save: saveSuccess,
+                        update: updateSuccess
+                    },
+                    fail: {
+                        save: saveFail,
+                        update: updateFail
+                    }
                 };
 
             }])

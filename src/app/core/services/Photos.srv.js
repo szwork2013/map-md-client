@@ -25,11 +25,7 @@
                             extractedData = data.comments;
                             break;
                         default :
-                            if(data.photos) {
-                                extractedData = data.photos;
-                            }else {
-                                extractedData = data;
-                            }
+                            extractedData = data;
                     }
                 } else {
                     switch(what) {
@@ -43,9 +39,9 @@
                                 extractedData = data.camera_info;
                             }
                             break;
-                        case 'user':
-                            extractedData = data.open_info;
-                            break;
+                        //case 'user':
+                        //    extractedData = data.open_info;
+                        //    break;
                         case 'travel':
                             extractedData = data.travel;
                             break;
@@ -60,10 +56,11 @@
             });
         }])
         .factory('Photos', ['ApiRestangular', PhotoServiceFactory])
-
         .factory('Panoramios', ['ApiRestangular', PanoramiosServiceFactory])
         .factory('Comments', ['ApiRestangular', CommentsServiceFactory])
-        .factory('Tracks', ['LocalRestangular', TrackServiceFactory]);
+        .factory('Tracks', ['LocalRestangular', TrackServiceFactory])
+        .factory('GeoJSONs', ['ApiRestangular', GeoJSONServiceFactory])
+    ;
 
     function PhotoServiceFactory(Restangular) {
         var photoService = Restangular.service('photo');
@@ -131,6 +128,33 @@
 
         function search(text) {
             return trackService.one().all('tracks').getList();
+        }
+    }
+
+    function GeoJSONServiceFactory(Restangular) {
+        var service = Restangular.service('geojson');
+
+        return {
+            create: create,
+            get: getGeoJSON,
+            update: update,
+            search: search
+        };
+
+        function create(geoJSON) {
+            return service.post(geoJSON);
+        }
+
+        function getGeoJSON(id) {
+            return service.one(id).get();
+        }
+
+        function update(geoJSON) {
+            return service.one().post(geoJSON.id, geoJSON);
+        }
+
+        function search(query) {
+            return service.one().get({query: query});
         }
     }
 

@@ -1,0 +1,119 @@
+<md-button class="md-fab md-raised md-primary md-fab-bottom-right" aria-label="上传"
+           ng-click="mgec.submit(mgec.geoJSON)"
+           ng-disabled="mgec.geoJSON.saving"
+           ng-switch="mgec.geoJSON.saving">
+    <md-icon ng-switch-default md-svg-src="file:cloud_upload"></md-icon>
+    <md-progress-circular ng-switch-when="true"
+                          class="md-accent" md-mode="indeterminate"></md-progress-circular>
+</md-button>
+<md-content layout-fill >
+    <md-card class="caption">
+        <md-card-content>
+            <p><b>{{mgec.geoJSON.name}}</b></p>
+        </md-card-content>
+    </md-card>
+
+    <md-card>
+        <md-card-content>
+            <md-input-container>
+                <label>name</label>
+                <input type="string" name="name"
+                       ng-model="mgec.geoJSON.name">
+            </md-input-container>
+            <div layout="column">
+                <div layout="row">
+                    <md-input-container>
+                        <label>点半径(radius)</label>
+                        <input type="number" step="1" name="radius"
+                               ng-model="mgec.geoJSON.style.radius" min="1" max="100">
+                    </md-input-container>
+                    <md-input-container>
+                        <label>(fillColor)</label>
+                        <input type="string" name="fillColor"
+                               ng-model="mgec.geoJSON.style.fillColor">
+                    </md-input-container>
+                    <md-input-container>
+                        <label>(fillOpacity)</label>
+                        <input type="string" name="fillOpacity"
+                               ng-model="mgec.geoJSON.style.fillOpacity">
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container>
+                        <label>weight</label>
+                        <input type="number" step="1" name="weight"
+                               ng-model="mgec.geoJSON.style.weight" min="0" max="100">
+                    </md-input-container>
+                    <md-input-container>
+                        <label>(color)</label>
+                        <input type="string" name="color"
+                               ng-model="mgec.geoJSON.style.color">
+                    </md-input-container>
+                    <md-input-container>
+                        <label>(opacity)</label>
+                        <input type="string" name="opacity"
+                               ng-model="mgec.geoJSON.style.opacity">
+                    </md-input-container>
+                </div>
+            </div>
+            <md-input-container >
+                <label>描述</label>
+                                <textarea ng-model="mgec.geoJSON.description" columns="1"
+                                          md-maxlength="10000"></textarea>
+            </md-input-container>
+        </md-card-content>
+    </md-card>
+    <div ng-controller="MapsGeojsonEditFeatureCtrl as mgefc">
+        <form name="featureForm" ng-submit="mgefc.setGeoJSON(geoJSON)">
+            <md-card >
+                <md-card-content>
+                    <h3>{{mgefc.feature.name}}</h3>
+                    <div layout="column" flex>
+                        <div layout="row">
+                            <md-input-container>
+                                <label>点半径(radius)</label>
+                                <input type="number" step="1" name="radius"
+                                       ng-model="mgefc.feature.style.radius" min="1" max="100">
+                            </md-input-container>
+                            <md-input-container>
+                                <label>(fillColor)</label>
+                                <input type="string" name="fillColor"
+                                       ng-model="mgefc.feature.style.fillColor">
+                            </md-input-container>
+                            <md-input-container>
+                                <label>(fillOpacity)</label>
+                                <input type="string" name="fillOpacity"
+                                       ng-model="mgefc.feature.style.fillOpacity">
+                            </md-input-container>
+                        </div>
+                        <div layout="row">
+                            <md-input-container>
+                                <label>weight</label>
+                                <input type="number" step="1" name="weight"
+                                       ng-model="mgefc.feature.style.weight" min="0" max="100">
+                            </md-input-container>
+                            <md-input-container>
+                                <label>(color)</label>
+                                <input type="string" name="color"
+                                       ng-model="mgefc.feature.style.color">
+                            </md-input-container>
+                            <md-input-container>
+                                <label>(opacity)</label>
+                                <input type="string" name="opacity"
+                                       ng-model="mgefc.feature.style.opacity">
+                            </md-input-container>
+                        </div>
+                    </div>
+                </md-card-content>
+                <div class="md-actions" layout="row" layout-align="end center">
+                    <md-button class="md-raised">更新</md-button>
+                    <md-button class="md-raised"
+                               ng-click="mgefc.reset()">取消</md-button>
+                </div>
+            </md-card>
+        </form>
+    </div>
+
+    <mmd-footer flex layout="column">
+    </mmd-footer>
+</md-content>

@@ -18,7 +18,8 @@ var exampleAPIcodes = {
 		"Streets":'anypossible.mb7ojm5k',
 		"Outdoors":'anypossible.mb7p2034',
 		"Hike":'anypossible.mb7p5k3m',
-		"Pirate":'anypossible.mb7p8g4g'
+		"Pirate":'anypossible.mb7p8g4g',
+		"Tornado": 'anypossible.mc1hm5il'
 	}
 };
 

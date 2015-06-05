@@ -1,1 +1,18 @@
-<div ui-view flex layout-fill layout="column"></div>
+<md-toolbar class="md-accent">
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings"
+                   ng-click="toggleLeftBar()">
+            <md-icon md-svg-icon="navigation:menu"></md-icon>
+        </md-button>
+        <h2>
+            <span>{{mgc.title}}</span>
+        </h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="More"
+                   ng-click="showBottomSheet($event)">
+            <md-icon md-svg-icon="more_vert"></md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<md-content ui-view flex layout-fill layout="column">
+</md-content>

@@ -93,6 +93,11 @@
                     "MarsSatellite": {
                         name: "MapBox MarsSatellite",
                         code: 'MapBox.MarsSatellite'
+                    },
+                    "AmericaTornado": {
+                        name: "MapBox Tornado",
+                        code: 'MapBox.Tornado',
+                        overlay: true
                     }
                 }
             };

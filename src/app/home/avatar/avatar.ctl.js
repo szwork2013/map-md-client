@@ -160,8 +160,9 @@
                 $log.debug(LOG_TAG + 'avatar uploaded!');
                 $mmdMessage.showMessage("头像上传成功！");
                 $scope.answer(res);
-            }, function() {
+            }, function(error) {
                 $scope.saving = false;
+                $mmdMessage.showMessage(error.statusText);
             });
         };
     }

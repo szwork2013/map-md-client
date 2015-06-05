@@ -138,7 +138,8 @@
             request: function (config) {
                 config.headers = config.headers || {};
                 var token = JSON.parse($window.localStorage.getItem(accessTokenName));
-                if (token && token.access_token) {
+                if (token && token.access_token && !config.url.match(/signin$/g) &&
+                    !config.url.match(/signup$/g)) {
                     config.headers.Authorization = 'Bearer ' + token.access_token;
                 }
                 return config;

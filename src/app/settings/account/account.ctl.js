@@ -41,10 +41,13 @@
 
         self.submit = function(settings) {
             self.saving = true;
-            settings.saveAccount().then(function() {
+            settings.saveAccount().then(function(setting) {
                 self.saving = false;
                 $scope.accountForm.$setPristine();
                 $scope.showMessage("保存成功");
+                Authenticate.user.name = setting.name;
+            }, function(error) {
+                $scope.showMessage(error.statusText);
             });
         };
 

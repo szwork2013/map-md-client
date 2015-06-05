@@ -1,0 +1,27 @@
+<md-content class="" flex layout="column" layout-fill>
+    <div flex layout="column"
+         class="">
+        <md-card class="caption">
+            <md-card-content>
+                <p>{{mgdc.geoJSON.description}}</p>
+            </md-card-content>
+        </md-card>
+        <md-card class="" flex>
+            <md-card-content >
+                <md-list>
+                    <div ng-repeat="(key,val) in mgdc.properties">
+                        {{key}} : {{val}}
+                    </div>
+                </md-list>
+            </md-card-content>
+            <div class="md-actions" layout="row" layout-align="end center">
+            </div>
+        </md-card>
+
+        <mmd-save-as mmd-src="mgdc.geoJSONString" mmd-file-name="{{mgdc.geoJSON.name+'.geojson'}}"></mmd-save-as>
+
+        <mmd-footer layout="column">
+        </mmd-footer>
+    </div>
+
+</md-content>

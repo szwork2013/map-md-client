@@ -24,6 +24,7 @@ angular
             .icon("action:done",           "./assets/svg/action/ic_done_24px.svg", 24)
             .icon("action:help",           "./assets/svg/action/ic_help_24px.svg", 24)
             .icon("action:lock",           "./assets/svg/action/ic_lock_24px.svg", 24)
+            .icon("action:search",         "./assets/svg/action/ic_search_24px.svg", 24)
             .icon("action:settings",       "./assets/svg/action/ic_settings_24px.svg", 24)
             .icon("action:settings_applications", "./assets/svg/action/ic_settings_applications_24px.svg", 24)
             .icon("action:account_box",    "./assets/svg/action/ic_account_box_24px.svg", 24)
