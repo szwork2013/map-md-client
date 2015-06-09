@@ -71,7 +71,8 @@
                         </form>
                     </md-card-content>
                     <div class="md-actions" layout="row" layout-align="end center">
-                        <md-button class="md-raised md-primary"
+                        <md-button class="md-raised "
+                                   ng-class="{'md-primary': !geojson.id}"
                                    ng-disabled="mguc.saving"
                                    ng-click="mguc.submit(geojson)">保存</md-button>
                         <md-button class="md-raised"

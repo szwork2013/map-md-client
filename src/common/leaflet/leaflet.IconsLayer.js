@@ -118,7 +118,7 @@
 
                 var markerStyle = {icon: myIcon, riseOnHover: true};
                 markerStyle = angular.extend(markerStyle, self._opts.markerStyle);
-                marker = L.marker([photo.point.lat, photo.point.lng],
+                marker = L.marker([photo.location.position[1], photo.location.position[0]],
                     markerStyle);
 
                 marker.photoId = photo.id;

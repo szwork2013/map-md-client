@@ -9,7 +9,7 @@
             function ($urlRouterProvider, $stateProvider) {
                 $stateProvider
                     .state('app.maps.geojson.edit', {
-                        url: '/edit/{id:int}',
+                        url: '/edit/{id:[0-9]{1,30}}',
                         templateUrl: 'maps/geojson/edit/edit.tpl.html',
                         controller: 'MapsGeojsonEditCtrl as mgec',
                         resolve:{

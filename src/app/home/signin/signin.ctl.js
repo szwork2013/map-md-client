@@ -6,11 +6,12 @@
 
     angular.module('app.home.signin', [])
         .controller('SigninCtrl',
-        ['$scope', '$log', '$mdDialog', '$mmdUtil', 'Oauth2Service', 'Users', 'Authenticate',
+        ['$rootScope', '$scope', '$log', '$mdDialog', '$mmdUtil', 'Oauth2Service', 'Users', 'Authenticate',
             SigninController]);
 
     /**
      * 用户登录控制器
+     * @param $rootScope
      * @param $scope
      * @param $log
      * @param $mdDialog
@@ -20,7 +21,7 @@
      * @param Authenticate
      * @constructor
      */
-    function SigninController($scope, $log, $mdDialog, $mmdUtil, Oauth2Service, Users, Authenticate) {
+    function SigninController($rootScope, $scope, $log, $mdDialog, $mmdUtil, Oauth2Service, Users, Authenticate) {
         $scope.Authenticate = Authenticate;
         $scope.user = {username: '', password: ''};
 
@@ -39,7 +40,9 @@
             $scope.loading  = true;
             Oauth2Service.oauthUser(user).then(function(res) {
                 $scope.loading  = false;
-                Authenticate.getUser();
+                Authenticate.getUser().then(function() {
+                    $rootScope.$broadcast('auth:oauthed');
+                });
                 $scope.answer(res);
             }, function(error) {
                 $scope.loading  = false;

@@ -56,7 +56,7 @@
         ['$scope', 'fileUpload', '$log', '$q', 'QQWebapi',
             MapsUploadCtrl])
         .controller('MapsFileUploadCtrl',
-        ['$window', '$scope', '$log', '$q', 'fileUpload', '$mmdUtil', MapsFileUploadCtrl])
+        ['$window', '$scope', '$log', '$q', 'fileUpload', '$mmdUtil', 'serverBaseUrl', MapsFileUploadCtrl])
         .controller('MapsFileUploadPhotoCtrl',
         ['$window', '$scope', '$log', '$q', 'Photos', '$mmdUtil', MapsFileUploadPhotoCtrl])
         .controller('MapsFileUploadDestoryCtrl',
@@ -235,7 +235,7 @@
         });
     }
 
-    function MapsFileUploadCtrl($window, $scope, $log, $q, fileUpload, $mmdUtil) {
+    function MapsFileUploadCtrl($window, $scope, $log, $q, fileUpload, $mmdUtil, serverBaseUrl) {
 
         var self = this;
 
@@ -260,11 +260,18 @@
             }
         }
 
+        /**
+         * 授权成功事件，更新token
+         */
+        $scope.$on('auth:oauthed', function() {
+            $scope.options.headers.Authorization = getToken();
+        });
+
         $scope.options = {
 
             autoUpload: false,
 
-            url: "http://localhost:8080/api/rest/photo/upload",
+            url: serverBaseUrl+"/api/rest/photo/upload",
             headers: {
                 Authorization: getToken()
             },
@@ -298,10 +305,10 @@
                         value: vendor
                     },{
                         name: "title",
-                        value: this.files[0].title
+                        value: this.files[0].title || ''
                 }, {
                     name: "description",
-                    value: this.files[0].description
+                    value: this.files[0].description || ''
                 }
                 ];
             },

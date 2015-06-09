@@ -116,6 +116,10 @@
                 });
         };
 
+        $scope.go = function(state, params) {
+            $state.go(state, params);
+        };
+
         function toggleRight() {
             var pending = $mdBottomSheet.hide() || $q.when(true);
 
@@ -299,11 +303,21 @@
 
         var mapBaseLayer = "MapBox.DaithStar", mapOverLayers;
         controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
-        mapBaseLayer = "AMap.Base";
-        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
         mapBaseLayer = "MapBox.Outdoors";
         controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
         mapBaseLayer = "MapBox.Streets";
+        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        mapBaseLayer = "MapBox.Penil";
+        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        mapBaseLayer = "MapBox.Hike";
+        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        mapBaseLayer = "MapBox.Pirate";
+        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        mapBaseLayer = "MapBox.Dark";
+        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        mapBaseLayer = "MapBox.SatelliteStreets";
+        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        mapBaseLayer = "AMap.Base";
         controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
 
         getLocationSearch();

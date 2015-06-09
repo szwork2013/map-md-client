@@ -5,18 +5,20 @@
     'use strict';
 
     angular.module('app.core', ['app.core.theme', 'app.core.services', 'app.core.oauth'])
-        //.value('staticCtx', 'http://static.photoshows.cn')
-        .value('staticCtx', 'http://test.photoshows.cn')
-        .factory('MainRestangular', ['Restangular', function(Restangular) {
+        .value('staticCtx', 'http://static.photoshows.cn')
+        //.value('staticCtx', 'http://test.photoshows.cn')
+        .value('serverBaseUrl', 'http://www.photoshows.cn')
+        //.value('serverBaseUrl', 'http://localhost:8080')
+        .factory('MainRestangular', ['Restangular', 'serverBaseUrl',
+            function(Restangular, serverBaseUrl) {
             return Restangular.withConfig(function(RestangularConfigurer) {
-                //RestangularConfigurer.setBaseUrl('http://www.photoshows.cn');
-                RestangularConfigurer.setBaseUrl('http://localhost:8080');
+                RestangularConfigurer.setBaseUrl(serverBaseUrl);
             });
         }])
-        .factory('ApiRestangular', ['Restangular', function(Restangular) {
+        .factory('ApiRestangular', ['Restangular', 'serverBaseUrl',
+            function(Restangular, serverBaseUrl) {
             return Restangular.withConfig(function(RestangularConfigurer) {
-                //RestangularConfigurer.setBaseUrl('http://www.photoshows.cn/api/rest');
-                RestangularConfigurer.setBaseUrl('http://localhost:8080/api/rest');
+                RestangularConfigurer.setBaseUrl(serverBaseUrl+'/api/rest');
             });
         }])
         .factory('QQWSRestangular', ['Restangular', function(Restangular) {

@@ -3,13 +3,13 @@
     <a class="pull-left" href="{{ctx}}/#/user/{{comment.user_id}}"
        user-card owner="ponmCtxConfig" user-id="comment.user_id">
         <img class="media-object img-rounded"
-             ng-src="{{UrlService.getAvatarUrl(comment.user_avatar)}}"
+             ng-src="{{UrlService.getAvatarUrl(comment.user.avatar.id)}}"
              width="60" height="60" alt="{{comment.username}}">
     </a>
     <div class="media-body">
         <div class="header">
             <h6 class="media-heading">
-                <a href="{{ctx}}/#/user/{{comment.user_id}}">{{comment.username}}</a>
+                <a href="{{ctx}}/#/user/{{comment.user.id}}">{{comment.user.username}}</a>
             </h6>
             <div>
                 <span class="footnotes">{{comment.create_date | calculatetime | date:'yyyy-MM-dd'}}</span>

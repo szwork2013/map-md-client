@@ -4,8 +4,11 @@
 (function () {
     'use strict';
 
-    angular.module('app.maps.track', ['app.maps.track.search', 'app.maps.track.upload',
-        'app.maps.track.my', 'app.maps.track.track'])
+    angular.module('app.maps.track', [
+        'app.maps.track.search',
+        'app.maps.track.upload',
+        'app.maps.track.my',
+        'app.maps.track.display'])
         .config(['$urlRouterProvider', '$stateProvider',
             function ($urlRouterProvider, $stateProvider) {
 

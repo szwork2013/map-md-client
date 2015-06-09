@@ -16,8 +16,7 @@
                         resolve: {}
                     });
             }])
-        .controller('MapsClusterCtrl', ['$scope', '$log', '$mmdLeafletUtil', MapsClusterCtrl])
-    ;
+        .controller('MapsClusterCtrl', ['$scope', '$log', '$mmdLeafletUtil', MapsClusterCtrl]);
 
     function MapsClusterCtrl($scope, $log, $mmdLeafletUtil) {
 
@@ -31,12 +30,12 @@
             $scope.getMap().then(function(map) {
                 if (angular.isArray(photo)) {
                     angular.forEach(photo, function (photo, key) {
-                        if(photo.point) {
+                        if(photo.location) {
                             clusterGroup.addLayer($mmdLeafletUtil.photoMarker(photo, map));
                         }
                     });
                 } else if (angular.isObject(photo)) {
-                    if(photo.point) {
+                    if(photo.location) {
                         clusterGroup.addLayer($mmdLeafletUtil.photoMarker(photo, map));
                     }
                 }

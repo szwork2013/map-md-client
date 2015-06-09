@@ -38,6 +38,7 @@ angular
             .icon("social:person",         "./assets/svg/social/ic_person_24px.svg", 24)
             .icon("social:person_add",     "./assets/svg/social/ic_person_add_24px.svg", 24)
             .icon("social:person_outline", "./assets/svg/social/ic_person_outline_24px.svg", 24)
+            .icon("social:share",          "./assets/svg/social/ic_share_24px.svg", 24)
             .icon("image:camera",           "./assets/svg/image/ic_camera_24px.svg", 24)
             .icon("image:photo",           "./assets/svg/image/ic_photo_24px.svg", 24)
             .icon("image:photo_album",     "./assets/svg/image/ic_photo_album_24px.svg", 24)

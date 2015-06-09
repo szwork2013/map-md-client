@@ -18,12 +18,6 @@
                     //extractedData = data.data.data;
                     //extractedData.meta = data.data.meta;
                     switch(what) {
-                        case 'panoramio/photo':
-                            extractedData = data.photos;
-                            break;
-                        case 'comment':
-                            extractedData = data.comments;
-                            break;
                         default :
                             extractedData = data;
                     }
@@ -38,15 +32,6 @@
                             if(data.camera_info) {
                                 extractedData = data.camera_info;
                             }
-                            break;
-                        //case 'user':
-                        //    extractedData = data.open_info;
-                        //    break;
-                        case 'travel':
-                            extractedData = data.travel;
-                            break;
-                        case 'comment':
-                            extractedData = data.comment;
                             break;
                         default :
                             extractedData = data;
@@ -69,10 +54,10 @@
                 return this.one('camerainfo').get();
             };
             model.getComments = function() {
-                return this.all('comment').getList();
+                return this.all('comments').getList();
             };
             model.favorite = function() {
-                return this.one('like').get();
+                return this.one('like').post();
             };
             model.unFavorite = function() {
                 return this.one('like').remove();
@@ -94,7 +79,7 @@
     }
 
     function PanoramiosServiceFactory(Restangular) {
-        return Restangular.service('panoramio/photo');
+        return Restangular.service('panoramio');
     }
 
     function CommentsServiceFactory(Restangular) {
@@ -153,8 +138,8 @@
             return service.one().post(geoJSON.id, geoJSON);
         }
 
-        function search(query) {
-            return service.one().get({query: query});
+        function search(query, page, size) {
+            return service.one().get({query: query, page: page, size: size});
         }
     }
 

@@ -62,7 +62,8 @@
                         };
                     });
                     file.$submit = function () {
-                        if (!file.error) {
+                        // 没有错误并且没有photoId即没有上传的才submit
+                        if (!file.error&&!file.photoId) {
                             return data.submit();
                         }
                     };

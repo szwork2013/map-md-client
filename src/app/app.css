@@ -345,6 +345,11 @@ div.country {
   line-height: 1.1em;
   text-align: center; }
 
+.mmd-list .md-list-item-text h3 {
+  cursor: pointer; }
+  .mmd-list .md-list-item-text h3:hover {
+    text-decoration: underline; }
+
 .legend {
   padding: 6px 8px;
   font: 14px/16px Arial, Helvetica, sans-serif;
@@ -381,6 +386,9 @@ div.country {
 
 .md-autocomplete-suggestions {
   z-index: 1002; }
+
+.mmd-list md-list md-list-item {
+  border-bottom: 1px dashed grey; }
 
 .upload-file-form md-progress-linear {
   z-index: 1; }

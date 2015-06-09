@@ -127,7 +127,7 @@
             function saveComment(content) {
                 return Comments.create({
                     type: scope.type,
-                    entity_id: scope.entityId,
+                    entity: {id: scope.entityId},
                     content: content
                 });
             }

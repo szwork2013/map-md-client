@@ -17,18 +17,18 @@
                     })
                 ;
             }])
-        .controller('SettingsAccountCtrl', ['$scope', '$log', '$mdDialog', 'UserSettings', 'Authenticate', SettingsAccountCtrl])
+        .controller('SettingsAccountCtrl', ['$scope', '$log', '$mdDialog', 'Users', 'Authenticate', SettingsAccountCtrl])
     ;
 
     var LOG_TAG = "Settings-Account: ";
 
-    function SettingsAccountCtrl($scope, $log, $mdDialog, UserSettings, Authenticate) {
+    function SettingsAccountCtrl($scope, $log, $mdDialog, Users, Authenticate) {
         var self = this;
         self.settings = {};
         $scope.Authenticate = Authenticate;
 
         Authenticate.getUser().then(function(user) {
-            UserSettings.get(user.id).then(function(settings) {
+            Users.getUser(user.id).then(function(settings) {
                 self.settings  = settings;
                 $scope.reset();
             });
@@ -41,11 +41,12 @@
 
         self.submit = function(settings) {
             self.saving = true;
-            settings.saveAccount().then(function(setting) {
+            Users.saveAccount(settings).then(function(setting) {
                 self.saving = false;
                 $scope.accountForm.$setPristine();
                 $scope.showMessage("保存成功");
                 Authenticate.user.name = setting.name;
+                Authenticate.user.description = setting.description;
             }, function(error) {
                 $scope.showMessage(error.statusText);
             });

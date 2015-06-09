@@ -177,14 +177,22 @@
             $mmdPhotoDialog.show({target: ev.originEvent.target._icon}, ev.photo);
         }
 
-        $scope.$on('$destroy', function(e) {
-            leafletData.getMap('main-map').then(function(map) {
-                map.removeLayer(self.markerLayer);
-                //map.removeLayer(self.circleMarkers);
-                map.removeControl(self.layers);
+        if(angular.isFunction($scope.getMap)) {
+            $scope.getMap().then(function(map) {
+                $scope.map = map;
             });
+        }
+
+        $scope.$on('$destroy', function(e) {
             self.layers.removeLayer(self.markerLayer);
-            //self.layers.removeLayer(self.circleMarkers);
+            if($scope.map) {
+                if(self.markerLayer) {
+                    $scope.map.removeLayer(self.markerLayer);
+                }
+                if(self.layers) {
+                    $scope.map.removeControl(self.layers);
+                }
+            }
         });
     }
 

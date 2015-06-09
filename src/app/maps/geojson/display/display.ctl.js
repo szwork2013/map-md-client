@@ -9,7 +9,7 @@
             function ($urlRouterProvider, $stateProvider) {
                 $stateProvider
                     .state('app.maps.geojson.display', {
-                        url: '/{id:int}',
+                        url: '/{id:[0-9]{1,30}}',
                         templateUrl: 'maps/geojson/display/display.tpl.html',
                         controller: 'MapsGeojsonDisplayCtrl as mgdc',
                         resolve:{
@@ -49,6 +49,18 @@
         function onFeatureMouseover(e, feature) {
             self.properties = feature.properties;
         }
+
+        //$scope.$on('leafletDirectiveMap.geojsonClick', function(e, feature, oe) {
+        //    $log.debug("feature clicked");
+        //    if(feature.geometry.type === "Point") {
+        //
+        //    }else {
+        //        $scope.getMap().then(function(map) {
+        //            map.fitBounds(oe.target.getBounds());
+        //        });
+        //    }
+        //
+        //});
 
         $scope.$on('$destroy', function(e) {
             $scope.setGeoJSON({});

@@ -14,13 +14,14 @@
                     <span>{{photo.title}}</span>
                 </h2>
                 <span flex></span>
+
                 <md-button class="md-icon-button" aria-label="favorite"
-                           ng-click="favorite(photo)"
-                        ng-switch="photo.like">
-                    <md-icon ng-switch-when="true"
+                           ng-click="favorite(photo)">
+
+                    <md-icon ng-if="photo.like"
                              style="color: lightcoral;"
                              md-svg-icon="action:favorite"></md-icon>
-                    <md-icon ng-switch-default
+                    <md-icon ng-if="!photo.like"
                              md-svg-icon="action:favorite_outline"></md-icon>
                 </md-button>
                 <md-button class="md-icon-button" aria-label="Close"

@@ -106,7 +106,7 @@
         function addClusterMarkers(photos) {
             $scope.getMap().then(function(map) {
                 angular.forEach(photos, function(photo, key) {
-                    if(photo.point) {
+                    if(photo.location) {
                         markers.addLayer($mmdLeafletUtil.photoMarker(photo, map));
                     }
                 });

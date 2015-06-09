@@ -58,11 +58,9 @@
             Users.get(userId).then(function(user) {
                 $scope.user = user;
             });
-
             photos = [];
-
             // 开始调用获取用户图片
-            callGetPhotos(userId, 1);
+            callGetPhotos(userId, 0);
         }
 
         /**

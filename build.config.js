@@ -77,11 +77,7 @@ module.exports = {
       'vendor/ng-file-upload/dist/ng-file-upload-shim.min.js',
       'vendor/ng-file-upload/dist/ng-file-upload.min.js',
       'vendor/leaflet/dist/leaflet-src.js',
-      'vendor/leaflet/dist/images/layers.png',
-      'vendor/leaflet/dist/images/layers-2x.png',
-      'vendor/leaflet/dist/images/marker-icon.png',
-      'vendor/leaflet/dist/images/marker-icon-2x.png',
-      'vendor/leaflet/dist/images/marker-shadow.png',
+
       'vendor/Leaflet.markercluster/dist/leaflet.markercluster-src.js',
       'vendor/Leaflet.heat/dist/leaflet-heat.js',
       'vendor/leaflet-omnivore/leaflet-omnivore.js',
@@ -111,7 +107,8 @@ module.exports = {
       'vendor/blueimp-file-upload/js/jquery.fileupload-image.js',
       'vendor/blueimp-file-upload/js/jquery.fileupload-validate.js',
       'vendor/jquery-ui/jquery-ui.min.js',
-      'vendor/Jcrop/js/jquery.Jcrop.js'
+      'vendor/Jcrop/js/jquery.Jcrop.js',
+      'vendor/turf/turf.js'
     ],
     css: [
       'vendor/angular-material/angular-material.css',
@@ -121,11 +118,22 @@ module.exports = {
       'vendor/leaflet.elevation/dist/Leaflet.Elevation-0.0.2.css',
       'vendor/leaflet.locatecontrol/dist/L.Control.Locate.min.css',
       'vendor/Jcrop/css/jquery.Jcrop.css',
-      //'vendor/fontawesome/css/font-awesome.css',
+      'vendor/fontawesome/css/font-awesome.css',
       //'vendor/nvd3/nv.d3.css',
       'http://cloud.github.com/downloads/lafeber/world-flags-sprite/flags32.css'
     ],
     assets: [
+      'vendor/leaflet/dist/images/layers.png',
+      'vendor/leaflet/dist/images/layers-2x.png',
+      'vendor/leaflet/dist/images/marker-icon.png',
+      'vendor/leaflet/dist/images/marker-icon-2x.png',
+      'vendor/leaflet/dist/images/marker-shadow.png',
+      'vendor/fontawesome/fonts/FontAwesome.otf',
+      'vendor/fontawesome/fonts/fontAwesome-webfont.eot',
+      'vendor/fontawesome/fonts/fontAwesome-webfont.svg',
+      'vendor/fontawesome/fonts/fontAwesome-webfont.ttf',
+      'vendor/fontawesome/fonts/fontAwesome-webfont.woff',
+      'vendor/fontawesome/fonts/fontAwesome-webfont.woff2'
     ]
   }
 };

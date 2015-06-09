@@ -76,19 +76,31 @@
 
     function UsersServiceFactory(Restangular) {
         var userService = Restangular.service('user');
+        Restangular.extendModel('user', function(model) {
+            model.saveAccount = function() {
+                return this.post('account', this);
+            };
+            return model;
+        });
         return {
             me: getMe,
-            get: getUser,
+            get: getOpenInfo,
+            getUser: getUser,
             getPhotos: getPhotos,
-            uploadAvatar: uploadAvatar
+            uploadAvatar: uploadAvatar,
+            saveAccount: saveAccount
         };
 
         function getMe() {
             return userService.one().get();
         }
 
-        function getUser(id) {
+        function getOpenInfo(id) {
             return userService.one(id).one('openinfo').get();
+        }
+
+        function getUser(id) {
+            return userService.one(id).get();
         }
 
         function getPhotos(id, pageSize, pageNo) {
@@ -110,5 +122,10 @@
                 "Content-Type": "multipart/form-data; charset=utf-8; boundary=" + boundary
             });
         }
+
+        function saveAccount(user) {
+            return userService.one(user.id).post('account', user);
+        }
+
     }
 })();

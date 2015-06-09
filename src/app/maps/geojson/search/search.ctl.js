@@ -25,6 +25,7 @@
         var self = this;
 
         $scope.setTitle("搜索");
+        var page = 0, size = 20;
 
         self.querySearch = function(text) {
             return [
@@ -48,11 +49,12 @@
         };
 
         function search(query) {
-            GeoJSONs.search(query).then(function(geoJSONList) {
+            GeoJSONs.search(query, page, size).then(function(geoJSONList) {
                 self.geoJSONs = geoJSONList;
             });
         }
 
+        self.geoJSON = {};
         self.display = function(geoJSON) {
             if(angular.isString(geoJSON.data) ) {
                 geoJSON.data = JSON.parse(geoJSON.data);
@@ -61,7 +63,10 @@
                     geoJSON.style = geoJSON.data.properties.style;
                 }
             }
-            $scope.setGeoJSON(geoJSON);
+            if(self.geoJSON !== geoJSON) {
+                $scope.setGeoJSON(geoJSON);
+                self.geoJSON = geoJSON;
+            }
         };
 
         $scope.$on('$destroy', function(e) {

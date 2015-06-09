@@ -98,19 +98,20 @@
             });
         }
 
-        $scope.$on('leafletDirectiveMap.geojsonClick', function(e) {
-        });
-
-        $scope.$on('leafletDirectiveMap.geojsonMouseover', function(e) {
-        });
-
-        $scope.$on('leafletDirectiveMap.geojsonMouseout', function(e) {
-        });
+        //$scope.$on('leafletDirectiveMap.geojsonClick', function(e) {
+        //});
+        //
+        //$scope.$on('leafletDirectiveMap.geojsonMouseover', function(e) {
+        //});
+        //
+        //$scope.$on('leafletDirectiveMap.geojsonMouseout', function(e) {
+        //});
 
         function setGeoJSON(geoJSON) {
             $scope.setGeoJSON(geoJSON, {
                 click: onFeatureClick
             });
+
         }
 
         self.submit = function(geoJSON) {

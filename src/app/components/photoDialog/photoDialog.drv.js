@@ -9,7 +9,8 @@
      * @name app.components.photoDialog
      */
     angular.module('app.components')
-        .factory('$mmdPhotoDialog', ['$mdDialog', '$log', '$filter', 'Photos', 'Users', MmdPhotoDialogProvider]);
+        .factory('$mmdPhotoDialog', ['$mdDialog', '$log', '$filter', 'Photos', 'Users',
+            MmdPhotoDialogProvider]);
 
     function MmdPhotoDialogProvider($mdDialog, $log, $filter, Photos, Users) {
 

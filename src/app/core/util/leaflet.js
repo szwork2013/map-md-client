@@ -15,7 +15,8 @@
                         html: '<img src="' + self._getIconUrl(photo.oss_key) + '">'
                     });
                     var markerStyle = {icon: myIcon, riseOnHover: true};
-                    var marker = L.marker(photo.point, markerStyle);
+                    var marker = L.marker({lat: photo.location.position[1], lng: photo.location.position[0]},
+                                            markerStyle);
                     if(map) {
                         marker.on('click', function(e) {
                             map.fire('photoClick', {originEvent: e, photoId: photo.id});

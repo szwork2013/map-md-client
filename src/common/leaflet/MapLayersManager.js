@@ -6,6 +6,15 @@ L.Control.LayersManager = L.Control.Layers.extend({
     _overLayers: {},
     _baseLayer: null,
     _overLayer: {},
+    initialize: function (options) {
+        var self = this;
+        //L.Control.Layers.initialize.call(this, options);
+        self._layers = {};
+        self._baseLayers = {};
+        self._overLayers = {};
+        self._baseLayer = null;
+        self._overLayer = {};
+    },
     onAdd: function(map) {
         var container = L.Control.Layers.prototype.onAdd.call(this, map);
         if(this._baseLayer) {

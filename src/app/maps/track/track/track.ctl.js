@@ -4,12 +4,12 @@
 (function () {
     'use strict';
 
-    angular.module('app.maps.track.track', [])
+    angular.module('app.maps.track.display', [])
         .config(['$urlRouterProvider', '$stateProvider',
             function ($urlRouterProvider, $stateProvider) {
                 $stateProvider
-                    .state('app.maps.track.track', {
-                        url: '/{id:int}',
+                    .state('app.maps.track.display', {
+                        url: '/{id:[0-9]{1,30}}',
                         templateUrl: 'maps/track/track/track.tpl.html',
                         controller: "MapsTrackTrackCtrl as mttc",
                         resolve:{

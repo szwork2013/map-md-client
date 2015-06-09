@@ -7,3 +7,14 @@ div.country {
   line-height: 1.1em;
   text-align: center;
 }
+
+.mmd-list {
+  .md-list-item-text {
+    h3 {
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

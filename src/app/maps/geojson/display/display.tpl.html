@@ -9,9 +9,13 @@
         <md-card class="" flex>
             <md-card-content >
                 <md-list>
-                    <div ng-repeat="(key,val) in mgdc.properties">
-                        {{key}} : {{val}}
-                    </div>
+                    <md-list-item class="md-3-line"
+                                  ng-repeat="(key,val) in mgdc.properties">
+                        <div class="md-list-item-text">
+                            <h3> {{ key }} </h3>
+                            <p> {{ val }} </p>
+                        </div>
+                    </md-list-item>
                 </md-list>
             </md-card-content>
             <div class="md-actions" layout="row" layout-align="end center">

@@ -90,7 +90,6 @@
                                 }
                             },
                             click: function(e) {
-                                zoomToFeature.call(this, e);
                                 if(layerEventListeners.click) {
                                     layerEventListeners.click.call(this, e, feature);
                                 }
@@ -101,20 +100,42 @@
                         });
                     }
                 });
+
+                fitBounds(geojson.data);
             } catch (ex) {
                 $log.debug(LOG_TAG + ex);
             } finally {
             }
         };
 
-        $scope.$on('leafletDirectiveMap.geojsonClick', function(e) {
+        function fitBounds(geoJson) {
+            var bounds = turf.envelope(geoJson);
+            if(bounds && bounds.geometry && bounds.geometry.coordinates &&
+                bounds.geometry.coordinates[0]) {
+                bounds = bounds.geometry.coordinates[0];
+                $scope.getMap().then(function(map) {
+                    map.fitBounds([[bounds[0][1], bounds[0][0]], [bounds[2][1], bounds[2][0]]]);
+                });
+            }
+        }
+
+        $scope.$on('leafletDirectiveMap.geojsonClick', function(e, feature, oe) {
+            $log.debug("feature clicked");
+            if(feature.geometry.type === "Point") {
+
+            }else {
+                $scope.getMap().then(function(map) {
+                    map.fitBounds(oe.target.getBounds());
+                });
+            }
+
         });
 
-        $scope.$on('leafletDirectiveMap.geojsonMouseover', function(e) {
-        });
-
-        $scope.$on('leafletDirectiveMap.geojsonMouseout', function(e) {
-        });
+        //$scope.$on('leafletDirectiveMap.geojsonMouseover', function(e) {
+        //});
+        //
+        //$scope.$on('leafletDirectiveMap.geojsonMouseout', function(e) {
+        //});
 
         /**
          * 提交保存数据
