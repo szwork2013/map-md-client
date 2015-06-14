@@ -22,6 +22,7 @@
 @import './maps/track/search/search.scss';
 @import './maps/track/upload/upload.scss';
 @import './maps/travel/travel.scss';
+@import './photos/all/all.scss';
 @import './settings/settings.scss';
 @import './settings/map/map.scss';
 
@@ -70,6 +71,10 @@ md-backdrop.md-bottom-sheet-backdrop {
 }
 
 md-toast {
+  z-index: 1005;
+}
+
+md-tooltip {
   z-index: 1005;
 }
 

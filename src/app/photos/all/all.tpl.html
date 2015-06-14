@@ -1,0 +1,54 @@
+<md-card>
+    <md-card-content ui-rect-select="{'selector': '.photo'}"
+                     ui-move-select="{{moveSelect}}"
+                     ui-selector="photo.actionSelected">
+        <md-grid-list
+                md-cols-gt-md="10" md-cols-sm="3" md-cols-md="6"
+                md-row-height-gt-md="1:1" md-row-height="4:3"
+                md-gutter-gt-md="1px" md-gutter-gt-sm="1px" md-gutter="1px">
+            <md-grid-tile
+                    ng-repeat="photo in pac.photos"
+                    ng-click="pac.displayPhoto($event, photo)"
+                    ng-mouseover="photo.actionSelectable = true"
+                    ng-mouseleave="photo.actionSelectable = false"
+                    class="photo"
+                    ng-style="{
+                        'background': photo.color
+                      }"
+                    md-colspan-gt-sm="{{photo.colspan}}"
+                    md-rowspan-gt-sm="{{photo.rowspan}}">
+                <a href=""
+                   ng-show="photo.actionSelectable||photo.actionSelected"
+                   ng-click="$event.stopPropagation();photo.actionSelected=!photo.actionSelected">
+                    <md-icon md-svg-icon="toggle:check_box"
+                             ng-if="photo.actionSelected"
+                             style="color: dodgerblue;"></md-icon>
+                    <md-icon md-svg-icon="toggle:check_box_outline_blank"
+                             ng-if="!photo.actionSelected"></md-icon>
+                </a>
+
+                <img ng-src="{{staticCtx}}/{{photo.oss_key}}@!photo-preview-sm"
+                        ng-style="{
+                            'width': photo.style.width,
+                            'height': photo.style.height,
+                            'margin': photo.style.margin
+                        }">
+<!--                <mmd-photo-card photo = "photo"
+                                mmd-photo-url = "">
+                </mmd-photo-card>-->
+            </md-grid-tile>
+        </md-grid-list>
+        <md-button ng-click="pac.loadMorePhotos()">加载更多</md-button>
+    </md-card-content>
+
+    <div class="md-actions" layout="row" layout-align="end center">
+        <md-button class="md-warn"
+                   ng-click="pac.remove($event)">删除</md-button>
+        <md-button class="md-raised md-primary"
+                   ng-click="pac.move($event)">移动</md-button>
+        <md-button class="md-raised md-primary"
+                   ng-disabled="true"
+                   ng-show="sac.saving">保存中...</md-button>
+        <md-button ng-disabled="!accountForm.$dirty||sac.saving" ng-click="reset()">取消</md-button>
+    </div>
+</md-card>

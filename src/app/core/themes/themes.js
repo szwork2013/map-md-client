@@ -21,6 +21,7 @@ angular
             .icon("action:today",          "./assets/svg/action/ic_today_24px.svg", 24)
             .icon("file:size",             "./assets/svg/action/ic_description_24px.svg", 24)
             .icon("action:exit_to_app",    "./assets/svg/action/ic_exit_to_app_24px.svg", 24)
+            .icon("action:delete",         "./assets/svg/action/ic_delete_24px.svg", 24)
             .icon("action:done",           "./assets/svg/action/ic_done_24px.svg", 24)
             .icon("action:help",           "./assets/svg/action/ic_help_24px.svg", 24)
             .icon("action:lock",           "./assets/svg/action/ic_lock_24px.svg", 24)
@@ -30,6 +31,9 @@ angular
             .icon("action:account_box",    "./assets/svg/action/ic_account_box_24px.svg", 24)
             .icon("action:account_circle",
             "./assets/svg/action/ic_account_circle_24px.svg", 24)
+            .icon("content:remove",        "./assets/svg/content/ic_remove_24px.svg", 24)
+            .icon("content:remove_circle", "./assets/svg/content/ic_remove_circle_24px.svg", 24)
+            .icon("content:remove_circle_outline", "./assets/svg/content/ic_remove_circle_outline_24px.svg", 24)
             .icon("maps:place",            "./assets/svg/maps/ic_place_24px.svg", 24)
             .icon("maps:map",              "./assets/svg/maps/ic_map_24px.svg", 24)
             .icon("maps:directions_walk",  "./assets/svg/maps/ic_directions_walk_24px.svg", 24)
@@ -58,6 +62,8 @@ angular
             .icon("navigation:menu",       "./assets/svg/navigation/ic_menu_24px.svg", 24)
             .icon("navigation:close",      "./assets/svg/navigation/ic_close_24px.svg", 24)
             .icon("editor:mode_edit",      "./assets/svg/editor/ic_mode_edit_24px.svg", 24)
+            .icon("toggle:check_box",      "./assets/svg/toggle/ic_check_box_24px.svg", 24)
+            .icon("toggle:check_box_outline_blank", "./assets/svg/toggle/ic_check_box_outline_blank_24px.svg", 24)
         ;
 
         $mdThemingProvider.theme('default')

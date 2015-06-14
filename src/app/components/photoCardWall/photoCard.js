@@ -19,13 +19,8 @@
             restrict: 'E',
             link: link,
             scope: {
-                photoId: "=mmdPhotoId",
-                photoColor: "=mmdPhotoColor",
-                photoUrl: "@mmdPhotoUrl",
-                photoSize: "=mmdPhotoSize",
-                photoIs360: "=mmdPhotoIs360",
-                photoAddress: "=mmdPhotoAddress",
-                photoDescription: "=mmdPhotoDescription"
+                photo: "=",
+                photoUrl: "@mmdPhotoUrl"
             },
             templateUrl: 'components/photoCardWall/photoCard.tpl.html'
         };
@@ -34,7 +29,7 @@
             $mdTheming(element);
 
             if(scope.photoColor) {
-                element.css('background-color', scope.photoColor);
+                element.css('background-color', scope.photo.color);
             }
 
             /**
@@ -42,8 +37,8 @@
              * @param $event
              * @param photoId
              */
-            scope.displayPhoto = function($event, photoId) {
-                $mmdPhotoDialog.show($event, {id: photoId});
+            scope.displayPhoto = function($event, photo) {
+                $mmdPhotoDialog.show($event, {id: photo.id});
             };
         }
     }

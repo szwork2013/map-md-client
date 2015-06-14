@@ -4,11 +4,7 @@
 (function() {
     'use strict';
 
-    angular.module('app.core', ['app.core.theme', 'app.core.services', 'app.core.oauth'])
-        .value('staticCtx', 'http://static.photoshows.cn')
-        //.value('staticCtx', 'http://test.photoshows.cn')
-        .value('serverBaseUrl', 'http://www.photoshows.cn')
-        //.value('serverBaseUrl', 'http://localhost:8080')
+    angular.module('app.core', ['app', 'app.core.theme', 'app.core.services', 'app.core.oauth'])
         .factory('MainRestangular', ['Restangular', 'serverBaseUrl',
             function(Restangular, serverBaseUrl) {
             return Restangular.withConfig(function(RestangularConfigurer) {

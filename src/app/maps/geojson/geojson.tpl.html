@@ -9,9 +9,13 @@
         </h2>
         <span flex></span>
 
-        <md-button class="md-icon-button" aria-label="Share"
-                   ng-click="showBottomSheet($event)">
-            <md-icon md-svg-icon="social:share"></md-icon>
+        <md-button class="md-icon-button" ng-repeat="action in mgc.toolbarActions"
+                   aria-label="{{action.label}}"
+                   ng-click="action.listener($event)">
+            <md-tooltip>
+                {{action.label}}
+            </md-tooltip>
+            <md-icon md-svg-icon="{{action.icon}}"></md-icon>
         </md-button>
         <md-button class="md-icon-button" aria-label="More"
                    ng-click="showBottomSheet($event)">

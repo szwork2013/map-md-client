@@ -20,7 +20,7 @@
         ['$scope', '$timeout', '$log', '$q', 'Restangular',
             MapsTrackUploadCtrl])
         .controller('trackCtl',
-        ['$scope', '$log', '$q', 'Restangular',
+        ['$scope', '$log', '$q', 'Tracks', '$mmdMessage',
             TrackCtl])
     ;
 
@@ -28,8 +28,6 @@
 
     function MapsTrackUploadCtrl( $scope, $timeout, $log, $q, Restangular) {
         var self = this;
-
-        $scope.setMapBarConfig({noToolbar: true});
 
         // 正在加载标志
         $scope.uploading = false;
@@ -153,6 +151,7 @@
                     track.type = 1;
                     track.elevation = elevation;
                     track.layer = gjl;
+                    track.geoJson = runLayer.toGeoJSON();
 
                     $scope.addTrack(track, file.name);
 
@@ -179,10 +178,11 @@
      * @param $scope
      * @param $log
      * @param $q
-     * @param Restangular
+     * @param Tracks
+     * @param $mmdMessage
      * @constructor
      */
-    function TrackCtl($scope, $log, $q, Restangular) {
+    function TrackCtl($scope, $log, $q, Tracks, $mmdMessage) {
 
         var self = this;
 
@@ -221,6 +221,19 @@
             value: 1
         }
         ];
+
+        self.submit = function(track) {
+            $log.debug(track);
+            Tracks.create({
+                name: track.name,
+                description: track.description,
+                geo_json: JSON.stringify(track.geoJson)
+            }).then(function() {
+                $mmdMessage.success.save();
+            },function(err) {
+                $mmdMessage.fail.save(err.statusText);
+            });
+        };
     }
 
 })();

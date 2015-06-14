@@ -38,8 +38,9 @@
 
         $scope.showTrackBottomSheet = function($event) {
             $scope.showGridBottomSheet($event, [
-                { name: '上传', icon: 'maps:directions_walk', link: 'app.maps.track.upload' },
                 { name: '我的', icon: 'social:person', link: 'app.maps.track.my' },
+                { name: '上传', icon: 'maps:directions_walk', link: 'app.maps.track.upload' },
+                { name: '搜索', icon: 'action:search', link: 'app.maps.track.search' },
                 { name: 'Help', icon: 'maps:heatmap' , link: 'app.helps.track'}
             ]).then(function(clickedItem) {
                 $scope.alert = clickedItem.name + ' clicked!';

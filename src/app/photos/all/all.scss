@@ -1,0 +1,13 @@
+md-grid-list {
+  md-grid-tile {
+    overflow: hidden;
+    md-icon {
+      position: absolute;
+      left: 2px;
+      top: 2px;
+    }
+    img {
+      //width: 100%;
+    }
+  }
+}

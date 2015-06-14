@@ -40,11 +40,11 @@
                 return extractedData;
             });
         }])
-        .factory('Photos', ['ApiRestangular', PhotoServiceFactory])
+        .factory('Photos',     ['ApiRestangular', PhotoServiceFactory])
         .factory('Panoramios', ['ApiRestangular', PanoramiosServiceFactory])
-        .factory('Comments', ['ApiRestangular', CommentsServiceFactory])
-        .factory('Tracks', ['LocalRestangular', TrackServiceFactory])
-        .factory('GeoJSONs', ['ApiRestangular', GeoJSONServiceFactory])
+        .factory('Comments',   ['ApiRestangular', CommentsServiceFactory])
+        .factory('Tracks',     ['ApiRestangular', TrackServiceFactory])
+        .factory('GeoJSONs',   ['ApiRestangular', GeoJSONServiceFactory])
     ;
 
     function PhotoServiceFactory(Restangular) {
@@ -103,16 +103,31 @@
         var trackService = Restangular.service('track');
 
         return {
+            create: create,
             get: getTrack,
-            search: search
+            search: search,
+            my: my,
+            remove: remove
         };
+
+        function create(track) {
+            return trackService.one().post('', track);
+        }
 
         function getTrack(id) {
             return trackService.one(id).get();
         }
 
-        function search(text) {
-            return trackService.one().all('tracks').getList();
+        function search(text, page, size) {
+            return trackService.one().get({query: text, page: page, size: size});
+        }
+
+        function my(page, size) {
+            return trackService.one().all('my').getList({page: page, size: size});
+        }
+
+        function remove(id) {
+            return trackService.one(id).remove();
         }
     }
 
@@ -123,7 +138,12 @@
             create: create,
             get: getGeoJSON,
             update: update,
-            search: search
+            search: search,
+            my: my,
+            remove: remove,
+            isLike: isLike,
+            like: like,
+            unLike: unLike
         };
 
         function create(geoJSON) {
@@ -140,6 +160,26 @@
 
         function search(query, page, size) {
             return service.one().get({query: query, page: page, size: size});
+        }
+
+        function my(page, size) {
+            return service.one('my').get({page: page, size: size});
+        }
+
+        function remove(id) {
+            return service.one(id).remove();
+        }
+
+        function isLike(id) {
+            return service.one(id).one('like').get();
+        }
+
+        function like(id) {
+            return service.one(id).post('like');
+        }
+
+        function unLike(id) {
+            return service.one(id).one('like').remove();
         }
     }
 

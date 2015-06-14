@@ -11,12 +11,8 @@
                 $stateProvider
                     .state('app.maps.user', {
                         url: '/user/{id}',
-                        views: {
-                            '': {
-                                templateUrl: 'maps/user/user.tpl.html',
-                                controller: 'MapsUserCtrl'
-                            }
-                        },
+                        templateUrl: 'maps/user/user.tpl.html',
+                        controller: 'MapsUserCtrl',
                         resolve: {
                             userId: ['$stateParams', function($stateParams){
                                 return $stateParams.id;
@@ -80,7 +76,7 @@
             $scope.photos = [];
 
             // 开始调用获取用户图片
-            callGetPhotos(1);
+            callGetPhotos(0);
         }
 
         /**

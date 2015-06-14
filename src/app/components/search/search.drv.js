@@ -27,7 +27,7 @@
             $mdTheming(element);
 
             var geoSearchControl;
-                scope.loc = 1;
+                scope.loc = 2;
             scope.getMap().then(function(map) {
                 if(map) {
                     $log.debug(LOG_TAG + "got map");
@@ -166,7 +166,7 @@
             if(!this._map.hasLayer(this.marker)) {
                 this._marker.addTo(this._map);
             }
-            if(result.class == "boundary") {
+            if(result.boundingbox) {
                 this._map.fitBounds([[result.boundingbox[0], result.boundingbox[2]],
                     [result.boundingbox[1], result.boundingbox[3]]]);
             }else {

@@ -113,13 +113,7 @@ module.exports = function ( grunt ) {
             cwd: 'src/json',
             expand: true
           }
-          //{
-          //  src: [ '**' ],
-          //  dest: '<%= build_dir %>/vendor/fontawesome',
-          //  cwd: 'vendor/fontawesome',
-          //  expand: true
-          //}
-       ]   
+       ]
       },
       build_vendor_assets: {
         files: [
@@ -127,6 +121,12 @@ module.exports = function ( grunt ) {
             src: [ '<%= vendor_files.assets %>' ],
             dest: '<%= build_dir %>/',
             cwd: '.',
+            expand: true
+          },
+          { // copy fontawesome fonts
+            src: [ '**' ],
+            dest: '<%= build_dir %>/fonts',
+            cwd: 'vendor/fontawesome/fonts',
             expand: true
           }
        ]   

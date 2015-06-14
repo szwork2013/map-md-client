@@ -28,9 +28,7 @@
         var page = 0, size = 20;
 
         self.querySearch = function(text) {
-            return [
-                {name: text}
-            ];
+            return GeoJSONs.search(text, page, size);
         };
 
         self.searchTextChange = function(text) {

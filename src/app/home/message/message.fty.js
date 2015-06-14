@@ -34,22 +34,30 @@
                 function updateSuccess(message) {
                     showMessage("更新成功 " + (message || ''));
                 }
+                function removeSuccess(message) {
+                    showMessage("删除成功 " + (message || ''));
+                }
                 function saveFail(message) {
                     showMessage("保存失败 " + (message || ''));
                 }
                 function updateFail(message) {
                     showMessage("更新失败 " + (message || ''));
                 }
+                function removeFail(message) {
+                    showMessage("删除失败 " + (message || ''));
+                }
 
                 return {
                     showMessage: showMessage,
                     success: {
                         save: saveSuccess,
-                        update: updateSuccess
+                        update: updateSuccess,
+                        remove: removeSuccess
                     },
                     fail: {
                         save: saveFail,
-                        update: updateFail
+                        update: updateFail,
+                        remove: removeFail
                     }
                 };
 

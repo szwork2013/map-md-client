@@ -4,9 +4,16 @@
 (function () {
     'use strict';
 
-    angular.module('app.maps',
-        [ 'app.maps.popular', 'app.maps.user', 'app.maps.cluster', 'app.maps.upload',
-            'app.maps.geojson', 'app.maps.travel', 'app.maps.heatmap', 'app.maps.track'])
+    angular.module('app.maps', [
+        'app.maps.popular',
+        'app.maps.user',
+        'app.maps.cluster',
+        'app.maps.upload',
+        'app.maps.geojson',
+        'app.maps.travel',
+        'app.maps.heatmap',
+        'app.maps.track',
+        'app.maps.choropleth'])
 
         .config(['$logProvider', '$urlRouterProvider', '$stateProvider',
             function ($logProvider, $urlRouterProvider, $stateProvider) {
@@ -317,6 +324,10 @@
         controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
         mapBaseLayer = "MapBox.SatelliteStreets";
         controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        mapBaseLayer = "Esri.WorldImagery";
+        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        mapBaseLayer = "QQMap";
+        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
         mapBaseLayer = "AMap.Base";
         controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
 
@@ -346,78 +357,10 @@
         $scope.getMap = function() {
             return leafletData.getMap('main-map');
         };
+
+        $scope.getGeoJSON = function() {
+            return leafletData.getGeoJSON('main-map');
+        };
     }
 
-    //MapLayersManager = L.Control.Layers.extend({
-    //    _baseLayers: {},
-    //    _overLayers: {},
-    //    _baseLayer: null,
-    //    _overLayer: {},
-    //    onAdd: function(map) {
-    //        var container = L.Control.Layers.prototype.onAdd.call(this, map);
-    //        map.addLayer(this._baseLayer);
-    //        angular.forEach(this._overLayer, function(overLayer, key) {
-    //            map.addLayer(overLayer);
-    //        });
-    //        return container;
-    //    },
-    //    onRemove: function() {
-    //        this._map.removeLayer(this._baseLayer);
-    //    },
-    //    setBaseLayer: function(mapCode, name) {
-    //        if(this._baseLayers[mapCode]) {
-    //            this._changeBaseLayer(this._baseLayers[mapCode]);
-    //        }else {
-    //            var baseLayer = L.tileLayer.provider(mapCode);
-    //            this._changeBaseLayer(baseLayer);
-    //            this._baseLayers[mapCode] = baseLayer;
-    //            this.addBaseLayer(baseLayer, name);
-    //            this._clearOverLayers();
-    //        }
-    //    },
-    //    setOverLayers: function(mapCodes) {
-    //        var self = this;
-    //        angular.forEach(this._overLayer, function(overLayer, key) {
-    //            //if(!mapCodes[key]) {
-    //                if(self._map) {
-    //                    self._map.removeLayer(overLayer);
-    //                }
-    //                delete self._overLayer[key];
-    //            //}
-    //        });
-    //        angular.forEach(mapCodes, function(mapCode, key) {
-    //            if(!self._overLayer[key]) {
-    //                if(self._overLayers[mapCode]) {
-    //                    if(self._map) {
-    //                        self._map.addLayer(self._overLayers[mapCode]);
-    //                    }
-    //                    self._overLayer[key] = self._overLayers[mapCode];
-    //                }else {
-    //                    var overLayer = L.tileLayer.provider(mapCode);
-    //                    if(self._map) {
-    //                        self._map.addLayer(overLayer);
-    //                    }
-    //                    self._overLayers[mapCode] = overLayer;
-    //                    self._overLayer[key] = overLayer;
-    //                    self.addOverlay(overLayer, key);
-    //                }
-    //            }
-    //        });
-    //    },
-    //    _changeBaseLayer: function(baseLayer) {
-    //        if(this._map) {
-    //            if(this._baseLayer !== baseLayer) {
-    //                if(this._baseLayer) {
-    //                    this._map.removeLayer(this._baseLayer);
-    //                }
-    //                baseLayer.addTo(this._map);
-    //            }
-    //        }
-    //        this._baseLayer = baseLayer;
-    //    },
-    //    _clearOverLayers: function() {
-    //        //this._overLayer = {};
-    //
-    //    }
-    //});
 })();

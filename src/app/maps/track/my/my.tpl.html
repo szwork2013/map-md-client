@@ -8,23 +8,37 @@
             <span>我的航线</span>
         </h2>
         <span flex></span>
+        <md-button class="md-icon-button" ng-repeat="action in mtmc.toolbarActions"
+                   aria-label="{{action.label}}"
+                   ng-click="action.listener($event)">
+            <md-tooltip>
+                {{action.label}}
+            </md-tooltip>
+            <md-icon md-svg-icon="{{action.icon}}"></md-icon>
+        </md-button>
         <md-button class="md-icon-button" aria-label="More"
                    ng-click="showTrackBottomSheet($event)">
             <md-icon md-svg-icon="more_vert"></md-icon>
         </md-button>
     </div>
 </md-toolbar>
-<md-content flex
-            class="track-list">
+<md-content flex class="mmd-list track-list">
     <md-list>
         <md-list-item class="md-3-line"
                       ng-repeat="track in mtmc.tracks"
                       ng-click="mtmc.displayTrack(track)">
-            <md-icon md-font-icon="pictogram activity-{{track.activity}}" alt="activity-1"></md-icon>
+            <md-icon md-font-icon="pictogram activity-{{track.activity}}"
+                     alt="activity-1"
+                     class="leader"></md-icon>
             <div class="md-list-item-text">
                 <h3> {{ track.name }} </h3>
-                <p> {{ track.id }} </p>
+                <p> {{ track.description }} </p>
             </div>
+            <md-button class="md-icon-button md-warn" ng-show="mtmc.edit.editing"
+                       aria-label="删除"
+                       ng-click="$event.preventDefault();mtmc.remove(track)">
+                <md-icon md-svg-icon="action:delete"></md-icon>
+            </md-button>
         </md-list-item>
     </md-list>
 </md-content>

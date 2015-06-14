@@ -389,6 +389,13 @@ div.country {
 
 .mmd-list md-list md-list-item {
   border-bottom: 1px dashed grey; }
+  .mmd-list md-list md-list-item md-icon.leader {
+    margin: 15px 10px;
+    height: 40px;
+    width: 40px;
+    cursor: pointer; }
+  .mmd-list md-list md-list-item .md-list-item-inner md-icon.leader {
+    margin: 0 10px 0 0; }
 
 .upload-file-form md-progress-linear {
   z-index: 1; }
@@ -515,6 +522,13 @@ md-content.gpx-list md-list-item {
 .travel .spot-desc {
   padding: 10px; }
 
+md-grid-list md-grid-tile {
+  overflow: hidden; }
+  md-grid-list md-grid-tile md-icon {
+    position: absolute;
+    left: 2px;
+    top: 2px; }
+
 .footer {
   height: 200px;
   background-color: #212121;
@@ -615,6 +629,9 @@ md-backdrop.md-bottom-sheet-backdrop {
   z-index: 1003; }
 
 md-toast {
+  z-index: 1005; }
+
+md-tooltip {
   z-index: 1005; }
 
 /**  */

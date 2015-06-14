@@ -9,7 +9,7 @@
         'app.maps.geojson.display',
         'app.maps.geojson.edit',
         'app.maps.geojson.search',
-        'app.maps.geojson.choropleth'
+        'app.maps.geojson.my'
     ])
         .config(['$urlRouterProvider', '$stateProvider',
             function ($urlRouterProvider, $stateProvider) {
@@ -17,12 +17,8 @@
                     .state('app.maps.geojson', {
                         abstract: true,
                         url: '^/geojson',
-                        views: {
-                            '': {
-                                templateUrl: 'maps/geojson/geojson.tpl.html',
-                                controller: 'MapsGeojsonCtrl as mgc'
-                            }
-                        },
+                        templateUrl: 'maps/geojson/geojson.tpl.html',
+                        controller: 'MapsGeojsonCtrl as mgc',
                         resolve: {}
                     });
             }])
@@ -32,11 +28,13 @@
     var LOG_TAG = "Maps-Geojson: ";
 
     function MapsGeojsonCtrl($scope, $log, GeoJSONs, $mmdMessage) {
+        $scope.setAppTitle("GeoJSON");
+
         var self = this;
 
         $scope.showBottomSheet = function($event) {
             $scope.showGridBottomSheet($event, [
-                { name: '我的', icon: 'social:person', link: 'app.maps.geojson.user', params:{id:''} },
+                { name: '我的', icon: 'social:person', link: 'app.maps.geojson.my' },
                 { name: '上传', icon: 'image:camera', link: 'app.maps.geojson.upload' },
                 { name: '搜索', icon: 'action:search', link: 'app.maps.geojson.search' },
                 { name: 'Help', icon: 'action:help' , link: 'app.helps.geojson'}
@@ -54,18 +52,12 @@
 
             layer.setStyle({
                 dashArray: '',
-                fillOpacity: 0.7
+                fillOpacity: 0.3
             });
 
             if (!L.Browser.ie && !L.Browser.opera) {
                 layer.bringToFront();
             }
-        }
-
-        function zoomToFeature(e) {
-            $scope.getMap().then(function(map) {
-                map.fitBounds(e.target.getBounds());
-            });
         }
 
         $scope.setGeoJSON = function(geojson, layerEventListeners) {
@@ -101,23 +93,18 @@
                     }
                 });
 
-                fitBounds(geojson.data);
             } catch (ex) {
                 $log.debug(LOG_TAG + ex);
             } finally {
             }
         };
 
-        function fitBounds(geoJson) {
-            var bounds = turf.envelope(geoJson);
-            if(bounds && bounds.geometry && bounds.geometry.coordinates &&
-                bounds.geometry.coordinates[0]) {
-                bounds = bounds.geometry.coordinates[0];
-                $scope.getMap().then(function(map) {
-                    map.fitBounds([[bounds[0][1], bounds[0][0]], [bounds[2][1], bounds[2][0]]]);
-                });
-            }
-        }
+        $scope.$on('leafletDirectiveMap.geojsonCreated', function(e, geoJSON) {
+            $log.debug("geojson created");
+            $scope.getMap().then(function(map) {
+                map.fitBounds(geoJSON.getBounds());
+            });
+        });
 
         $scope.$on('leafletDirectiveMap.geojsonClick', function(e, feature, oe) {
             $log.debug("feature clicked");
@@ -128,14 +115,7 @@
                     map.fitBounds(oe.target.getBounds());
                 });
             }
-
         });
-
-        //$scope.$on('leafletDirectiveMap.geojsonMouseover', function(e) {
-        //});
-        //
-        //$scope.$on('leafletDirectiveMap.geojsonMouseout', function(e) {
-        //});
 
         /**
          * 提交保存数据
@@ -172,7 +152,18 @@
                     $mmdMessage.fail.save(err.statusText);
                 });
             }
-
         };
+
+        self.toolbarActions = [];
+        $scope.addToolbarAction = function(action) {
+            self.toolbarActions.push(action);
+        };
+        $scope.removeToolbarAction = function() {
+            self.toolbarActions = [];
+        };
+
+        $scope.$on('$destroy', function(e) {
+            self.toolbarActions = [];
+        });
     }
 })();

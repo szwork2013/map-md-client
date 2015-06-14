@@ -1,51 +1,42 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>Angular Material - Starter App</title>
+<html ng-app="app" ng-controller="AppCtrl as appc">
+    <head lang="zh">
+        <meta charset="UTF-8">
+        <title ng-bind="appTitle"></title>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
-    <!-- compiled CSS --><% styles.forEach( function ( file ) { %>
-    <link rel="stylesheet" type="text/css" href="<%= file %>"/>
-    <% }); %>
+        <!--[if IE]>
+        <style>
+            body .main-view {
+                height: 100%;
+            }
+            .maps-view {
+                position: relative;
+                height: 100%;
+            }
+        </style>
+        <![endif]-->
 
-    <link rel="stylesheet" type="text/css" href="vendor/fontawesome/css/font-awesome.css"/>
+        <!-- compiled CSS --><% styles.forEach( function ( file ) { %>
+        <link rel="stylesheet" type="text/css" href="<%= file %>"/>
+        <% }); %>
 
-    <!-- Dev Emulator -->
-    <!--<script type="text/javascript" src="vendor/hammer-touchemulator/touch-emulator.js"></script>-->
-    <!--<script> TouchEmulator(); </script>-->
+        <!-- Dev Emulator -->
+        <!--<script type="text/javascript" src="vendor/hammer-touchemulator/touch-emulator.js"></script>-->
+        <!--<script> TouchEmulator(); </script>-->
 
-    <!-- compiled JavaScript --><% scripts.forEach( function ( file ) { %>
-    <script type="text/javascript" src="<%= file %>"></script>
-    <% }); %>
+        <!-- compiled JavaScript --><% scripts.forEach( function ( file ) { %>
+        <script type="text/javascript" src="<%= file %>"></script>
+        <% }); %>
 
-</head>
-<body ng-app="starterApp" layout="column" ng-controller="AppCtrl as appc">
-
-<!--<md-button id="menu" class="md-raised md-mini md-icon-button menu"-->
-           <!--ng-click="appc.toggleList()"-->
-           <!--aria-label="Show User Menu"-->
-        <!--ng-show="$mdMedia('sm')">-->
-    <!--<md-icon md-svg-icon="navigation:menu"></md-icon>-->
-<!--</md-button>-->
-
-<div flex layout="row">
-
-    <div ui-view="sidenav"></div>
-
-    <div flex layout="column" ui-view>
-    </div>
-
-</div>
-
-<script type="text/javascript">
-
-    angular.module('starterApp', ['ngMaterial', 'app']);
-
-</script>
-</body>
+    </head>
+    <body layout="column">
+        <div ui-view="sidenav"></div>
+        <div flex layout="column" ui-view
+             class="main-view"></div>
+    </body>
 </html>

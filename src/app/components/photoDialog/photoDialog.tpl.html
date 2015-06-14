@@ -64,20 +64,21 @@
                 <md-list-item>
                     <p class="">{{photo.description}}</p>
                 </md-list-item>
-                <md-list-item>
+                <md-list-item ng-if="photo.location.address">
                     <md-button class="md-primary"
                                ng-href="{{googleUrl}}"
                                target="_blank">
                         <md-icon md-svg-icon="social:location_city"></md-icon>
-                        {{photo.point.address}}
+                        {{photo.location.address}}
                     </md-button>
                 </md-list-item>
-                <md-list-item>
+                <md-list-item ng-if="photo.location">
 
-                    <md-button class="md-primary" ng-href="{{googleUrl}}"
+                    <md-button class="md-primary"
+                               ng-href="{{googleUrl}}"
                                target="_blank">
                         <md-icon md-svg-icon="maps:place"></md-icon>
-                        {{photo.point.lat | number}}, {{photo.point.lng | number}}
+                        {{photo.location.position[1] | number}}, {{photo.location.position[0] | number}}
                     </md-button>
                 </md-list-item>
 

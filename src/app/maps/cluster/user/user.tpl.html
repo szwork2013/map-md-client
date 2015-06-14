@@ -31,14 +31,8 @@
     <div mmd-photo-card-wall layout-fill flex
          mmd-wall-options="{targetHeight: 160, fadeSpeed: 0, allowPartialLastRow: true}">
         <mmd-photo-card ng-repeat="photo in photos | limitTo:photosLimitTo"
-                        mmd-photo-id = "photo.id"
-                        mmd-photo-color = "photo.color"
-                        mmd-photo-url = "{{staticCtx}}/{{photo.oss_key}}@!photo-preview-sm"
-                        mmd-photo-size = "photo"
-                        mmd-photo-is360 = "photo.is360"
-                        mmd-photo-address = "photo.point.address"
-                        mmd-photo-description = "photo.description"
-                >
+                        photo = "photo"
+                        mmd-photo-url = "{{staticCtx}}/{{photo.oss_key}}@!photo-preview-sm">
         </mmd-photo-card>
     </div>
     <md-button flex

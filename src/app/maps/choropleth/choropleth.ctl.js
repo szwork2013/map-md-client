@@ -4,18 +4,16 @@
 (function() {
     'use strict';
 
-    angular.module('app.maps.geojson.choropleth', [])
+    angular.module('app.maps.choropleth', [
+        'app.maps.choropleth.upload'
+    ])
         .config(['$urlRouterProvider', '$stateProvider',
             function ($urlRouterProvider, $stateProvider) {
                 $stateProvider
-                    .state('app.maps.geojson.choropleth', {
-                        url: '^/choropleth/:id',
-                        views: {
-                            '': {
-                                templateUrl: 'maps/geojson/choropleth/choropleth.tpl.html',
-                                controller: 'MapsChoroplethCtrl'
-                            }
-                        },
+                    .state('app.maps.choropleth', {
+                        url: '^/choropleth',
+                        templateUrl: 'maps/choropleth/choropleth.tpl.html',
+                        controller: 'MapsChoroplethCtrl as mcc',
                         resolve: {
                             id: ['$stateParams', function($stateParams){
                                 return $stateParams.id;
@@ -24,11 +22,9 @@
                     });
             }])
         .controller('MapsChoroplethCtrl', ['$scope', '$log', 'leafletData', '$http', 'id',
-            MapsChoroplethCtrl])
-    ;
+            MapsChoroplethCtrl]);
 
     function MapsChoroplethCtrl($scope, $log, leafletData, $http, id) {
-
 
         //$scope.setLegend({
         //    colors: [ '#CC0066', '#006699', '#FF0000', '#00CC00', '#FFCC00' ],
@@ -86,52 +82,11 @@
             $scope.selectedFeature = feature;
         }
 
-        getDatajson(id).success(function(data, status) {
-            $scope.data = data;
-
-            getGeojson(id).success(function(data, status) {
-                $scope.setGeojson({
-                    data: data,
-                    style: style,
-                    resetStyleOnMouseout: true
-                });
-            });
-        });
-
-        // Get the countries data from a JSON
-        //$http.get("json/all.json").success(function(data, status) {
-        //
-        //    // Put the countries on an associative array
-        //    $scope.countries = {};
-        //    for (var i=0; i< data.length; i++) {
-        //        var country = data[i];
-        //        $scope.countries[country['alpha-3']] = country;
-        //    }
-        //
-        //    $http.get("json/countries.geo.json").success(function(data, status) {
-        //        $scope.setGeojson({
-        //            data: data,
-        //            style: style,
-        //            resetStyleOnMouseout: true
-        //        });
-        //    });
-        //});
-
         $scope.$on('$destroy', function(e) {
             $scope.setGeojson({});
             //$scope.setLegend();
         });
 
-        function getGeojson(id) {
-
-            var name = "json/china/" + id + ".geo.json";
-            return $http.get(name);
-        }
-
-        function getDatajson(id) {
-            var name = "json/china/" + id + ".data.json";
-            return $http.get(name);
-        }
     }
 
 

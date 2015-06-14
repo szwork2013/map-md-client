@@ -48,6 +48,17 @@
     md-list {
         md-list-item {
             border-bottom: 1px dashed grey;
+            md-icon.leader {
+                margin: 15px 10px;
+                height: 40px;
+                width: 40px;
+                cursor: pointer;
+            }
+            .md-list-item-inner {
+                md-icon.leader {
+                    margin: 0 10px 0 0;
+                }
+            }
         }
         &.md-default-theme {
             md-list-item {

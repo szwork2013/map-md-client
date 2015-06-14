@@ -50,20 +50,59 @@
             self.properties = feature.properties;
         }
 
-        //$scope.$on('leafletDirectiveMap.geojsonClick', function(e, feature, oe) {
-        //    $log.debug("feature clicked");
-        //    if(feature.geometry.type === "Point") {
-        //
-        //    }else {
-        //        $scope.getMap().then(function(map) {
-        //            map.fitBounds(oe.target.getBounds());
-        //        });
-        //    }
-        //
-        //});
+        $scope.$on('leafletDirectiveMap.geojsonClick', function(e, feature, oe) {
+            $log.debug("feature clicked");
+            self.properties = feature.properties;
+        });
+
+        self.filterSecId = function(properties) {
+            var result = {};
+            angular.forEach(properties, function(value, key) {
+                switch (key) {
+                    case 'style':
+                        break;
+                    default :
+                        result[key] = value;
+                }
+            });
+            return result;
+        };
+
+        self.like = {
+            liking: false,
+            icon: 'action:favorite_outline',
+            listener: function(e) {
+                var self = this;
+                if(this.liking) {
+                    GeoJSONs.unLike(geoJSONId).then(function() {
+                        self.setLike(false);
+                    },function(err) {
+                        $mmdMessage.fail.save(err.statusText);
+                    });
+                }else {
+                    GeoJSONs.like(geoJSONId).then(function() {
+                        self.setLike(true);
+                    },function(err) {
+                        $mmdMessage.fail.save(err.statusText);
+                    });
+                }
+            },
+            setLike: function(like) {
+                this.liking = like;
+                this.icon = this.liking ? 'action:favorite' : 'action:favorite_outline';
+            },
+            label: '喜欢'
+        };
+
+        // 登录用户是否like
+        GeoJSONs.isLike(geoJSONId).then(function(result) {
+            self.like.setLike(result);
+            $scope.addToolbarAction(self.like);
+        });
 
         $scope.$on('$destroy', function(e) {
             $scope.setGeoJSON({});
+            $scope.removeToolbarAction();
         });
     }
 })();

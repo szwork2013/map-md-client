@@ -3088,10 +3088,13 @@ angular.module("leaflet-directive")
 
                     lObject.addTo(map);
 
-                    if(!_hasSetLeafletData){//only do this once and play with the same ref forever
-                        _hasSetLeafletData = true;
+                    //if(!_hasSetLeafletData){//only do this once and play with the same ref forever
+                    //    _hasSetLeafletData = true;
                         leafletData.setGeoJSON(leafletGeoJSON, attrs.id);
-                    }
+                    //}
+
+                    // 创建完成后发出事件
+                    $rootScope.$broadcast('leafletDirectiveMap.geojsonCreated', leafletGeoJSON);
                 };
 
                 var _create = function(model){
@@ -3102,11 +3105,12 @@ angular.module("leaflet-directive")
                         $it.each(model, function(m, name) {
                             //name could be layerName and or groupName
                             //for now it is not tied to a layer
-                            _addGeojson(m,name);
+                            _addGeojson(m, name);
                         });
                         return;
                     }
                     _addGeojson(model);
+
                 };
 
                 _extendDirectiveControls(attrs.id, 'geojson', _create, _clean);

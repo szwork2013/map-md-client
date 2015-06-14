@@ -1,4 +1,4 @@
-<md-content class="" flex layout="column" layout-fill>
+<md-content layout-fill>
     <div flex layout="column"
          class="">
         <md-card class="caption">
@@ -10,7 +10,7 @@
             <md-card-content >
                 <md-list>
                     <md-list-item class="md-3-line"
-                                  ng-repeat="(key,val) in mgdc.properties">
+                                  ng-repeat="(key,val) in mgdc.filterSecId(mgdc.properties)">
                         <div class="md-list-item-text">
                             <h3> {{ key }} </h3>
                             <p> {{ val }} </p>

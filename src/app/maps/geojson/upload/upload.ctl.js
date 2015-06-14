@@ -111,12 +111,21 @@
             $scope.setGeoJSON(geoJSON, {
                 click: onFeatureClick
             });
-
         }
 
         self.submit = function(geoJSON) {
-            setGeoJSON(geoJSON);
             $scope.submit(geoJSON);
+        };
+
+        self.updateGeoJson = function(geoJSON) {
+            setGeoJSON(geoJSON);
+        };
+
+        self.cancel = function(index) {
+            if(self.geoJSON === self.geojsons[index]) {
+                $scope.setGeoJSON({});
+            }
+            self.geojsons.splice(index, 1);
         };
 
         $scope.$on('$destroy', function(e) {

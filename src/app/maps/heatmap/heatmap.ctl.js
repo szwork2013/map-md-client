@@ -1,9 +1,9 @@
-/**
- * Created by tiwen.wang on 5/8/2015.
- */
 (function() {
     'use strict';
 
+    /**
+     * 热点地图，总控制热点图的呈现，下级控制器可以控制数据源从不同的modal获取
+     */
     angular.module('app.maps.heatmap', ['app.maps.heatmap.user', 'app.maps.heatmap.travel'])
         .config(['$urlRouterProvider', '$stateProvider',
             function ($urlRouterProvider, $stateProvider) {
@@ -56,6 +56,7 @@
                         }
                     },
                     max: 8,
+                    maxZoom: 10,
                     visible: true
                 }
             };

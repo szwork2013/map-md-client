@@ -25,7 +25,7 @@
          */
         function showPhoto(ev, photo) {
             return $mdDialog.show({
-                controller: PhotoDialogController,
+                controller: ['$scope', '$mdDialog', 'photo', PhotoDialogController],
                 templateUrl: 'components/photoDialog/photoDialog.tpl.html',
                 targetEvent: ev,
                 locals: {
@@ -59,7 +59,7 @@
                 $scope.photo = photo;
                 if(photo.user_id > 0) {
                     // 获取照片作者信息
-                    Users.get(photo.user_id).then(function(user) {
+                    Users.getUser(photo.user_id).then(function(user) {
                         $scope.user = user;
                     });
                 }

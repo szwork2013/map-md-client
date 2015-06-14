@@ -18,15 +18,18 @@
         </md-not-found>
     </md-autocomplete>
 </form>
-<md-content flex
-            class="mmd-list">
+<md-content layout-fill
+            class="mmd-list ">
     <md-list>
         <md-list-item class="md-3-line"
                       ng-repeat="geoJSON in mgsc.geoJSONs"
-                      >
-            <md-icon md-font-icon="pictogram activity-{{geoJSON.name}}" alt="activity-1"></md-icon>
+                      ng-click="mgsc.display(geoJSON)">
+            <md-icon md-font-icon="pictogram activity-{{geoJSON.type}}"
+                     class="leader"
+                     alt="activity-1"
+                     ></md-icon>
             <div class="md-list-item-text">
-                <h3 ng-click="go('app.maps.geojson.display', {id: geoJSON.id})"> {{ geoJSON.name }} </h3>
+                <h3 ng-click="$event.preventDefault();go('app.maps.geojson.display', {id: geoJSON.id})"> {{ geoJSON.name }} </h3>
                 <p> {{ geoJSON.description }} </p>
             </div>
         </md-list-item>

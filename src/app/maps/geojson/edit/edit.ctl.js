@@ -22,6 +22,7 @@
         .controller('MapsGeojsonEditCtrl', ['$scope', '$log', '$timeout', '$q', 'GeoJSONs',
             '$mmdMessage', 'geoJSONId',
             MapsGeojsonEditCtrl])
+        .directive('mmdMapGeojsonEditFeature', ['$mdTheming','$log', mmdMapGeojsonEditFeatureDirective])
         .controller('MapsGeojsonEditFeatureCtrl', ['$scope', '$log', '$timeout', '$q', '$mmdMessage',
             MapsGeojsonEditFeatureCtrl])
     ;
@@ -48,32 +49,68 @@
             $scope.submit(geoJSON);
         };
 
+        $scope.$on('leafletDirectiveMap.geojsonClick', function(e, feature, fe) {
+            angular.forEach($scope.geoJSON.data.features, function(f, key) {
+                if(angular.equals(f, feature)) {
+                    f.properties = f.properties || {};
+                    f.properties.style = angular.extend({}, self.geoJSON.style, f.properties.style);
+                    self.features = [f];
+                }
+            });
+        });
+
+        self.featurePropsUpdated = function(properties) {
+            if(self.features[0]) {
+                self.features[0].properties = properties;
+            }
+            $scope.setGeoJSON(self.geoJSON);
+        };
+
         $scope.$on('$destroy', function(e) {
             $scope.setGeoJSON({});
         });
     }
 
+    function mmdMapGeojsonEditFeatureDirective($mdTheming, $log) {
+        return {
+            restrict: 'AE',
+            replace: false,
+            scope: {
+                feature: '=',
+                updated: '='
+            },
+            link: link,
+            controller: 'MapsGeojsonEditFeatureCtrl as mgefc',
+            templateUrl: 'maps/geojson/edit/feature.tpl.html'
+        };
+
+        function link(scope, element, attrs) {
+        }
+    }
+
     function MapsGeojsonEditFeatureCtrl($scope, $log, $timeout, $q, $mmdMessage) {
         var self = this;
 
-        $scope.$on('leafletDirectiveMap.geojsonClick', function(e, feature, fe) {
-            angular.forEach($scope.geoJSON.data.features, function(f, key) {
-                if(angular.equals(f, feature)) {
-                    f.properties = f.properties || {};
-                    f.properties.style = f.properties.style || {};
-                    self.feature = f.properties;
-                    self.properties = angular.copy(f.properties);
-                }
-            });
-        });
+        self.feature = $scope.feature.properties;
+        self.properties = angular.copy($scope.feature.properties);
 
         self.reset = function() {
             self.feature.style = angular.copy(self.properties.style);
-            $scope.setGeoJSON($scope.geoJSON);
+            $scope.updated(self.feature);
+            $scope.featureForm.$setPristine();
         };
 
-        self.setGeoJSON = function() {
-            $scope.setGeoJSON($scope.geoJSON);
+        self.filterSecId = function(properties) {
+            var result = {};
+            angular.forEach(properties, function(value, key) {
+                switch (key) {
+                    case 'style':
+                        break;
+                    default :
+                        result[key] = value;
+                }
+            });
+            return result;
         };
     }
 })();

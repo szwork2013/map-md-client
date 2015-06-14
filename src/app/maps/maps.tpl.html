@@ -1,6 +1,10 @@
-<div flex layout="row" class="maps-view">
-    <md-content flex>
-        <leaflet id="main-map" defaults="defaults" options="options" center="center"
+<div layout="row" layout-fill flex
+     class="maps-view">
+    <md-content flex layout-fill>
+        <leaflet id="main-map"
+                 defaults="defaults"
+                 options="options"
+                 center="center"
                  markers="markers"
                  geojson="geojson"
                  layers="layers"
@@ -8,18 +12,9 @@
                  paths="paths"
                  url-hash-center="yes"></leaflet>
         <mmd-search get-map="getMap"></mmd-search>
-
-        <!--<md-button id="maps-sidenav-menu"-->
-                   <!--class="md-raised md-mini md-icon-button menu"-->
-                   <!--ng-click="toggleRightSidenav()"-->
-                   <!--aria-label="Show maps sidenav"-->
-                   <!--ng-show="$mdMedia('sm')"-->
-                <!-->-->
-            <!--<md-icon md-svg-icon="navigation:menu"></md-icon>-->
-        <!--</md-button>-->
     </md-content>
 
-    <md-sidenav flex layout="column" md-is-locked-open="$mdMedia('gt-md')"
+    <md-sidenav layout="column" md-is-locked-open="$mdMedia('gt-md')"
                 class="md-sidenav-right md-whiteframe-z2 maps-sidenav" md-component-id="right"
                 >
         <div ui-view

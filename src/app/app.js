@@ -9,13 +9,17 @@
         'app.components',
         'app.home',
         'app.maps',
+        'app.photos',
         'app.settings',
         'ui.router',
         'ngMaterial',
         'leaflet-directive',
         'templates-app',
-        'templates-common',
-        'angularMoment'])
+        'templates-common'])
+        .value('staticCtx', 'http://static.photoshows.cn')
+        //.value('staticCtx', 'http://test.photoshows.cn')
+        //.value('serverBaseUrl', 'http://www.photoshows.cn')
+        .value('serverBaseUrl', 'http://localhost:8080')
         .config(['$logProvider', '$urlRouterProvider', '$stateProvider', '$locationProvider',
             function ($logProvider, $urlRouterProvider, $stateProvider, $locationProvider) {
 
@@ -43,7 +47,6 @@
                 ;
             }])
         .run(['$rootScope', 'Oauth2Service', 'Authenticate', '$log', '$location', Run])
-
         .controller('AppCtrl',
         ['$scope', '$mdSidenav', '$mdBottomSheet', '$mdMedia', '$log', '$q', 'UrlService', 'staticCtx',
             AppCtrl])
@@ -56,6 +59,10 @@
             // init logged user
             Authenticate.getUser();
         });
+
+        $rootScope.setAppTitle = function(title) {
+            $rootScope.appTitle = title;
+        };
     }
 
     /**

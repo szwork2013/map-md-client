@@ -16,21 +16,61 @@
                     });
             }])
         .controller('MapsTrackMyCtrl',
-        ['$scope', '$mdSidenav', '$log', '$q', 'Tracks',
+        ['$scope', '$mdSidenav', '$log', '$q', 'Tracks', '$mmdMessage',
             MapsTrackMyCtrl]);
 
     var LOG_TAG = "Maps-Track-My: ";
 
-    function MapsTrackMyCtrl($scope, $mdSidenav, $log, $q, Tracks) {
+    function MapsTrackMyCtrl($scope, $mdSidenav, $log, $q, Tracks, $mmdMessage) {
 
         var self = this;
+        var page = 0, size = 20;
+
+        Tracks.my(page, size).then(function(tracks) {
+            self.tracks = tracks;
+        });
 
         self.displayTrack = function(track) {
             if(track.layer) {
                 $scope.activeTrack(track);
             }else {
-                self.addTrack(track);
+                track.geoJson = JSON.parse(track.geo_json);
+                $scope.addTrack(track, track.name);
             }
         };
+
+        self.remove = function(track) {
+            Tracks.remove(track.id).then(function() {
+                $mmdMessage.success.remove();
+                if(self.tracks.indexOf(track) > -1) {
+                    self.tracks.splice(self.tracks.indexOf(track), 1);
+                }
+            },function(err) {
+                $mmdMessage.fail.remove(err.statusText);
+            });
+        };
+
+        self.edit = {
+            editing: false,
+            icon: 'content:remove_circle_outline',
+            listener: function(e) {
+                this.editing = !this.editing;
+                this.icon = this.editing ? 'content:remove_circle' : 'content:remove_circle_outline';
+            },
+            label: '编辑'
+        };
+        self.toolbarActions = [];
+        $scope.addToolbarAction = function(action) {
+            self.toolbarActions.push(action);
+        };
+        $scope.removeToolbarAction = function() {
+            self.toolbarActions = [];
+        };
+
+        $scope.addToolbarAction(self.edit);
+
+        $scope.$on('$destroy', function(e) {
+            self.toolbarActions = [];
+        });
     }
 })();

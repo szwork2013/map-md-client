@@ -24,13 +24,13 @@
     function MapsTrackSearchCtrl($scope, $mdSidenav, $log, $q, Tracks) {
 
         var self = this;
+        var page = 0, size = 20;
+        self.tracks = [];
 
         self.searchTextChange = function(text) {
             if(text) {
-                Tracks.search(text).then(function(tracks) {
-                    angular.forEach(tracks, function(track, key) {
-                        self.tracks.push(track);
-                    });
+                Tracks.search(text, page, size).then(function(tracks) {
+                    self.tracks = tracks;
                 });
             }else {
                 angular.forEach(self.tracks, function(track, key) {
@@ -44,31 +44,17 @@
             if(track.layer) {
                 $scope.activeTrack(track);
             }else {
+                track.geoJson = JSON.parse(track.geo_json);
                 self.addTrack(track);
             }
-        };
-
-        self.addTrack = function(track) {
-            //var elevation = L.control.elevation();
-            //track.elevation = elevation;
-            //track.layer = L.geoJson(track.geoJson, {
-            //    onEachFeature: elevation.addData.bind(elevation)
-            //});
-            $scope.addTrack(track, track.name);
         };
 
         self.querySearch = function(text) {
             var deferred = $q.defer();
 
             deferred.resolve([{
-                name: 't1',
+                name: text,
                 id: 1
-            },{
-                name: 't2',
-                id: 2
-            },{
-                name: 't3',
-                id: 3
             }]);
 
             return deferred.promise;

@@ -55,7 +55,7 @@
 
         function init() {
             // 获取用户信息
-            Users.get(userId).then(function(user) {
+            Users.getUser(userId).then(function(user) {
                 $scope.user = user;
             });
             photos = [];

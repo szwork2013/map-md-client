@@ -31,16 +31,9 @@
                 if(self.login&&self.user) {
                     deferred.resolve(self.user);
                 }else if(!self.login && self.logout) {
-                    Users.me().then(function(res) {
+                    Users.me().then(function(user) {
                         self.login = true;
-                        self.user = {
-                            "id": res.id,
-                            "username": res.username,
-                            "name": res.name,
-                            "avatar": res.avatar,
-                            "photoCount": res.photo_count,
-                            "photoViews": res.photo_views
-                        };
+                        self.user = user;
                         deferred.resolve(self.user);
                     });
                 }else {

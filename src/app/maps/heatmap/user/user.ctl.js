@@ -44,14 +44,14 @@
 
         function init() {
             // 获取用户信息
-            Users.get(userId).then(function(user) {
+            Users.getUser(userId).then(function(user) {
                 $scope.user = user;
             });
 
             $scope.photos = [];
 
             // 开始调用获取用户图片
-            callGetPhotos(userId, 1);
+            callGetPhotos(userId, 0);
         }
 
         /**
@@ -75,8 +75,8 @@
         function setHeatMap(photos) {
             var heatData = [];
             angular.forEach(photos, function(photo, key) {
-                if(photo.point) {
-                    heatData.push([photo.point.lat, photo.point.lng]);
+                if(photo.location) {
+                    heatData.push([photo.location.position[1], photo.location.position[0]]);
                 }
             });
             $scope.setHeatMap("User " + userId, heatData);

@@ -23,7 +23,9 @@
             md-min-length="0"
             placeholder="搜索">
         <md-item-template>
-            <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.display_name}}</span>
+            <img ng-src="{{item.icon}}"><span md-highlight-text="searchText"
+                           md-highlight-flags="^i">{{item.display_name
+            }}</span>
         </md-item-template>
         <md-not-found>
             No matches found for "{{searchText}}".

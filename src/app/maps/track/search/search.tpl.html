@@ -1,5 +1,5 @@
 <md-toolbar md-scroll-shrink
-            class="md-tall md-accent track-search">
+            class="md-accent track-search">
     <div class="md-toolbar-tools">
         <md-button class="md-icon-button" aria-label="Menu"
                    ng-click="toggleLeftBar()">
@@ -35,30 +35,18 @@
             <md-icon md-svg-icon="more_vert"></md-icon>
         </md-button>
     </div>
-    <div class="md-toolbar-content">
-        <!--<fieldset class="standard">
-            <legend>Using <code>ng-model</code></legend>
-            <div layout="row" layout-wrap>
-                <div flex="50">
-                    <md-checkbox ng-model="data.cb1" aria-label="Checkbox 1">
-                        Checkbox 1: {{ data.cb1 }}
-                    </md-checkbox>
-                </div>
-
-            </div>
-        </fieldset>-->
-    </div>
 </md-toolbar>
 <md-content flex
-            class="track-list">
+            class="mmd-list track-list">
     <md-list>
         <md-list-item class="md-3-line"
                       ng-repeat="track in ctrl.tracks"
                 ng-click="ctrl.displayTrack(track)">
-            <md-icon md-font-icon="pictogram activity-{{track.activity}}" alt="activity-1"></md-icon>
+            <md-icon md-font-icon="pictogram activity-{{track.activity}}" alt="activity-1"
+                    class="leader"></md-icon>
             <div class="md-list-item-text">
                 <h3> {{ track.name }} </h3>
-                <p> {{ track.id }} </p>
+                <p> {{ track.description }} </p>
             </div>
         </md-list-item>
     </md-list>
