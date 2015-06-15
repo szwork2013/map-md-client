@@ -6,6 +6,16 @@ material design client for map
 $ grunt watch
 ```
 
+## build
+```
+grunt build
+```
+
+## pakage
+```
+grunt comiple
+```
+
 ## unit test
 ```sh
 grunt karma:continuous

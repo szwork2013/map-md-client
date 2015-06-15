@@ -1,0 +1,12 @@
+md-grid-tile {
+  .cover {
+    width: 100%;
+    height: 100%;
+    &.select {
+      border: 5px solid cornflowerblue;
+    }
+    img{
+      width: 100%;
+    }
+  }
+}

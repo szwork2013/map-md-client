@@ -123,10 +123,6 @@
                 });
         };
 
-        $scope.go = function(state, params) {
-            $state.go(state, params);
-        };
-
         function toggleRight() {
             var pending = $mdBottomSheet.hide() || $q.when(true);
 

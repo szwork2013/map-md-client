@@ -45,6 +45,7 @@
         .factory('Comments',   ['ApiRestangular', CommentsServiceFactory])
         .factory('Tracks',     ['ApiRestangular', TrackServiceFactory])
         .factory('GeoJSONs',   ['ApiRestangular', GeoJSONServiceFactory])
+        .factory('Albums',     ['ApiRestangular', AlbumServiceFactory])
     ;
 
     function PhotoServiceFactory(Restangular) {
@@ -180,6 +181,52 @@
 
         function unLike(id) {
             return service.one(id).one('like').remove();
+        }
+    }
+
+    function AlbumServiceFactory(Restangular) {
+        var service = Restangular.service('album');
+        //Restangular.extendModel('album', function(model) {
+        //    model.addPhotos = function (photos) {
+        //        return this.post('add', photos);
+        //    };
+        //});
+        return {
+            get: get,
+            create: create,
+            modify: modify,
+            remove: remove,
+            addPhotos: addPhotos,
+            removePhotos: removePhotos,
+            deletePhotos: deletePhotos
+        };
+
+        function get(id) {
+            return service.one(id).get();
+        }
+
+        function create(album) {
+            return service.one().post('', album);
+        }
+
+        function modify(id, album) {
+            return service.one(id).post('', album);
+        }
+
+        function remove(id) {
+            return service.one(id).remove();
+        }
+
+        function addPhotos(id, photoIds) {
+            return service.one(id).post('add', photoIds);
+        }
+
+        function removePhotos(id, photoIds) {
+            return service.one(id).post('remove', photoIds);
+        }
+
+        function deletePhotos(id, photoIds) {
+            return service.one(id).post('delete', photoIds);
         }
     }
 

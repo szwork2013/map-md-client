@@ -48,7 +48,7 @@
             }])
         .run(['$rootScope', 'Oauth2Service', 'Authenticate', '$log', '$location', Run])
         .controller('AppCtrl',
-        ['$scope', '$mdSidenav', '$mdBottomSheet', '$mdMedia', '$log', '$q', 'UrlService', 'staticCtx',
+        ['$scope', '$mdSidenav', '$mdBottomSheet', '$mdMedia', '$state', '$q', 'UrlService', 'staticCtx',
             AppCtrl])
         ;
 
@@ -71,12 +71,12 @@
      * @param $mdSidenav
      * @param $mdBottomSheet
      * @param $mdMedia
-     * @param $log
+     * @param $state
      * @param $q
      * @param staticCtx
      * @constructor
      */
-    function AppCtrl($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $log, $q, UrlService, staticCtx) {
+    function AppCtrl($scope, $mdSidenav, $mdBottomSheet, $mdMedia, $state, $q, UrlService, staticCtx) {
         var self = this;
 
         self.toggleList   = toggleUsersList;
@@ -98,5 +98,9 @@
                 $mdSidenav('left').toggle();
             });
         }
+
+        $scope.go = function(state, params) {
+            $state.go(state, params);
+        };
     }
 })();

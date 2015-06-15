@@ -28,6 +28,9 @@
                     return $mdToast.show(toast);
                 };
 
+                function createSuccess(message) {
+                    showMessage("创建成功 " + (message || ''));
+                }
                 function saveSuccess(message) {
                     showMessage("保存成功 " + (message || ''));
                 }
@@ -36,6 +39,9 @@
                 }
                 function removeSuccess(message) {
                     showMessage("删除成功 " + (message || ''));
+                }
+                function createFail(message) {
+                    showMessage("创建失败 " + (message || ''));
                 }
                 function saveFail(message) {
                     showMessage("保存失败 " + (message || ''));
@@ -50,11 +56,13 @@
                 return {
                     showMessage: showMessage,
                     success: {
+                        create: createSuccess,
                         save: saveSuccess,
                         update: updateSuccess,
                         remove: removeSuccess
                     },
                     fail: {
+                        create: createFail,
                         save: saveFail,
                         update: updateFail,
                         remove: removeFail

@@ -13,11 +13,11 @@
                 <div flex layout="row">
                     <md-tabs flex
                              md-selected="menuSelectedIndex"
-                             md-dynamic-height md-border-bottom
-                            >
+                             md-dynamic-height md-border-bottom>
                         <md-tab label="{{item.name}}"
                                 ng-repeat="item in linkItems"
-                                >
+                                md-active="$index==menuSelectedIndex"
+                                md-on-select="selectPage(item)">
                         </md-tab>
                     </md-tabs>
                 </div>

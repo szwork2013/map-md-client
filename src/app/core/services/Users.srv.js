@@ -81,7 +81,8 @@
             getUser: getUser,
             getPhotos: getPhotos,
             uploadAvatar: uploadAvatar,
-            saveAccount: saveAccount
+            saveAccount: saveAccount,
+            getAlbums: getAlbums
         };
 
         function getMe() {
@@ -120,5 +121,8 @@
             return userService.one(user.id).post('account', user);
         }
 
+        function getAlbums(id) {
+            return userService.one(id).all('albums').getList();
+        }
     }
 })();

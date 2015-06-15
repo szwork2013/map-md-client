@@ -16,11 +16,12 @@
                     })
                 ;
             }])
-        .controller('PhotosAllCtrl', ['$scope', '$log', '$mmdPhotoDialog', '$mdDialog', '$mmdMessage',
-            'Authenticate', 'Users', 'Photos', PhotosAllCtrl])
+        .controller('PhotosAllCtrl', ['$scope', '$log', '$mmdPhotoDialog', '$mmdMessage',
+            'Authenticate', 'Users', 'Photos', '$albumAddPhoto', PhotosAllCtrl])
     ;
 
-    function PhotosAllCtrl($scope, $log, $mmdPhotoDialog, $mdDialog, $mmdMessage, Authenticate, Users, Photos) {
+    function PhotosAllCtrl($scope, $log, $mmdPhotoDialog, $mmdMessage, Authenticate,
+                           Users, Photos, $albumAddPhoto) {
         var self = this;
         self.photos = [];
         var userId = 0, pageSize = 50, pageNo = -1;
@@ -62,6 +63,10 @@
                         height: '100%',
                         margin: '0 -' + (((photo.width/photo.height)-photo.colspan)/photo.colspan/2)*100 + '%'
                     };
+                }else {
+                    photo.style = {
+                        width: '100%'
+                    };
                 }
             }else {
                 photo.rowspan = Math.round(photo.height/photo.width);
@@ -79,39 +84,50 @@
             }
         }
 
-        self.displayPhoto = function($event, photo) {
-            $mmdPhotoDialog.show($event, {id: photo.id});
-        };
-
         self.remove = function(ev) {
-            $scope.showConfirm(ev).then(function(confirm) {
-                angular.forEach(self.photos, function(photo, key) {
-                    if(photo.actionSelected) {
-                        Photos.remove(photo.id).then(function(res) {
-                            self.photos.splice(self.photos.indexOf(photo), 1);
-                            $mmdMessage.success.remove();
-                        },function(err) {
-                            $mmdMessage.fail.remove(err.statusText);
-                        });
-                    }
+            var photos = getSelectPhotos();
+            if(!photos.length) {
+                $scope.showSelectPrompt(ev);
+                return;
+            }
+            $scope.showConfirm(ev, '删除图片?', '确认删除选中的图片').then(function(confirm) {
+                angular.forEach(photos, function(photo, key) {
+                    Photos.remove(photo.id).then(function(res) {
+                        self.photos.splice(self.photos.indexOf(photo), 1);
+                        $mmdMessage.success.remove();
+                    },function(err) {
+                        $mmdMessage.fail.remove(err.statusText);
+                    });
                 });
-
             },function(cancel) {
             });
         };
 
-        $scope.showConfirm = function(ev) {
-            // Appending dialog to document.body to cover sidenav in docs app
-            var confirm = $mdDialog.confirm()
-                .parent(angular.element(document.body))
-                .title('删除图片?')
-                .content('确认删除选中的图片')
-                .ariaLabel('Lucky day')
-                .ok('确认')
-                .cancel('取消')
-                .targetEvent(ev);
-            return $mdDialog.show(confirm);
+        self.addToAlbum = function(ev) {
+            var photos = getSelectPhotos();
+            if(!photos.length) {
+                $scope.showSelectPrompt(ev);
+                return;
+            }
+            if(self.albums) {
+                $albumAddPhoto(ev, {id: userId}, self.albums, photos );
+            }else {
+                $albumAddPhoto(ev, {id: userId}, self.albums, photos )
+                    .then(function(albums) {
+                        self.albums = albums;
+                    });
+            }
         };
+
+        function getSelectPhotos() {
+            var photos = [];
+            angular.forEach(self.photos, function(photo, key) {
+                if(photo.actionSelected) {
+                    this.push(photo);
+                }
+            }, photos);
+            return photos;
+        }
 
         $scope.moveSelect = false;
     }

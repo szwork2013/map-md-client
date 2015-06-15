@@ -4,11 +4,11 @@
                      ui-selector="photo.actionSelected">
         <md-grid-list
                 md-cols-gt-md="10" md-cols-sm="3" md-cols-md="6"
-                md-row-height-gt-md="1:1" md-row-height="4:3"
+                md-row-height-gt-md="1:1" md-row-height="1:1"
                 md-gutter-gt-md="1px" md-gutter-gt-sm="1px" md-gutter="1px">
             <md-grid-tile
                     ng-repeat="photo in pac.photos"
-                    ng-click="pac.displayPhoto($event, photo)"
+                    ng-click="displayPhoto($event, photo)"
                     ng-mouseover="photo.actionSelectable = true"
                     ng-mouseleave="photo.actionSelectable = false"
                     class="photo"
@@ -45,7 +45,7 @@
         <md-button class="md-warn"
                    ng-click="pac.remove($event)">删除</md-button>
         <md-button class="md-raised md-primary"
-                   ng-click="pac.move($event)">移动</md-button>
+                   ng-click="pac.addToAlbum($event)">移动</md-button>
         <md-button class="md-raised md-primary"
                    ng-disabled="true"
                    ng-show="sac.saving">保存中...</md-button>

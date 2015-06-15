@@ -1,14 +1,26 @@
-<a href=""
-   ng-click="displayPhoto($event, photo)">
-    <img ng-src="{{photoUrl}}"
-         data-width="{{photo.width}}" data-height="{{photo.height}}">
-    <div ng-if="photo.is360">
-        <div class="icon-photo-p360"></div>
+<div ng-mouseover="photo.actionSelectable = true"
+     ng-mouseleave="photo.actionSelectable = false">
+    <div class="action-selector"
+         ng-show="photo.actionSelectable||actionSelected"
+         ng-click="$event.stopPropagation();actionSelected=!actionSelected">
+        <md-icon md-svg-icon="toggle:check_box"
+                 ng-if="actionSelected"
+                 style="color: dodgerblue;"></md-icon>
+        <md-icon md-svg-icon="toggle:check_box_outline_blank"
+                 ng-if="!actionSelected"></md-icon>
     </div>
-</a>
-<div class="action-container">
-    <div class="action ponm-photo-footer">
-        <div><md-icon md-svg-icon="maps:place"></md-icon></md-icon>{{photo.location.address}}</div>
-        <pre class="description">{{photo.description}}</pre>
+    <a href=""
+       ng-click="displayPhoto($event, photo)">
+        <img ng-src="{{photoUrl}}"
+             data-width="{{photo.width}}" data-height="{{photo.height}}">
+        <div ng-if="photo.is360">
+            <div class="icon-photo-p360"></div>
+        </div>
+    </a>
+    <div class="action-container">
+        <div class="action ponm-photo-footer">
+            <div><md-icon md-svg-icon="maps:place"></md-icon></md-icon>{{photo.location.address}}</div>
+            <pre class="description">{{photo.description}}</pre>
+        </div>
     </div>
 </div>

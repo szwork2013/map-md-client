@@ -10,7 +10,8 @@
             'app.components.photoCard',
             'app.components.photoSlider',
             'app.components.search',
-            'app.components.saveAs'
+            'app.components.saveAs',
+            'app.components.album'
         ]);
 
 })();

@@ -1,0 +1,39 @@
+<md-dialog aria-label="Dialog"
+           layout-fill
+           layout-margin
+           layout="column">
+    <md-dialog-content flex layout-fill>
+        <md-grid-list
+                md-cols-gt-md="5" md-cols-sm="2" md-cols-md="4"
+                md-row-height-gt-md="1:1" md-row-height="4:3"
+                md-gutter-gt-md="1px" md-gutter-gt-sm="1px" md-gutter="1px">
+            <md-grid-tile
+                    ng-repeat="album in albums"
+                    md-colspan-gt-sm="1"
+                    md-rowspan-gt-sm="1"
+                    ng-click="selectAlbum(album)">
+                <div class="cover" ng-class="{select: selAlbum.id==album.id}">
+                    <a href="">
+                        <img ng-src="{{album.cover ? staticCtx+'/'+album.cover.oss_key+'@1e_200w_200h_1c_1o.jpg' : 'assets/images/album-cover.jpg'}}">
+                    </a>
+                </div>
+
+                <md-grid-tile-footer>
+                    <h3>{{album.name}}</h3>
+                </md-grid-tile-footer>
+            </md-grid-tile>
+        </md-grid-list>
+    </md-dialog-content>
+    <div class="md-actions" layout="row">
+        <span flex></span>
+        <md-button ng-click="cancel('not useful')" class="md-primary">
+            取消
+        </md-button>
+        <md-button ng-click="newAlbum(ev)" class="md-primary">
+            新建
+        </md-button>
+        <md-button ng-click="addTo()" class="md-primary">
+            确定
+        </md-button>
+    </div>
+</md-dialog>

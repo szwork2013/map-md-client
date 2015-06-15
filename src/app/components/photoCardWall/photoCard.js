@@ -20,6 +20,7 @@
             link: link,
             scope: {
                 photo: "=",
+                actionSelected: '=',
                 photoUrl: "@mmdPhotoUrl"
             },
             templateUrl: 'components/photoCardWall/photoCard.tpl.html'
