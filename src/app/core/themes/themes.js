@@ -31,9 +31,11 @@ angular
             .icon("action:account_box",    "./assets/svg/action/ic_account_box_24px.svg", 24)
             .icon("action:account_circle",
             "./assets/svg/action/ic_account_circle_24px.svg", 24)
+            .icon("content:add",           "./assets/svg/content/ic_add_24px.svg", 24)
             .icon("content:remove",        "./assets/svg/content/ic_remove_24px.svg", 24)
             .icon("content:remove_circle", "./assets/svg/content/ic_remove_circle_24px.svg", 24)
             .icon("content:remove_circle_outline", "./assets/svg/content/ic_remove_circle_outline_24px.svg", 24)
+            .icon("content:save", "./assets/svg/content/ic_save_24px.svg", 24)
             .icon("maps:place",            "./assets/svg/maps/ic_place_24px.svg", 24)
             .icon("maps:map",              "./assets/svg/maps/ic_map_24px.svg", 24)
             .icon("maps:directions_walk",  "./assets/svg/maps/ic_directions_walk_24px.svg", 24)

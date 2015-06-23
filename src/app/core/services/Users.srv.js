@@ -68,7 +68,7 @@
     }
 
     function UsersServiceFactory(Restangular) {
-        var userService = Restangular.service('user');
+        var service = Restangular.service('user');
         Restangular.extendModel('user', function(model) {
             model.saveAccount = function() {
                 return this.post('account', this);
@@ -79,6 +79,7 @@
             me: getMe,
             get: getOpenInfo,
             getUser: getUser,
+            getByUsername: getByUsername,
             getPhotos: getPhotos,
             uploadAvatar: uploadAvatar,
             saveAccount: saveAccount,
@@ -86,19 +87,23 @@
         };
 
         function getMe() {
-            return userService.one().get();
+            return service.one().get();
         }
 
         function getOpenInfo(id) {
-            return userService.one(id).one('openinfo').get();
+            return service.one(id).one('openinfo').get();
         }
 
         function getUser(id) {
-            return userService.one(id).get();
+            return service.one(id).get();
+        }
+
+        function getByUsername(name) {
+            return service.one().get({name: name});
         }
 
         function getPhotos(id, pageSize, pageNo) {
-            return userService.one(id).one('photos', pageSize).all(pageNo).getList();
+            return service.one(id).one('photos', pageSize).all(pageNo).getList();
         }
 
         function uploadAvatar(data) {
@@ -112,17 +117,17 @@
 
             multipart += "--" + boundary + "--\r\n";
 
-            return userService.one().post('avatar', multipart, {}, {
+            return service.one().post('avatar', multipart, {}, {
                 "Content-Type": "multipart/form-data; charset=utf-8; boundary=" + boundary
             });
         }
 
         function saveAccount(user) {
-            return userService.one(user.id).post('account', user);
+            return service.one(user.id).post('account', user);
         }
 
         function getAlbums(id) {
-            return userService.one(id).all('albums').getList();
+            return service.one(id).all('albums').getList();
         }
     }
 })();

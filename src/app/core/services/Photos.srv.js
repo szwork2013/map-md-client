@@ -46,6 +46,7 @@
         .factory('Tracks',     ['ApiRestangular', TrackServiceFactory])
         .factory('GeoJSONs',   ['ApiRestangular', GeoJSONServiceFactory])
         .factory('Albums',     ['ApiRestangular', AlbumServiceFactory])
+        .factory('Groups',     ['ApiRestangular', GroupServiceFactory])
     ;
 
     function PhotoServiceFactory(Restangular) {
@@ -193,16 +194,23 @@
         //});
         return {
             get: get,
+            getBy: getBy,
             create: create,
             modify: modify,
             remove: remove,
             addPhotos: addPhotos,
             removePhotos: removePhotos,
-            deletePhotos: deletePhotos
+            deletePhotos: deletePhotos,
+            modifyFC: modifyFC,
+            removeFeature: removeFeature
         };
 
         function get(id) {
             return service.one(id).get();
+        }
+
+        function getBy(username, name) {
+            return service.one().get({username: username, name: name});
         }
 
         function create(album) {
@@ -227,6 +235,51 @@
 
         function deletePhotos(id, photoIds) {
             return service.one(id).post('delete', photoIds);
+        }
+
+        function modifyFC(id, fc) {
+            return service.one(id).post('fc', fc);
+        }
+
+        function removeFeature(id, featureId) {
+            return service.one(id).one('fc', featureId).remove();
+        }
+    }
+
+    function GroupServiceFactory(Restangular) {
+        var service = Restangular.service('group');
+
+        return {
+            get: get,
+            getByName: getByName,
+            create: create,
+            applyJoin: applyJoin,
+            getAlbums: getAlbums
+            //modify: modify,
+            //remove: remove,
+            //addPhotos: addPhotos,
+            //removePhotos: removePhotos,
+            //deletePhotos: deletePhotos
+        };
+
+        function get(id) {
+            return service.one(id).get();
+        }
+
+        function getByName(name) {
+            return service.one().get({name: name});
+        }
+
+        function create(group) {
+            return service.one().post('', group);
+        }
+
+        function applyJoin(id) {
+            return service.one(id).post('join');
+        }
+
+        function getAlbums(id) {
+            return service.one(id).all('albums').getList();
         }
     }
 

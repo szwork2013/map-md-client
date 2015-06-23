@@ -151,7 +151,8 @@
                 return response || $q.when(response);
             },
             responseError: function(rejection) {
-                if (rejection.config&&!rejection.config.ignoreAuthModule) {
+                if (rejection.config&&!rejection.config.ignoreAuthModule &&
+                        rejection.config.headers && rejection.config.headers.Authorization) {
                     switch (rejection.status) {
                         case 401:
                             var deferred = $q.defer();

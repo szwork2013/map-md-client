@@ -12,17 +12,22 @@
 
         return showNewAlbumDialog;
 
-        function showNewAlbumDialog(ev) {
+        function showNewAlbumDialog(ev, type) {
             return $mdDialog.show({
-                controller: ['$scope', '$mdDialog', AlbumNewDialogController],
+                controller: ['$scope', '$mdDialog', 'type', AlbumNewDialogController],
                 templateUrl: 'components/album/create/create.tpl.html',
                 targetEvent: ev,
                 locals: {
+                    type: type
                 }
             });
         }
 
-        function AlbumNewDialogController($scope, $mdDialog) {
+        function AlbumNewDialogController($scope, $mdDialog, type) {
+
+            $scope.album = {
+                type: type || "Base"
+            };
 
             $scope.cancel = function() {
                 $mdDialog.cancel();

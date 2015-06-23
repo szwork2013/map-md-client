@@ -1,0 +1,37 @@
+<form name="albumNewForm" ng-submit="anc.save($event)">
+<md-card>
+    <md-card-content>
+        <md-select placeholder="类型" ng-model="anc.album.type">
+            <md-option ng-repeat="type in anc.types" value="{{type.code}}">{{type.name}}</md-option>
+        </md-select>
+        <md-input-container>
+            <label>名称</label>
+            <input ng-model="anc.album.name">
+        </md-input-container>
+        <md-input-container flex>
+            <label>描述</label>
+            <textarea ng-model="anc.album.description" columns="1" md-maxlength="150"></textarea>
+        </md-input-container>
+    </md-card-content>
+    <div class="md-actions" layout="row" layout-align="end center">
+        <md-button class="md-raised md-primary"
+                   ng-disabled="!albumNewForm.$dirty"
+                >创建</md-button>
+        <md-button ng-click="anc.cancel($event)"
+                   ng-disabled="!albumNewForm.$dirty">取消</md-button>
+    </div>
+</md-card>
+</form>
+
+<md-card ng-show="anc.step>1">
+    <md-card-content>
+
+    </md-card-content>
+    <div class="md-actions" layout="row" layout-align="end center">
+        <md-button class="md-raised md-primary"
+                   ng-disabled="!groupNewForm.$dirty"
+                >保存</md-button>
+        <md-button ng-click="anc.cancel($event)"
+                   ng-disabled="!groupNewForm.$dirty">取消</md-button>
+    </div>
+</md-card>

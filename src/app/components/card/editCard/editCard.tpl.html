@@ -1,0 +1,11 @@
+<md-card>
+    <md-card-content>
+        <div ng-transclude></div>
+    </md-card-content>
+    <div class="md-actions" layout="row" layout-align="end center">
+        <md-button class="md-raised"
+                   ng-class="{'md-primary': cardForm.$dirty}">更新</md-button>
+        <md-button class=""
+                   ng-click="ecc.reset()">取消</md-button>
+    </div>
+</md-card>

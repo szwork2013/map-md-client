@@ -40,19 +40,30 @@
                 function removeSuccess(message) {
                     showMessage("删除成功 " + (message || ''));
                 }
-                function createFail(message) {
-                    showMessage("创建失败 " + (message || ''));
+                function createFail(err) {
+                    showMessage("创建失败 " + getMessage(err));
                 }
-                function saveFail(message) {
-                    showMessage("保存失败 " + (message || ''));
+                function saveFail(err) {
+                    showMessage("保存失败 " + getMessage(err));
                 }
-                function updateFail(message) {
-                    showMessage("更新失败 " + (message || ''));
+                function updateFail(err) {
+                    showMessage("更新失败 " + getMessage(err));
                 }
-                function removeFail(message) {
-                    showMessage("删除失败 " + (message || ''));
+                function removeFail(err) {
+                    showMessage("删除失败 " + getMessage(err));
                 }
 
+                function getMessage(err) {
+                    if(angular.isObject(err)) {
+                        if(err.status === 401) {
+                            return "未登录";
+                        }
+                    }else if(angular.isString(err)) {
+                        return err;
+                    }
+
+                    return '';
+                }
                 return {
                     showMessage: showMessage,
                     success: {

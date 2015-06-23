@@ -1,0 +1,69 @@
+<div>
+<md-card>
+    <md-card-content layout="column">
+        <user-profile user="group.user">
+            {{group.user.username}}
+        </user-profile>
+        <div>
+            {{group.description}}
+        </div>
+    </md-card-content>
+</md-card>
+
+<md-card class="group-members">
+    <md-card-content layout="column">
+        <md-grid-list
+                md-cols-gt-md="10" md-cols-sm="4" md-cols-md="6"
+                md-row-height-gt-md="1:1" md-row-height="1:1"
+                md-gutter-gt-md="10px" md-gutter-gt-sm="6px" md-gutter="4px">
+            <md-grid-tile
+                    ng-repeat="member in group.members"
+                    md-colspan-gt-sm="2"
+                    md-rowspan-gt-sm="1">
+                <user-profile user="member" class="group-member" flex>
+                    {{member.username}}
+                </user-profile>
+            </md-grid-tile>
+        </md-grid-list>
+    </md-card-content>
+    <div class="md-actions" layout="row" layout-align="end center">
+        <md-button class="md-icon-button md-primary" aria-label="申请加入" title="申请加入"
+                   ng-click="applyJoin()"
+                   ng-disabled="applyJoined">
+            <md-icon md-svg-icon="social:person_add"></md-icon>
+        </md-button>
+    </div>
+</md-card>
+
+<md-card class="group-albums">
+    <md-card-content layout="column">
+        <md-grid-list
+                md-cols-gt-md="10" md-cols-sm="4" md-cols-md="6"
+                md-row-height-gt-md="1:1" md-row-height="1:1"
+                md-gutter-gt-md="10px" md-gutter-gt-sm="6px" md-gutter="4px">
+            <md-grid-tile
+                    ng-repeat="album in ugpc.albums"
+                    md-colspan-gt-sm="2"
+                    md-rowspan-gt-sm="1">
+                <div layout="column">
+                    <div>{{album.name}}</div>
+                    <div flex>{{album.description}}</div>
+                    <div layout="row">
+                        <md-button ng-click="goDisplay(album)">查看</md-button>
+                        <md-button ng-click="goEdit(album)">编辑</md-button>
+                    </div>
+
+                </div>
+
+            </md-grid-tile>
+        </md-grid-list>
+    </md-card-content>
+    <div class="md-actions" layout="row" layout-align="end center">
+        <md-button class="md-icon-button md-primary" aria-label="新建专辑" title="新建专辑"
+                   ng-click="go('app.albums.new', {group: group.id})">
+            <md-icon md-svg-icon="content:add"></md-icon>
+        </md-button>
+    </div>
+</md-card>
+
+</div>

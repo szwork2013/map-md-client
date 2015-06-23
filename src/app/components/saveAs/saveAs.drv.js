@@ -263,6 +263,8 @@
                 }else if(angular.isString(scope.src)) {
                     var blob = new Blob([scope.src], {type: "text/plain;charset=utf-8"});
                     saveAs(blob, scope.fileName||"download");
+                }else if(angular.isObject(scope.src)) {
+                    saveAs(new Blob([JSON.stringify(scope.src)], {type: "text/plain;charset=utf-8"}), scope.fileName||"download");
                 }
             };
         }

@@ -93,7 +93,7 @@
                             }, options.delayTime);
                         });
                     } else {
-                        $log.debug(LOG_TAG + "直接布局");
+                        //$log.debug(LOG_TAG + "直接布局");
                         collage();
                     }
                 }, options.delayTime);

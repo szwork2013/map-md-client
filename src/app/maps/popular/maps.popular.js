@@ -4,8 +4,11 @@
 (function () {
     'use strict';
 
-    angular.module('app.maps.popular',
-        ['leaflet-directive', 'app.components', 'app.core', 'restangular', 'ui.router'])
+    angular.module('app.maps.popular', [
+        'leaflet-directive',
+        'restangular',
+        'ui.router',
+        'app.maps'])
         .config(['$logProvider', '$urlRouterProvider', '$stateProvider',
             function ($logProvider, $urlRouterProvider, $stateProvider) {
 
@@ -165,12 +168,12 @@
          */
         function onMapPhotosChanged(e) {
             $scope.photos = $mmdUtil.Array.mergeRightist($scope.photos || [], e.photos, "id");
-            $log.debug(LOG_TAG + "photo wall changed");
+            //$log.debug(LOG_TAG + "photo wall changed");
             $scope.$broadcast('mmd-photo-wall-resize');
         }
 
         $scope.$on('mmd-photo-fluid-resized', function(e) {
-            $log.debug(LOG_TAG + "photo wall resized");
+            //$log.debug(LOG_TAG + "photo wall resized");
         });
 
         function onMapPhotoClicked(ev) {

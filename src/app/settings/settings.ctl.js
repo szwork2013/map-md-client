@@ -15,12 +15,8 @@
                     .state('app.settings', {
                         abstract: true,
                         url: '/settings',
-                        views: {
-                            '': {
-                                templateUrl: 'settings/setting.tpl.html',
-                                controller: 'SettingsCtrl'
-                            }
-                        },
+                        templateUrl: 'settings/setting.tpl.html',
+                        controller: 'SettingsCtrl',
                         resolve: {}
                     })
                 ;

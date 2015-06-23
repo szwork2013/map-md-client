@@ -6,6 +6,7 @@
 
     angular.module('app.maps', [
         'app.maps.popular',
+        'app.maps.album',
         'app.maps.user',
         'app.maps.cluster',
         'app.maps.upload',

@@ -1,0 +1,32 @@
+<md-content layout-fill>
+    <div flex layout="column"
+         class="">
+        <md-card class="caption">
+            <md-card-content>
+                <p>{{mafcdc.album.description}}</p>
+            </md-card-content>
+        </md-card>
+        <md-card class="" flex>
+            <md-card-content >
+                <md-list>
+                    <md-list-item class="md-3-line"
+                                  ng-repeat="(key,val) in mafcdc.filterSecId(mafcdc.feature.properties)">
+                        <div class="md-list-item-text">
+                            <h3> {{ key }} </h3>
+                            <p> {{ val }} </p>
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </md-card-content>
+            <div class="md-actions" layout="row" layout-align="end center">
+            </div>
+        </md-card>
+
+        <mmd-save-as mmd-src="mafcdc.album.featureCollection"
+                     mmd-file-name="{{mafcdc.album.name+'.geojson'}}"></mmd-save-as>
+
+        <mmd-footer layout="column">
+        </mmd-footer>
+    </div>
+
+</md-content>
