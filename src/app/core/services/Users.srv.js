@@ -47,9 +47,6 @@
                 delete this.user;
                 Oauth2Service.removeToken();
             },
-            signup: function() {
-
-            },
             openSignin: function(ev) {
                 return $mdDialog.show({
                     controller: 'SigninCtrl',
@@ -63,6 +60,24 @@
                     templateUrl: 'home/signup/signup.tpl.html',
                     targetEvent: ev
                 });
+            },
+            isMe: function(user) {
+                var deferred = $q.defer();
+                this.getUser().then(function(me) {
+                    deferred.resolve(user && user.id == me.id);
+                },function(err) {
+                    deferred.resolve(false);
+                });
+                return deferred.promise;
+            },
+            isMy: function(entity) {
+                var deferred = $q.defer();
+                this.getUser().then(function(user) {
+                    deferred.resolve(entity && entity.user && entity.user.id == user.id);
+                },function(err) {
+                    deferred.resolve(false);
+                });
+                return deferred.promise;
             }
         };
     }
@@ -81,9 +96,11 @@
             getUser: getUser,
             getByUsername: getByUsername,
             getPhotos: getPhotos,
+            saveAvatar: saveAvatar,
             uploadAvatar: uploadAvatar,
             saveAccount: saveAccount,
-            getAlbums: getAlbums
+            getAlbums: getAlbums,
+            getGroups: getGroups
         };
 
         function getMe() {
@@ -104,6 +121,10 @@
 
         function getPhotos(id, pageSize, pageNo) {
             return service.one(id).one('photos', pageSize).all(pageNo).getList();
+        }
+
+        function saveAvatar(id, imageId) {
+            return service.one(id).one('avatar').post(imageId);
         }
 
         function uploadAvatar(data) {
@@ -128,6 +149,10 @@
 
         function getAlbums(id) {
             return service.one(id).all('albums').getList();
+        }
+
+        function getGroups(id) {
+            return service.one(id).all('groups').getList();
         }
     }
 })();

@@ -26,15 +26,7 @@
 
     function MapsClusterUserController($scope, $log, Users, userId, Authenticate) {
 
-        $scope.showBottomSheet = function($event) {
-            $scope.showGridBottomSheet($event, [
-                { name: '我的热点', icon: 'social:person', link: 'app.maps.heatmap.user', params:{id:''} },
-                { name: '上传', icon: 'image:camera', link: 'app.maps.upload', params:{id:''} },
-                { name: 'Help', icon: 'action:help' , link: 'app.helps.cluster'}
-            ]).then(function(clickedItem) {
-                $scope.alert = clickedItem.name + ' clicked!';
-            });
-        };
+
 
         // configs
         $scope.loadMoreDisabled = false;

@@ -11,10 +11,11 @@
       @include transition-linear(all);
     }
 
-    .action-selector {
+    .selector {
       position: absolute;
-      top: 2px;
-      left: 2px;
+    }
+
+    .photo-card-image {
       cursor: pointer;
     }
 

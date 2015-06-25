@@ -30,7 +30,7 @@
         Albums.get(id).then(function(album) {
             self.album = album;
             originalAlbum = angular.copy(album);
-            $scope.setPage("app.photos.album", self.album.name);
+            $scope.setPage("app.photos.album", self.album.title);
         });
 
         self.save = function(ev) {

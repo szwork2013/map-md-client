@@ -20,29 +20,22 @@
                     });
             }])
         .controller('MapsTrackTrackCtrl',
-        ['$scope', '$mdSidenav', '$log', '$q', 'Tracks', 'trackId',
+        ['$scope', '$log', '$q', '$FeatureCollection', 'Tracks', 'trackId',
             MapsTrackTrackCtrl]);
 
-    var LOG_TAG = "Maps-Track-Track: ";
+    var LOG_TAG = "[Maps-Track-Display] ";
 
-    function MapsTrackTrackCtrl($scope, $mdSidenav, $log, $q, Tracks, trackId) {
+    function MapsTrackTrackCtrl($scope, $log, $q, $FeatureCollection, Tracks, trackId) {
 
         var self = this;
 
         self.trackId = trackId;
 
         Tracks.get(trackId).then(function(track) {
+            track.geoJson = JSON.parse(track.geo_json);
             self.track = track;
             $scope.addTrack(track, track.name);
         });
-
-        self.displayTrack = function(track) {
-            if(track.layer) {
-                $scope.activeTrack(track);
-            }else {
-                self.addTrack(track);
-            }
-        };
 
         $scope.$on('$destroy', function(e) {
             $scope.removeTrack(self.track);

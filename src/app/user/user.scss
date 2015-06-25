@@ -1,0 +1,25 @@
+.albums-grid-card {
+  md-grid-list {
+    .album-card {
+      padding: 0;
+      border-bottom: 1px solid lightgrey;
+      md-card {
+        box-shadow: initial;
+      }
+    }
+  }
+}
+
+.members-grid-card {
+  md-grid-list {
+    .member-card {
+      border-bottom: 1px solid lightgrey;
+    }
+  }
+}
+
+.masthead-meta {
+  .md-avatar {
+    margin-top: 20px;
+  }
+}

@@ -27,6 +27,7 @@
 @import './photos/all/all.scss';
 @import './photos/photos.scss';
 @import './group/group.scss';
+@import './user/user.scss';
 @import './settings/settings.scss';
 @import './settings/map/map.scss';
 
@@ -70,8 +71,13 @@ md-bottom-sheet {
   z-index: 1004;
 }
 
-md-backdrop.md-bottom-sheet-backdrop {
-  z-index: 1003;
+md-backdrop {
+  &.md-select-backdrop {
+    z-index: 1002;
+  }
+  &.md-bottom-sheet-backdrop {
+    z-index: 1003;
+  }
 }
 
 md-toast {
@@ -114,6 +120,8 @@ md-tabs {
 }
 
 pre {
+  margin: 0;
+  font-family: Microsoft YaHei;
   word-break: break-all;
   white-space: pre-wrap;
 }

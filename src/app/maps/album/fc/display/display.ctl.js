@@ -26,7 +26,8 @@
         var self = this;
 
         Albums.get(albumId).then(function(album) {
-            $scope.setTitle(album.name);
+            //$scope.setTitle(album.name, album.user);
+            $scope.setAlbum(album);
             self.album = album;
             self.album.featureCollection = self.album.featureCollection||{
                     type: 'FeatureCollection',

@@ -5,20 +5,21 @@
     'use strict';
 
     angular.module('app', [
-        'app.core',
-        'app.components',
-        'app.home',
-        'app.maps',
-        'app.photos',
-        'app.group',
-        'app.user',
-        'app.albums',
-        'app.settings',
         'ui.router',
         'ngMaterial',
         'leaflet-directive',
         'templates-app',
-        'templates-common'])
+        'templates-common',
+        'app.core',
+        'app.components',
+        'app.home',
+        'app.photos',
+        'app.group',
+        'app.albums',
+        'app.settings',
+        'app.user',
+        'app.maps'
+        ])
         //.value('staticCtx', 'http://static.photoshows.cn')
         .value('staticCtx', 'http://test.photoshows.cn')
         //.value('serverBaseUrl', 'http://www.photoshows.cn')
@@ -55,6 +56,7 @@
             AppCtrl])
         ;
 
+    var LOG_TAG = "[App] ";
     function Run($rootScope, Oauth2Service, Authenticate, $log, $location) {
 
         // 待刷新token后再获取登录用户
@@ -66,6 +68,11 @@
         $rootScope.setAppTitle = function(title) {
             $rootScope.appTitle = title;
         };
+
+        //$rootScope.$on('$stateChangeStart',
+        //    function(event, toState, toParams, fromState, fromParams){
+        //        $log.debug(LOG_TAG + '$stateChangeStart');
+        //    });
     }
 
     /**

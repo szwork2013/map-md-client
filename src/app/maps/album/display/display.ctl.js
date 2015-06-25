@@ -31,6 +31,11 @@
 
         Albums.getBy(userName, albumName).then(function(album) {
             self.album = album;
+            if(self.album.type == "Base") {
+                $scope.go("app.maps.cluster.album", {id: self.album.id, album: self.album});
+            }else {
+                $scope.go("app.maps.album.fc.display", {id: self.album.id});
+            }
         });
 
         $scope.$on('$destroy', function(e) {

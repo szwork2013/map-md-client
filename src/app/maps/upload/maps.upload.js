@@ -10,10 +10,14 @@
 
                 $stateProvider
                     .state('app.maps.upload', {
-                        url: '/upload',
+                        url: '/upload?album',
                         templateUrl: 'maps/upload/maps.upload.tpl.html',
-                        resolve: {},
-                        controller: "MapsUploadCtrl as mupc"
+                        controller: "MapsUploadCtrl as mupc",
+                        resolve: {
+                            albumId: ['$stateParams', function($stateParams){
+                                return $stateParams.album;
+                            }]
+                        }
                     });
 
                 delete $httpProvider.defaults.headers.common['X-Requested-With'];
@@ -53,7 +57,7 @@
                 });
             }])
         .controller('MapsUploadCtrl',
-        ['$scope', 'fileUpload', '$log', '$q', 'QQWebapi',
+        ['$scope', '$log', '$q', 'QQWebapi', 'Users', 'Albums', 'albumId', 'Authenticate',
             MapsUploadCtrl])
         .controller('MapsFileUploadCtrl',
         ['$window', '$scope', '$log', '$q', 'fileUpload', '$mmdUtil', 'serverBaseUrl', MapsFileUploadCtrl])
@@ -61,12 +65,15 @@
         ['$window', '$scope', '$log', '$q', 'Photos', '$mmdUtil', MapsFileUploadPhotoCtrl])
         .controller('MapsFileUploadDestoryCtrl',
         ['$window', '$scope', '$log', '$q', 'Photos', '$mmdUtil', MapsFileUploadDestoryCtrl])
+        .controller('AlbumsSelectCtrl',
+        ['$scope', '$log', '$q', 'Users',
+            AlbumsSelectCtrl])
     ;
 
     var LOG_TAG = "Maps-Upload: ";
     var PhotoMarkableControl;
 
-    function MapsUploadCtrl($scope, fileUpload, $log, $q, QQWebapi) {
+    function MapsUploadCtrl($scope, $log, $q, QQWebapi, Users, Albums, albumId, Authenticate) {
         var self = this;
         $scope.showBottomSheet = function($event) {
             $scope.showGridBottomSheet($event, [
@@ -77,6 +84,36 @@
                 $scope.alert = clickedItem.name + ' clicked!';
             });
         };
+
+        Authenticate.getUser().then(function(user) {
+            getUserAlbum(user);
+        });
+
+        function getUserAlbum(user) {
+            Users.getAlbums(user.id).then(function(albums) {
+                $scope.albums = albums;
+                setAlbum();
+            });
+        }
+
+        function setAlbum() {
+            if(albumId) {
+                angular.forEach($scope.albums, function(album, key) {
+                    if(album.id == albumId) {
+                        $scope.album = album;
+                    }
+                });
+                if(!$scope.album) {
+                    getAlbum(albumId);
+                }
+            }
+        }
+
+        function getAlbum(albumId) {
+            Albums.get(albumId).then(function(album) {
+                $scope.album = album;
+            });
+        }
 
         var photoMarkableControl;
         $scope.getMap().then(function (map) {
@@ -134,7 +171,6 @@
                             address.display = address.address + " " + address.title;
                         });
                     }
-
                 } else {
 
                 }
@@ -282,6 +318,7 @@
             },
 
             formData: function () {
+                var formDatas = [];
                 var lat = 0,
                     lng = 0,
                     address = '',
@@ -291,26 +328,34 @@
                     lng = this.files[0].position.lng || 0;
                     address = this.files[0].position.address || '';
                 }
-                return [{
-                        name: "lat",
-                        value: lat
-                    },{
-                        name: "lng",
-                        value: lng
-                    },{
-                        name: "address",
-                        value: address
-                    },{
-                        name: "vendor",
-                        value: vendor
-                    },{
-                        name: "title",
-                        value: this.files[0].title || ''
+                formDatas = [{
+                    name: "lat",
+                    value: lat
+                },{
+                    name: "lng",
+                    value: lng
+                },{
+                    name: "address",
+                    value: address
+                },{
+                    name: "vendor",
+                    value: vendor
+                },{
+                    name: "title",
+                    value: this.files[0].title || ''
                 }, {
                     name: "description",
                     value: this.files[0].description || ''
                 }
                 ];
+                // 添加到相册
+                if($scope.album) {
+                    formDatas.push({
+                        name: "album",
+                        value: $scope.album.id
+                    });
+                }
+                return formDatas;
             },
             done: function (e, data) {
                 data.files[0].uploaded = true;
@@ -521,6 +566,15 @@
                     self.destroying = false;
                 });
             }
+        };
+    }
+
+    function AlbumsSelectCtrl($scope, $log, $q, Users) {
+
+        $scope.loadAlbums = function() {
+            Users.getAlbums().then(function(albums) {
+
+            });
         };
     }
 })();

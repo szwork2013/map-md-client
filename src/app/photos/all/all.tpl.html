@@ -17,15 +17,11 @@
                       }"
                     md-colspan-gt-sm="{{photo.colspan}}"
                     md-rowspan-gt-sm="{{photo.rowspan}}">
-                <a href=""
-                   ng-show="photo.actionSelectable||photo.actionSelected"
-                   ng-click="$event.stopPropagation();photo.actionSelected=!photo.actionSelected">
-                    <md-icon md-svg-icon="toggle:check_box"
-                             ng-if="photo.actionSelected"
-                             style="color: dodgerblue;"></md-icon>
-                    <md-icon md-svg-icon="toggle:check_box_outline_blank"
-                             ng-if="!photo.actionSelected"></md-icon>
-                </a>
+
+                <md-checkbox ng-model="photo.actionSelected" aria-label="选择"
+                             ng-show="photo.actionSelectable||photo.actionSelected"
+                             ng-click="$event.stopPropagation();">
+                </md-checkbox>
 
                 <img ng-src="{{staticCtx}}/{{photo.oss_key}}@!photo-preview-sm"
                         ng-style="{

@@ -31,7 +31,8 @@
                      alt="activity-1"
                      class="leader"></md-icon>
             <div class="md-list-item-text">
-                <h3> {{ track.name }} </h3>
+                <h3 ng-click="$event.preventDefault();go('app.maps.track.display', {id: track.id})">
+                    {{ track.name }} </h3>
                 <p> {{ track.description }} </p>
             </div>
             <md-button class="md-icon-button md-warn" ng-show="mtmc.edit.editing"

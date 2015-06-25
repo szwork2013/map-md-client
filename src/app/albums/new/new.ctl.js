@@ -10,29 +10,29 @@
 
                 $stateProvider
                     .state('app.albums.new', {
-                        url: '/new?group',
+                        url: '/new?user',
                         templateUrl: 'albums/new/new.tpl.html',
                         controller: 'AlbumsNewCtrl as anc',
                         resolve: {
-                            groupId: ['$stateParams', function($stateParams){
-                                return $stateParams.group;
+                            userId: ['$stateParams', function($stateParams){
+                                return $stateParams.user;
                             }]
                         }
                     })
                 ;
             }])
-        .controller('AlbumsNewCtrl', ['$scope', '$state', '$log', '$mmdMessage', 'Albums', 'groupId', AlbumsNewCtrl])
+        .controller('AlbumsNewCtrl', ['$scope', '$state', '$log', '$mmdMessage', 'Albums', 'userId', AlbumsNewCtrl])
     ;
 
-    function AlbumsNewCtrl($scope, $state, $log, $mmdMessage, Albums, groupId) {
+    function AlbumsNewCtrl($scope, $state, $log, $mmdMessage, Albums, userId) {
         var self = this;
         self.step = 1;
 
-        if(groupId) {
+        if(userId) {
             self.album = {
                 type: "Base",
                 user: {
-                    id: groupId
+                    id: userId
                 }
             };
         }

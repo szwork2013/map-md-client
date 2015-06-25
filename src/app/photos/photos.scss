@@ -1,7 +1,10 @@
-.album-card {
-  cursor: pointer;
+.albums-grid-list {
+  md-grid-list {
+    .album-card {
+      height: 100%;
+    }
+  }
 }
-
 md-card.album-photos {
   position: relative;
 }

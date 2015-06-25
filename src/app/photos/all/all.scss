@@ -1,13 +1,11 @@
 md-grid-list {
   md-grid-tile {
     overflow: hidden;
-    md-icon {
+    md-checkbox {
       position: absolute;
-      left: 2px;
-      top: 2px;
-    }
-    img {
-      //width: 100%;
+      left: 5px;
+      top: 1px;
+      margin: 0;
     }
   }
 }

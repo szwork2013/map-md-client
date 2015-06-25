@@ -1,22 +1,17 @@
 <div ng-mouseover="photo.actionSelectable = true"
      ng-mouseleave="photo.actionSelectable = false">
-    <div class="action-selector"
-         ng-show="photo.actionSelectable||actionSelected"
-         ng-click="$event.stopPropagation();actionSelected=!actionSelected">
-        <md-icon md-svg-icon="toggle:check_box"
-                 ng-if="actionSelected"
-                 style="color: dodgerblue;"></md-icon>
-        <md-icon md-svg-icon="toggle:check_box_outline_blank"
-                 ng-if="!actionSelected"></md-icon>
-    </div>
-    <a href=""
-       ng-click="displayPhoto($event, photo)">
+    <md-checkbox ng-model="photo.actionSelected" aria-label="选择" class="selector"
+                 ng-show="photoSelectable&&(photo.actionSelectable||actionSelected)"
+                 ng-click="$event.stopPropagation();">
+    </md-checkbox>
+    <div class="photo-card-image"
+         ng-click="displayPhoto($event, photo)">
         <img ng-src="{{photoUrl}}"
              data-width="{{photo.width}}" data-height="{{photo.height}}">
         <div ng-if="photo.is360">
             <div class="icon-photo-p360"></div>
         </div>
-    </a>
+    </div>
     <div class="action-container">
         <div class="action ponm-photo-footer">
             <div><md-icon md-svg-icon="maps:place"></md-icon></md-icon>{{photo.location.address}}</div>

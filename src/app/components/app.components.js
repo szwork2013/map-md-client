@@ -13,7 +13,8 @@
             'app.components.saveAs',
             'app.components.album',
             'app.components.feature',
-            'app.components.card'
+            'app.components.card',
+            'app.components.like'
         ]);
 
 })();

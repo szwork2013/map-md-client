@@ -17,16 +17,16 @@
                     });
             }])
         .controller('MapsTrackUploadCtrl',
-        ['$scope', '$timeout', '$log', '$q', 'Restangular',
+        ['$scope', '$timeout', '$log', '$q', '$FeatureCollection',
             MapsTrackUploadCtrl])
         .controller('trackCtl',
-        ['$scope', '$log', '$q', 'Tracks', '$mmdMessage',
+        ['$scope', '$log', '$q', '$FeatureCollection', 'Tracks', '$mmdMessage',
             TrackCtl])
     ;
 
-    var LOG_TAG = "maps-upload: ";
+    var LOG_TAG = "[Maps upload] ";
 
-    function MapsTrackUploadCtrl( $scope, $timeout, $log, $q, Restangular) {
+    function MapsTrackUploadCtrl( $scope, $timeout, $log, $q, $FeatureCollection) {
         var self = this;
 
         // 正在加载标志
@@ -38,12 +38,10 @@
             $scope.tracks.splice(index, 1);
         };
 
-        $scope.fileSelected = function(files, e) {
-            $log.debug(LOG_TAG + "files size = " + files.length);
-
+        $scope.fileSelected = function(files, e, type) {
             var file;
-
             if(files.length) {
+                $log.debug(LOG_TAG + "type = " + type);
                 file = files[0];
                 var reader = new FileReader();
                 reader.onload = onload;
@@ -182,7 +180,7 @@
      * @param $mmdMessage
      * @constructor
      */
-    function TrackCtl($scope, $log, $q, Tracks, $mmdMessage) {
+    function TrackCtl($scope, $log, $q, $FeatureCollection, Tracks, $mmdMessage) {
 
         var self = this;
 
@@ -223,7 +221,6 @@
         ];
 
         self.submit = function(track) {
-            $log.debug(track);
             Tracks.create({
                 name: track.name,
                 description: track.description,

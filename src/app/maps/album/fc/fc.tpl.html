@@ -1,12 +1,27 @@
 <div layout-fill layout="column">
-    <md-toolbar md-scroll-shrink>
+    <md-toolbar class="md-accent md-tall" md-scroll-shrink>
         <div class="md-toolbar-tools">
+            <md-button class="md-icon-button" aria-label="Settings"
+                       ng-click="toggleLeftBar()">
+                <md-icon md-svg-icon="navigation:menu"></md-icon>
+            </md-button>
             <h3>
                 <span>{{title}}</span>
             </h3>
+            <span flex></span>
+            <like-button like-type="album" like-entity="album"></like-button>
+            <md-button class="md-icon-button" aria-label="More"
+                       ng-click="showBottomSheet($event)">
+                <md-icon md-svg-icon="more_vert"></md-icon>
+            </md-button>
+        </div>
+        <div class="md-toolbar-content">
+            <user-profile user="user">
+                <span>{{user.username}}</span>
+            </user-profile>
         </div>
     </md-toolbar>
-    <div ui-view flex layout-fill layout="column">
+    <md-content ui-view layout-fill layout="column">
 
-    </div>
+    </md-content>
 </div>

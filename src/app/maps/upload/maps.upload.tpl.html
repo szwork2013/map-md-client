@@ -1,4 +1,4 @@
-<md-toolbar class="md-accent">
+<md-toolbar class="md-accent" md-scroll-shrink>
     <div class="md-toolbar-tools">
         <md-button class="md-icon-button" aria-label="Settings"
                    ng-click="toggleLeftBar()">
@@ -14,21 +14,46 @@
         </md-button>
     </div>
 </md-toolbar>
+<div id="fileupload"
+     class="upload-file-form"
+     flex layout="column" layout-fill
+     ng-class="{'fileupload-processing': processing() || loadingFiles}"
+     ng-controller="MapsFileUploadCtrl as mfuc"
+     file-upload="options">
 
-<div id="fileupload" class="upload-file-form"
-      file-upload="options"
-      ng-class="{'fileupload-processing': processing() || loadingFiles}"
-      ng-controller="MapsFileUploadCtrl as mfuc"
-      flex layout="column" layout-fill>
-    <md-button class="md-fab md-primary md-fab-bottom-right" aria-label="上传"
+    <md-fab-speed-dial md-open="demo.isOpen" md-direction="left"
+                       class="md-fling md-bottom-right">
+        <md-fab-trigger>
+            <md-button aria-label="menu" class="md-fab md-warn">
+                <md-icon md-svg-icon="navigation:menu"></md-icon>
+            </md-button>
+        </md-fab-trigger>
+        <md-fab-actions>
+            <md-button aria-label="保存" class="md-fab md-raised"
+                       ng-click="submit()">
+                <md-icon md-svg-icon="content:save"></md-icon>
+            </md-button>
+            <md-button aria-label="上传" class="md-fab md-raised"
+                       ngf-select
+                       ngf-multiple="true"
+                       ngf-capture="'camera'"
+                       ngf-change="mfuc.fileSelected($files, $event)"
+                       accept="image/*" required="">
+                <md-icon md-svg-src="file:upload"></md-icon>
+            </md-button>
+        </md-fab-actions>
+    </md-fab-speed-dial>
+
+    <!--<md-button class="md-fab md-primary md-fab-bottom-right" aria-label="上传"
                ngf-select
                ngf-multiple="true"
                ngf-capture="'camera'"
                ngf-change="mfuc.fileSelected($files, $event)"
                accept="image/*" required="">
         <md-icon md-svg-src="file:upload"></md-icon>
-    </md-button>
-    <div ng-switch="processing()">
+    </md-button>-->
+
+    <!--<div ng-switch="processing()">
         <div ng-switch-when="true">
             <md-button  class="md-fab md-primary md-fab-bottom-left"
                         aria-label="取消"
@@ -44,7 +69,7 @@
                 <md-icon md-svg-src="file:cloud_upload"></md-icon>
             </md-button>
         </div>
-    </div>
+    </div>-->
 
     <div file-upload-progress="progress()" ng-show="active()">
         <md-progress-linear md-mode="determinate"
@@ -59,6 +84,12 @@
                     <p><b>选择照片上传</b></p>
                 </md-card-content>
             </md-card>
+
+            <md-select ng-model="album">
+                <md-select-label>{{ album ? album.name : '' }}</md-select-label>
+                <md-option ng-value="album" ng-repeat="album in albums">{{album.name}}</md-option>
+            </md-select>
+
             <md-list flex>
                 <md-list-item ng-repeat="file in queue"
                         ng-controller="MapsFileUploadPhotoCtrl as mupc">

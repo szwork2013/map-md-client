@@ -2,8 +2,12 @@
 <md-card>
     <md-card-content>
         <md-input-container>
+            <label>name</label>
+            <input ng-model="pac.album.name" required>
+        </md-input-container>
+        <md-input-container>
             <label>名称</label>
-            <input ng-model="pac.album.name">
+            <input ng-model="pac.album.title" required>
         </md-input-container>
         <md-input-container flex>
             <label>描述</label>
@@ -28,8 +32,9 @@
              mmd-wall-options="{targetHeight: 160, fadeSpeed: 0, allowPartialLastRow: true}">
             <mmd-photo-card ng-repeat="photo in pac.album.photos"
                             photo = "photo"
-                            mmd-photo-url = "{{staticCtx}}/{{photo.oss_key}}@!photo-preview-sm"
+                            photo-selectable="true"
                             action-selected="photo.actionSelected"
+                            mmd-photo-url = "{{staticCtx}}/{{photo.oss_key}}@!photo-preview-sm"
                             class="photo">
             </mmd-photo-card>
         </div>
@@ -45,5 +50,9 @@
                    ng-click="pac.selectAll($event)">全选</md-button>
         <md-button class="md-primary"
                    ng-click="pac.cancelSelect($event)">取消</md-button>
+        <md-button class="md-icon-button md-primary" title="上传图片"
+                ng-click="go('app.maps.upload', {album: pac.album.id})">
+            <md-icon md-svg-icon="image:photo_camera"></md-icon>
+        </md-button>
     </div>
 </md-card>

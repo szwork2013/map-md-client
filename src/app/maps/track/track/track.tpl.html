@@ -1,4 +1,4 @@
-<md-toolbar class="md-accent md-tall">
+<md-toolbar class="md-accent md-tall" md-scroll-shrink>
     <div class="md-toolbar-tools">
         <md-button class="md-icon-button" aria-label="Settings"
                    ng-click="toggleLeftBar()">
@@ -8,10 +8,16 @@
             <span>航线 {{mttc.track.name}}</span>
         </h2>
         <span flex></span>
+        <like-button like-type="track" like-entity="mttc.track"></like-button>
         <md-button class="md-icon-button" aria-label="More"
                    ng-click="showTrackBottomSheet($event)">
             <md-icon md-svg-icon="more_vert"></md-icon>
         </md-button>
+    </div>
+    <div class="md-toolbar-content">
+        <user-profile user="mttc.track.user">
+            <span>{{mttc.track.user.username}}</span>
+        </user-profile>
     </div>
 </md-toolbar>
 <md-content flex
@@ -23,44 +29,47 @@
         <md-grid-tile class="gray"
                       md-rowspan="1" md-colspan="1" md-colspan-sm="1">
             {{mttc.track.name}}
+            <md-grid-tile-footer>
+                <h3>名称</h3>
+            </md-grid-tile-footer>
         </md-grid-tile>
         <md-grid-tile class="green"
                       md-rowspan="1" md-colspan="2">
             {{mttc.track.date | date:'medium'}}
             <md-grid-tile-footer>
-                <h3>#2: (1r x 1c)</h3>
+                <h3>日期</h3>
             </md-grid-tile-footer>
         </md-grid-tile>
         <md-grid-tile class="yellow"
                       md-rowspan="2" md-colspan="2">
-            {{mttc.track.description}}
+            <pre>{{mttc.track.description}}</pre>
             <md-grid-tile-footer>
-                <h3>#3: (1r x 1c)</h3>
+                <h3>描述</h3>
             </md-grid-tile-footer>
         </md-grid-tile>
         <md-grid-tile class="gray">
-            {{mttc.track.duration | amDurationFormat:'s'}}
+            <!--{{mttc.track.duration | amDurationFormat:'s'}}-->
             <md-grid-tile-footer>
-                <h3>#1: (3r x 2c)</h3>
+                <h3>时长</h3>
             </md-grid-tile-footer>
         </md-grid-tile>
         <md-grid-tile class="blue">
             {{mttc.track.distance | distance}}
             <md-grid-tile-footer>
-                <h3>#4: (2r x 1c)</h3>
+                <h3>距离</h3>
             </md-grid-tile-footer>
         </md-grid-tile>
         <md-grid-tile class="red"
                       md-rowspan="2" md-colspan="2" md-colspan-sm="1">
-            {{mttc.track.duration | amDurationFormat:'s'}}
+            <!--{{mttc.track.duration | amDurationFormat:'s'}}-->
             <md-grid-tile-footer>
-                <h3>#5: (2r x 2c)</h3>
+                <h3>心率</h3>
             </md-grid-tile-footer>
         </md-grid-tile>
         <md-grid-tile class="green"
                       md-rowspan="2" >
             <md-grid-tile-footer>
-                <h3>#6: (2r x 1c)</h3>
+                <h3>速度</h3>
             </md-grid-tile-footer>
         </md-grid-tile>
     </md-grid-list>

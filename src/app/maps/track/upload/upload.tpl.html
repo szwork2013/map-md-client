@@ -1,13 +1,52 @@
-<md-button class="md-fab md-raised md-primary md-fab-bottom-right" aria-label="上传"
-           ngf-select
-           ngf-change="fileSelected($files, $event)"
-           ng-disabled="uploading">
-    <md-icon ng-if="!uploading"
-             md-svg-src="file:upload"></md-icon>
-    <md-progress-circular ng-if="uploading"
-                          class="md-accent"
-                          md-mode="indeterminate"></md-progress-circular>
-</md-button>
+<md-fab-speed-dial md-open="speedDialOpen" md-direction="left"
+                   class="md-fling md-bottom-right">
+    <md-fab-trigger>
+        <md-button aria-label="menu" class="md-fab md-warn">
+            <md-icon ng-if="!uploading" md-svg-icon="navigation:menu"></md-icon>
+            <md-progress-circular ng-if="uploading"
+                                  class="md-accent"
+                                  md-mode="indeterminate"></md-progress-circular>
+        </md-button>
+    </md-fab-trigger>
+    <md-fab-actions>
+        <md-button aria-label="上传" class="md-fab md-raised md-primary md-mini"
+                   ngf-select
+                   accept=".kml"
+                   ngf-change="fileSelected($files, $event, 'kml')"
+                   ng-disabled="uploading">
+            kml
+        </md-button>
+        <md-button aria-label="上传" class="md-fab md-raised md-primary md-mini"
+                   ngf-select
+                   accept=".geojson"
+                   ngf-change="fileSelected($files, $event, 'csv')"
+                   ng-disabled="uploading">
+            geojson
+        </md-button>
+        <md-button aria-label="上传" class="md-fab md-raised md-primary md-mini"
+                   ngf-select
+                   accept=".wkt"
+                   ngf-change="fileSelected($files, $event, 'csv')"
+                   ng-disabled="uploading">
+            wkt
+        </md-button>
+        <md-button aria-label="上传" class="md-fab md-raised md-primary md-mini"
+                   ngf-select
+                   accept=".gpx"
+                   ngf-change="fileSelected($files, $event, 'csv')"
+                   ng-disabled="uploading">
+            gpx
+        </md-button>
+        <md-button aria-label="上传" class="md-fab md-raised md-primary md-mini"
+                   ngf-select
+                   accept=".csv"
+                   ngf-change="fileSelected($files, $event, 'csv')"
+                   ng-disabled="uploading">
+            csv
+        </md-button>
+    </md-fab-actions>
+</md-fab-speed-dial>
+
 <md-toolbar class="md-accent">
     <div class="md-toolbar-tools">
         <md-button class="md-icon-button" aria-label="Settings"

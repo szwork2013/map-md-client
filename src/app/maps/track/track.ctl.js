@@ -70,7 +70,7 @@
             $scope.getMap().then(function(map) {
                 tracklayers.removeFrom(map);
             });
-            $scope.closeRightSidenav();
+            //$scope.closeRightSidenav();
         });
 
     }

@@ -28,6 +28,7 @@
         $scope.Authenticate = Authenticate;
 
         Authenticate.getUser().then(function(user) {
+            self.user = user;
             Users.getUser(user.id).then(function(settings) {
                 self.settings  = settings;
                 $scope.reset();
@@ -57,8 +58,10 @@
                 controller: 'AvatarUploadCtrl',
                 templateUrl: 'home/avatar/avatar.tpl.html',
                 targetEvent: ev
-            }).then(function(user) {
-                Authenticate.user.avatar = user.avatar;
+            }).then(function(image) {
+                Users.saveAvatar(self.user.id, image.id).then(function(user) {
+                    Authenticate.user.avatar = user.avatar;
+                });
             });
         };
     }

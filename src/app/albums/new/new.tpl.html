@@ -1,12 +1,16 @@
 <form name="albumNewForm" ng-submit="anc.save($event)">
 <md-card>
     <md-card-content>
-        <md-select placeholder="类型" ng-model="anc.album.type">
+        <md-select placeholder="类型" ng-model="anc.album.type" required>
             <md-option ng-repeat="type in anc.types" value="{{type.code}}">{{type.name}}</md-option>
         </md-select>
         <md-input-container>
+            <label>英文名称(网页链接)</label>
+            <input ng-model="anc.album.name" required>
+        </md-input-container>
+        <md-input-container>
             <label>名称</label>
-            <input ng-model="anc.album.name">
+            <input ng-model="anc.album.title" required>
         </md-input-container>
         <md-input-container flex>
             <label>描述</label>
@@ -28,10 +32,9 @@
 
     </md-card-content>
     <div class="md-actions" layout="row" layout-align="end center">
-        <md-button class="md-raised md-primary"
-                   ng-disabled="!groupNewForm.$dirty"
-                >保存</md-button>
-        <md-button ng-click="anc.cancel($event)"
-                   ng-disabled="!groupNewForm.$dirty">取消</md-button>
+        <md-button class="md-icon-button md-primary" title="上传图片"
+                   ng-click="go('app.maps.upload', {album: anc.album.id})">
+            <md-icon md-svg-icon="image:photo_camera"></md-icon>
+        </md-button>
     </div>
 </md-card>

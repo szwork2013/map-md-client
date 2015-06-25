@@ -6,7 +6,6 @@
 
     angular.module('app.maps', [
         'app.maps.popular',
-        'app.maps.album',
         'app.maps.user',
         'app.maps.cluster',
         'app.maps.upload',
@@ -14,7 +13,8 @@
         'app.maps.travel',
         'app.maps.heatmap',
         'app.maps.track',
-        'app.maps.choropleth'])
+        'app.maps.choropleth',
+        'app.maps.album'])
 
         .config(['$logProvider', '$urlRouterProvider', '$stateProvider',
             function ($logProvider, $urlRouterProvider, $stateProvider) {
@@ -48,7 +48,7 @@
         .controller('DialogController', ['$scope', '$mdDialog', DialogController])
     ;
 
-    var LOG_TAG = "Maps: ";
+    var LOG_TAG = "[Maps] ";
 
     function GridBottomSheetCtrl($scope, $mdBottomSheet, $state, items) {
         $scope.items = items;
@@ -71,8 +71,6 @@
             $mdDialog.hide(answer);
         };
     }
-
-    var MapLayersManager;
 
     /**
      *
@@ -136,7 +134,7 @@
             $mdSidenav('right')
                 .close()
                 .then(function(){
-                    $log.debug('closed');
+                    $log.debug(LOG_TAG + 'right sidenav closed');
                 });
         }
 

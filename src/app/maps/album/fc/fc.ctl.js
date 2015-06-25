@@ -23,8 +23,10 @@
 
     function MapsFcCtrl($scope, $log, Albums) {
 
-        $scope.setTitle = function(title) {
-            $scope.title = title;
+        $scope.setAlbum = function(album) {
+            $scope.title = album.title;
+            $scope.user = album.user;
+            $scope.album = album;
         };
     }
 })();

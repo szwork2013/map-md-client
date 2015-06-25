@@ -56,6 +56,12 @@
             }
         };
 
+        $scope.$on('leafletDirectiveMap.geojsonCreated', function(e, geoJSON) {
+            $scope.getMap().then(function(map) {
+                map.fitBounds(geoJSON.getBounds());
+            });
+        });
+
         $scope.$on('$destroy', function(e) {
             $scope.getMap().then(function(map) {
             });

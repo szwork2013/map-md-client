@@ -1,6 +1,7 @@
-<md-card layout-fill flex>
-    <md-card-content>
-        <md-grid-list
+<md-card layout-fill flex layout="column">
+    <img ng-src="{{staticCtx}}/{{album.cover.oss_key}}@!photo-preview-sm">
+    <md-card-content flex>
+        <!--<md-grid-list
                 md-cols-gt-md="3" md-cols-sm="2" md-cols-md="3"
                 md-row-height-gt-md="1:1" md-row-height="1:1"
                 md-gutter-gt-md="1px" md-gutter-gt-sm="1px" md-gutter="1px">
@@ -9,11 +10,29 @@
                           md-rowspan-gt-sm="1">
                 <img ng-src="{{staticCtx}}/{{photo.oss_key}}@!album-thumbnail">
             </md-grid-tile>
-        </md-grid-list>
-        <h3 class="md-title">{{album.name}}</h3>
-        <p>{{album.description}}</p>
+        </md-grid-list>-->
+        <h3 class="md-title">{{album.title}}</h3>
+        <pre>{{album.description}}</pre>
     </md-card-content>
     <div class="md-actions" layout="row" layout-align="end center">
-
+        <md-button class="md-icon-button md-mini" aria-label="查看"
+                   ng-click="goDisplay(album)">
+            <md-icon md-svg-icon="action:visibility"></md-icon>
+        </md-button>
+        <md-button class="md-icon-button md-mini" aria-label="编辑"
+                   ng-show="editable"
+                   ng-click="go('app.photos.album', {id: album.id})">
+            <md-icon md-svg-icon="editor:mode_edit"></md-icon>
+        </md-button>
+        <md-button class="md-icon-button md-mini" aria-label="上传"
+                   ng-show="editable"
+                   ng-click="goEdit(album)">
+            <md-icon md-svg-icon="maps:pin_drop"></md-icon>
+        </md-button>
+        <md-button class="md-icon-button md-mini" aria-label="上传图片"
+                   ng-show="editable"
+                   ng-click="go('app.maps.upload', {album: album.id})">
+            <md-icon md-svg-icon="image:photo_camera"></md-icon>
+        </md-button>
     </div>
 </md-card>

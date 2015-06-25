@@ -13,7 +13,8 @@
         };
 
         function getAvatarUrl(avatarId) {
-            return staticCtx + '/avatar' + (avatarId || 1) + '.png';
+            return avatarId ? staticCtx + '/cover' + avatarId + '.png' :
+            staticCtx + '/avatar1.png' ;
         }
     }
 })();

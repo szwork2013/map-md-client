@@ -107,7 +107,8 @@ module.exports = {
       'vendor/blueimp-file-upload/js/jquery.fileupload-validate.js',
       'vendor/jquery-ui/jquery-ui.min.js',
       'vendor/Jcrop/js/jquery.Jcrop.js',
-      'vendor/ui-rect-select/dist/ui-rect-select.min.js'
+      'vendor/ui-rect-select/dist/ui-rect-select.min.js',
+      'node_modules/leaflet-image/leaflet-image.js'
     ],
     css: [
       'vendor/angular-material/angular-material.css',

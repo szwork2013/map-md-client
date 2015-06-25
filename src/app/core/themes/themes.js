@@ -4,6 +4,9 @@
 angular
     .module('app.core.theme', ['ngMaterial'])
     .config(function ($mdThemingProvider, $mdIconProvider) {
+        $mdThemingProvider.theme('default')
+            .primaryPalette('indigo')
+            .accentPalette('orange');
 
         $mdIconProvider
             .defaultIconSet("./assets/svg/avatars.svg", 128)
@@ -31,6 +34,7 @@ angular
             .icon("action:account_box",    "./assets/svg/action/ic_account_box_24px.svg", 24)
             .icon("action:account_circle",
             "./assets/svg/action/ic_account_circle_24px.svg", 24)
+            .icon("action:visibility",    "./assets/svg/action/ic_visibility_24px.svg", 24)
             .icon("content:add",           "./assets/svg/content/ic_add_24px.svg", 24)
             .icon("content:remove",        "./assets/svg/content/ic_remove_24px.svg", 24)
             .icon("content:remove_circle", "./assets/svg/content/ic_remove_circle_24px.svg", 24)
@@ -39,18 +43,19 @@ angular
             .icon("maps:place",            "./assets/svg/maps/ic_place_24px.svg", 24)
             .icon("maps:map",              "./assets/svg/maps/ic_map_24px.svg", 24)
             .icon("maps:directions_walk",  "./assets/svg/maps/ic_directions_walk_24px.svg", 24)
-            .icon("maps:heatmap",  "./assets/svg/image/ic_hdr_strong_24px.svg", 24)
+            .icon("maps:heatmap",          "./assets/svg/image/ic_hdr_strong_24px.svg", 24)
+            .icon("maps:pin_drop",         "./assets/svg/maps/ic_pin_drop_24px.svg", 24)
             .icon("social:location_city",  "./assets/svg/social/ic_location_city_24px.svg", 24)
             .icon("social:person",         "./assets/svg/social/ic_person_24px.svg", 24)
             .icon("social:person_add",     "./assets/svg/social/ic_person_add_24px.svg", 24)
             .icon("social:person_outline", "./assets/svg/social/ic_person_outline_24px.svg", 24)
             .icon("social:share",          "./assets/svg/social/ic_share_24px.svg", 24)
-            .icon("image:camera",           "./assets/svg/image/ic_camera_24px.svg", 24)
+            .icon("image:camera",          "./assets/svg/image/ic_camera_24px.svg", 24)
             .icon("image:photo",           "./assets/svg/image/ic_photo_24px.svg", 24)
             .icon("image:photo_album",     "./assets/svg/image/ic_photo_album_24px.svg", 24)
             .icon("image:photo_library",   "./assets/svg/image/ic_photo_library_24px.svg", 24)
             .icon("image:photo_size",      "./assets/svg/image/ic_crop_5_4_24px.svg", 24)
-            .icon("image:camera",          "./assets/svg/image/ic_photo_camera_24px.svg", 24)
+            .icon("image:photo_camera",    "./assets/svg/image/ic_photo_camera_24px.svg", 24)
             .icon("image:exposure",        "./assets/svg/image/ic_exposure_24px.svg", 24)
             .icon("image:flash_on",        "./assets/svg/image/ic_flash_on_24px.svg", 24)
             .icon("image:iso",             "./assets/svg/image/ic_iso_24px.svg", 24)
@@ -67,9 +72,5 @@ angular
             .icon("toggle:check_box",      "./assets/svg/toggle/ic_check_box_24px.svg", 24)
             .icon("toggle:check_box_outline_blank", "./assets/svg/toggle/ic_check_box_outline_blank_24px.svg", 24)
         ;
-
-        $mdThemingProvider.theme('default')
-            .primaryPalette('indigo')
-            .accentPalette('orange');
 
     });

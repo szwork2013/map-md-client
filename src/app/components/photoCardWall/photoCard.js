@@ -20,6 +20,7 @@
             link: link,
             scope: {
                 photo: "=",
+                photoSelectable: '=',
                 actionSelected: '=',
                 photoUrl: "@mmdPhotoUrl"
             },

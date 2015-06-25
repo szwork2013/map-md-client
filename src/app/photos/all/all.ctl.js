@@ -4,7 +4,7 @@
 (function () {
     'use strict';
 
-    angular.module('app.photos.all', ['uiSelect'])
+    angular.module('app.photos.all', ['uiSelect', 'ui.router'])
         .config(['$urlRouterProvider', '$stateProvider',
             function ($urlRouterProvider, $stateProvider) {
                 $stateProvider

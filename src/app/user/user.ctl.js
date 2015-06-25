@@ -20,21 +20,38 @@
                     })
                 ;
             }])
-        .controller('UserCtrl', ['$scope', '$log', 'Users', 'Groups', 'name', UserCtrl])
+        .controller('UserCtrl', ['$scope', '$log', 'Users', 'name', 'Groups', '$mdDialog', 'Authenticate', UserCtrl])
     ;
 
-    function UserCtrl($scope, $log, Users, Groups, name) {
+    function UserCtrl($scope, $log, Users, name, Groups, $mdDialog, Authenticate) {
         var self = this;
-        Groups.getByName(name).then(function(group) {
-            if(group) {
-                self.group = group;
+
+        Users.getByUsername(name).then(function(user) {
+            if(user.user) {
                 self.type = 'group';
             }else {
-                Users.getByUsername(name).then(function(user) {
-                    self.type = 'user';
-                    self.user = user;
-                });
+                self.type = 'user';
             }
+            self.user = user;
+            self.title = user.name||user.username;
         });
+
+        self.changeAvatar = function(ev) {
+            $mdDialog.show({
+                controller: 'AvatarUploadCtrl',
+                templateUrl: 'home/avatar/avatar.tpl.html',
+                targetEvent: ev
+            }).then(function(image) {
+                if(self.type == 'group') {
+                    Groups.saveAvatar(self.user.id, image.id).then(function(user) {
+                        self.user.avatar = user.avatar;
+                    });
+                }else {
+                    Users.saveAvatar(self.user.id, image.id).then(function(user) {
+                        self.user.avatar = user.avatar;
+                    });
+                }
+            });
+        };
     }
 })();

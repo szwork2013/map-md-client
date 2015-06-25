@@ -120,11 +120,11 @@
             };
         }])
     .controller('AvatarUploadCtrl',
-        ['$scope', '$log', '$mdDialog', '$sce', 'fileReader', 'Users', '$mmdMessage',
+        ['$scope', '$log', '$mdDialog', '$sce', 'fileReader', 'Covers', '$mmdMessage',
             AvatarUploadController]);
 
-    var LOG_TAG = "Avatar-Upload: ";
-    function AvatarUploadController($scope, $log, $mdDialog, $sce, fileReader, Users, $mmdMessage) {
+    var LOG_TAG = "[Avatar Upload] ";
+    function AvatarUploadController($scope, $log, $mdDialog, $sce, fileReader, Covers, $mmdMessage) {
 
         $scope.hide = function() {
             $mdDialog.hide();
@@ -155,7 +155,8 @@
                 return;
             }
             $scope.saving = true;
-            Users.uploadAvatar(avatarData).then(function (res) {
+            Covers.upload(avatarData).then(function (res) {
+            //Users.uploadAvatar(avatarData).then(function (res) {
                 $scope.saving = false;
                 $log.debug(LOG_TAG + 'avatar uploaded!');
                 $mmdMessage.showMessage("头像上传成功！");

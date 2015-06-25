@@ -45,7 +45,7 @@
                 $scope.activeTrack(track);
             }else {
                 track.geoJson = JSON.parse(track.geo_json);
-                self.addTrack(track);
+                $scope.addTrack(track);
             }
         };
 

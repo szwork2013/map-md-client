@@ -1,6 +1,8 @@
 album-card {
+  padding: 2px;
   md-card {
     md-card-content {
+      overflow: hidden;
       padding: 6px;
     }
     .md-title {

@@ -9,7 +9,12 @@
         </div>
         <div class="masthead-container" flex layout="column" layout-align="end center">
             <div class="masthead-meta">
-                <h2>组</h2>
+                <a href="" ng-click="uc.owned&&uc.changeAvatar($event)">
+                    <img alt="{{ uc.user.name }}"
+                         ng-src="{{staticCtx}}/cover{{uc.user.avatar || 1}}.png"
+                         class="md-avatar" />
+                </a>
+                <h2>{{uc.title}}</h2>
                 <div flex layout="row">
                     <!--<md-tabs flex
                              md-selected="menuSelectedIndex"
@@ -27,9 +32,13 @@
     <div flex layout="column"
          class="settings-pane">
         <div flex class="subpage-container" ng-switch="uc.type">
-            <user-group-page group="uc.group" ng-switch-when="group">
+            <user-group-page ng-switch-when="group"
+                             group="uc.user"
+                             owned="uc.owned">
             </user-group-page>
-            <user-user-page user="uc.user" ng-switch-when="user">
+            <user-user-page ng-switch-when="user"
+                            user="uc.user"
+                            owned="uc.owned">
             </user-user-page>
         </div>
     </div>

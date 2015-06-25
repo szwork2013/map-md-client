@@ -40,7 +40,7 @@
          * 获取专辑
          */
         Albums.get(albumId).then(function(album) {
-            $scope.setTitle("编辑 "+album.name);
+            $scope.setAlbum(album);
             self.album = album;
             self.album.featureCollection = self.album.featureCollection||{
                     type: 'FeatureCollection',

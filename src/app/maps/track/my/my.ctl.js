@@ -71,6 +71,10 @@
 
         $scope.$on('$destroy', function(e) {
             self.toolbarActions = [];
+            angular.forEach(self.tracks, function(track, key) {
+                $scope.removeTrack(track);
+            });
+            self.tracks = [];
         });
     }
 })();

@@ -47,6 +47,8 @@
         .factory('GeoJSONs',   ['ApiRestangular', GeoJSONServiceFactory])
         .factory('Albums',     ['ApiRestangular', AlbumServiceFactory])
         .factory('Groups',     ['ApiRestangular', GroupServiceFactory])
+        .factory('Covers',     ['ApiRestangular', CoverServiceFactory])
+        .factory('Likes',      ['ApiRestangular', LikeServiceFactory])
     ;
 
     function PhotoServiceFactory(Restangular) {
@@ -253,8 +255,11 @@
             get: get,
             getByName: getByName,
             create: create,
+            isMember: isMember,
             applyJoin: applyJoin,
-            getAlbums: getAlbums
+            getAlbums: getAlbums,
+            saveAvatar: saveAvatar,
+            remove: remove
             //modify: modify,
             //remove: remove,
             //addPhotos: addPhotos,
@@ -274,12 +279,70 @@
             return service.one().post('', group);
         }
 
+        function isMember(id, userId) {
+            return service.one(id).one('members', userId).get();
+        }
+
         function applyJoin(id) {
             return service.one(id).post('join');
         }
 
         function getAlbums(id) {
             return service.one(id).all('albums').getList();
+        }
+
+        function saveAvatar(id, imageId) {
+            return service.one(id).one('avatar').post(imageId);
+        }
+
+        function remove(id) {
+            return service.one(id).remove();
+        }
+    }
+
+    function CoverServiceFactory(Restangular) {
+        var service = Restangular.service('cover');
+
+        return {
+            upload: upload
+        };
+
+        function upload(data) {
+            var boundary = Math.random().toString().substr(2);
+            var multipart = "";
+            multipart += "--" + boundary +
+                "\r\nContent-Disposition: form-data; name=" +
+                "\"file\"" + '; filename="cover.png"' +
+                "\r\nContent-type: application/octet-stream" +
+                "\r\n\r\n" + data + "\r\n";
+
+            multipart += "--" + boundary + "--\r\n";
+
+            return service.one().post('', multipart, {}, {
+                "Content-Type": "multipart/form-data; charset=utf-8; boundary=" + boundary
+            });
+        }
+    }
+
+    function LikeServiceFactory(Restangular) {
+        var service = Restangular.service('like');
+
+        return {
+            like: like,
+            unLike: unLike,
+            isLike: isLike
+        };
+
+        function like(type, id) {
+            return service.one().post('', {type: type, id: id});
+        }
+
+        function unLike(type, id) {
+            return service.one().remove({type: type, id: id});
+        }
+
+        function isLike(type, id) {
+            return service.one().get({type: type, id: id});
         }
     }
 
