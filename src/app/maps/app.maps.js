@@ -124,7 +124,6 @@
 
         function toggleRight() {
             var pending = $mdBottomSheet.hide() || $q.when(true);
-
             pending.then(function(){
                 $mdSidenav('right').toggle();
             });
@@ -146,7 +145,7 @@
             defaults: {
             },
             options: {
-                drawControl: true
+                //drawControl: true
                 //editable: true
             }
         });
@@ -256,6 +255,8 @@
 
         leafletData.getMap('main-map').then(function(map) {
 
+            self.map = map;
+
             // 由于动态产生的界面地图容器大小会变化，所以在创建后再检查容器大小是否变化
             $timeout(function() {
                 map.invalidateSize(false);
@@ -350,7 +351,11 @@
         }
 
         $scope.getMap = function() {
-            return leafletData.getMap('main-map');
+            if(self.map) {
+                return $q.when(self.map);
+            }else {
+                return leafletData.getMap('main-map');
+            }
         };
 
         $scope.getGeoJSON = function() {

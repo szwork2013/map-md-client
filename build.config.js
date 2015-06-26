@@ -82,8 +82,8 @@ module.exports = {
       'vendor/leaflet-omnivore/leaflet-omnivore.min.js',
       //'vendor/leaflet.elevation/dist/Leaflet.Elevation-0.0.2.min.js',
       'vendor/leaflet.locatecontrol/dist/L.Control.Locate.min.js',
-      'vendor/leaflet.editable/src/Leaflet.Editable.js',
-      'vendor/Leaflet.GeometryUtil/dist/leaflet.geometryutil.js',
+      //'vendor/leaflet.editable/src/Leaflet.Editable.js',
+      //'vendor/Leaflet.GeometryUtil/dist/leaflet.geometryutil.js',
       //'vendor/Leaflet.Snap/leaflet.snap.js',
       'vendor/lodash/lodash.min.js',
       'vendor/restangular/dist/restangular.min.js',
@@ -108,7 +108,8 @@ module.exports = {
       'vendor/jquery-ui/jquery-ui.min.js',
       'vendor/Jcrop/js/jquery.Jcrop.js',
       'vendor/ui-rect-select/dist/ui-rect-select.min.js',
-      'node_modules/leaflet-image/leaflet-image.js'
+      'node_modules/leaflet-image/leaflet-image.js',
+      'vendor/leaflet-draw/dist/leaflet.draw.js'
     ],
     css: [
       'vendor/angular-material/angular-material.css',
@@ -119,7 +120,8 @@ module.exports = {
       'vendor/leaflet.locatecontrol/dist/L.Control.Locate.min.css',
       'vendor/Jcrop/css/jquery.Jcrop.min.css',
       'vendor/fontawesome/css/font-awesome.min.css',
-      'vendor/ui-rect-select/dist/ui-rect-select.min.css'
+      'vendor/ui-rect-select/dist/ui-rect-select.min.css',
+      'vendor/leaflet-draw/dist/leaflet.draw.css'
       //'vendor/nvd3/nv.d3.css',
       //'http://cloud.github.com/downloads/lafeber/world-flags-sprite/flags32.css'
     ],

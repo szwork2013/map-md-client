@@ -15,14 +15,6 @@
                 </h2>
                 <span flex></span>
                 <like-button like-type="photo" like-entity="photo"></like-button>
-                <!--<md-button class="md-icon-button" aria-label="favorite"
-                           ng-click="favorite(photo)">
-                    <md-icon ng-if="photo.like"
-                             style="color: lightcoral;"
-                             md-svg-icon="action:favorite"></md-icon>
-                    <md-icon ng-if="!photo.like"
-                             md-svg-icon="action:favorite_outline"></md-icon>
-                </md-button>-->
                 <md-button class="md-icon-button" aria-label="Close"
                         ng-click="hide()">
                     <md-icon md-svg-icon="navigation:close"></md-icon>
@@ -61,22 +53,17 @@
                     </md-button>
                 </md-list-item>
                 <md-list-item>
-                    <p class="">{{photo.description}}</p>
+                    <pre class="">{{photo.description}}</pre>
                 </md-list-item>
-                <md-list-item ng-if="photo.location.address">
-                    <md-button class="md-primary"
-                               ng-href="{{googleUrl}}"
-                               target="_blank">
-                        <md-icon md-svg-icon="social:location_city"></md-icon>
+                <md-list-item ng-if="photo.location.address" layout="row" layout-align="start center">
+                    <md-icon md-svg-icon="social:location_city"></md-icon>
+                    <md-button class="">
                         {{photo.location.address}}
                     </md-button>
                 </md-list-item>
-                <md-list-item ng-if="photo.location">
-
-                    <md-button class="md-primary"
-                               ng-href="{{googleUrl}}"
-                               target="_blank">
-                        <md-icon md-svg-icon="maps:place"></md-icon>
+                <md-list-item layout="row" layout-align="start center" >
+                    <md-icon md-svg-icon="maps:place" layout-margin></md-icon>
+                    <md-button class="" ng-click="locate($event)">
                         {{photo.location.position[1] | number}}, {{photo.location.position[0] | number}}
                     </md-button>
                 </md-list-item>

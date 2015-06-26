@@ -19,11 +19,12 @@
                         }
                     });
             }])
-        .controller('MapsFcEditCtrl', ['$scope', '$log', '$q', '$timeout', 'Albums', 'albumId', '$mmdMessage',
+        .controller('MapsFcEditCtrl', ['$scope', '$log', '$q', '$timeout', 'Albums', 'albumId',
+            '$mmdMessage', '$FeatureCollection',
             MapsFcEditCtrl]);
 
     var LOG_TAG = "Maps-Album-Fc-Edit: ";
-    function MapsFcEditCtrl($scope, $log, $q, $timeout, Albums, albumId, $mmdMessage) {
+    function MapsFcEditCtrl($scope, $log, $q, $timeout, Albums, albumId, $mmdMessage, $FeatureCollection) {
         var self = this;
 
         var defalutStyle = {
@@ -35,6 +36,66 @@
             fillOpacity: 0.5,
             dashArray: 3
         };
+
+        var drawnItems, drawControl;
+        // init map draw tool
+        $scope.getMap().then(function(map) {
+
+            drawnItems = new L.FeatureGroup();
+            map.addLayer(drawnItems);
+
+            drawControl = new L.Control.Draw({
+                draw: {
+                    position: 'topleft',
+                    polygon: {
+                        title: 'Draw a sexy polygon!',
+                        allowIntersection: false,
+                        drawError: {
+                            color: '#b00b00',
+                            timeout: 1000
+                        },
+                        shapeOptions: {
+                            color: '#bada55'
+                        },
+                        showArea: true
+                    },
+                    polyline: {
+                        metric: false
+                    },
+                    circle: {
+                        shapeOptions: {
+                            color: '#662d91'
+                        }
+                    }
+                },
+                edit: {
+                    featureGroup: drawnItems
+                }
+            });
+            map.addControl(drawControl);
+            map.on('draw:created', function (e) {
+                var type = e.layerType,
+                    layer = e.layer;
+                if (type === 'marker') {
+                    layer.bindPopup('A popup!');
+                }
+                drawnItems.addLayer(layer);
+            });
+        });
+
+        /**
+         * 退出时清除地图控件
+         */
+        $scope.$on('$destroy', function(e) {
+            $scope.getMap().then(function(map) {
+                if(drawnItems) {
+                    map.removeLayer(drawnItems);
+                }
+                if(drawControl) {
+                    map.removeControl(drawControl);
+                }
+            });
+        });
 
         /**
          * 获取专辑
@@ -111,6 +172,7 @@
         });
 
         self.modifyAlbum = function() {
+
             Albums.modify(self.album.id, {
                     name: self.album.name,
                     description: self.album.description
@@ -127,26 +189,14 @@
          * 保存专辑
          */
         self.save = function() {
-            var features = [];
-            for(var i in self.album.featureCollection.features) {
-                var feature = self.album.featureCollection.features[i];
-                var newFeature = {
-                        type: feature.type,
-                        properties: feature.properties,
-                        geometry: feature.geometry
-                    };
-                if(feature.id) {
-                    newFeature.id = feature.id;
-                }
-                features.push(newFeature);
-            }
-            var fc = {
-                type: self.album.featureCollection.type,
-                properties: angular.copy(self.album.featureCollection.properties),
-                features: features
-            };
-            fc.properties.style = JSON.stringify(fc.properties.style);
-            Albums.modifyFC(self.album.id, fc)
+            $log.debug(LOG_TAG + " tojson");
+            var newGeoJSON = drawnItems.toGeoJSON();
+            $log.debug(newGeoJSON);
+            self.album.featureCollection.features =
+                self.album.featureCollection.features.concat(newGeoJSON.features);
+            // 保存成功后删除draw工具里的feature layers
+            drawnItems.clearLayers();
+            Albums.modifyFC(self.album.id, $FeatureCollection.tranform(self.album.featureCollection))
                 .then(function(album) {
                     $mmdMessage.success.save();
                 },function(err) {

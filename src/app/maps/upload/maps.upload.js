@@ -56,21 +56,18 @@
 
                 });
             }])
-        .controller('MapsUploadCtrl',
-        ['$scope', '$log', '$q', 'QQWebapi', 'Users', 'Albums', 'albumId', 'Authenticate',
-            MapsUploadCtrl])
-        .controller('MapsFileUploadCtrl',
-        ['$window', '$scope', '$log', '$q', 'fileUpload', '$mmdUtil', 'serverBaseUrl', MapsFileUploadCtrl])
-        .controller('MapsFileUploadPhotoCtrl',
-        ['$window', '$scope', '$log', '$q', 'Photos', '$mmdUtil', MapsFileUploadPhotoCtrl])
-        .controller('MapsFileUploadDestoryCtrl',
-        ['$window', '$scope', '$log', '$q', 'Photos', '$mmdUtil', MapsFileUploadDestoryCtrl])
-        .controller('AlbumsSelectCtrl',
-        ['$scope', '$log', '$q', 'Users',
-            AlbumsSelectCtrl])
+        .controller('MapsUploadCtrl', ['$scope', '$log', '$q', 'QQWebapi', 'Users', 'Albums',
+            'albumId', 'Authenticate', MapsUploadCtrl])
+        .controller('MapsFileUploadCtrl', ['$window', '$scope', '$log', '$q', 'fileUpload',
+            '$mmdUtil', 'serverBaseUrl', MapsFileUploadCtrl])
+        .controller('MapsFileUploadPhotoCtrl', ['$scope', '$log', '$q', 'Photos', '$mmdMessage',
+            MapsFileUploadPhotoCtrl])
+        .controller('MapsFileUploadDestoryCtrl', ['$window', '$scope', '$log', '$q', 'Photos',
+            '$mmdUtil', MapsFileUploadDestoryCtrl])
+        .controller('AlbumsSelectCtrl', ['$scope', '$log', '$q', 'Users', AlbumsSelectCtrl])
     ;
 
-    var LOG_TAG = "Maps-Upload: ";
+    var LOG_TAG = "[Maps-Upload] ";
     var PhotoMarkableControl;
 
     function MapsUploadCtrl($scope, $log, $q, QQWebapi, Users, Albums, albumId, Authenticate) {
@@ -318,7 +315,7 @@
             },
 
             formData: function () {
-                var formDatas = [];
+                var formDatas;
                 var lat = 0,
                     lng = 0,
                     address = '',
@@ -358,9 +355,11 @@
                 return formDatas;
             },
             done: function (e, data) {
-                data.files[0].uploaded = true;
+                var file = data.files[0];
+
                 var photo = data.result;
                 extractProps(data.files[0], photo);
+                file.done();
             },
             fail: function (e, data) {
                 data.files[0].uploading = false;
@@ -385,10 +384,9 @@
             file.is360 = photo.is360;
 
             if (!file.lat &&
-                photo.point &&
-                photo.point.lat !== 0 &&
-                photo.point.lng !== 0) {
-                file.setPosition(photo.point);
+                photo.location &&
+                photo.location.position) {
+                file.setPosition({lat: photo.location.position[1], lng: photo.location.position[0]});
             }
 
             angular.extend(file.photo, photo);
@@ -411,7 +409,6 @@
                     var file = data.files[0];
                     file.uuid = $mmdUtil.uuid();
                     file.photo = {
-                        id: file.uuid,
                         uuid: file.uuid
                     };
                     file.position = {};
@@ -421,6 +418,8 @@
                         this.position = angular.extend(this.position, position);
                         return this.position;
                     };
+
+                    file.tags = [];
 
                     loadImage.parseMetaData(file, function (data) {
                         if (data.exif) {
@@ -452,15 +451,14 @@
 
     /**
      *
-     * @param $window
      * @param $scope
      * @param $log
      * @param $q
      * @param Photos
-     * @param $mmdUtil
+     * @param $mmdMessage
      * @constructor
      */
-    function MapsFileUploadPhotoCtrl($window, $scope, $log, $q, Photos, $mmdUtil) {
+    function MapsFileUploadPhotoCtrl($scope, $log, $q, Photos, $mmdMessage) {
         var self = this;
 
         var file = $scope.file;
@@ -499,6 +497,8 @@
             }
         }
 
+        // tags
+        self.tags = [];
         self.tagsSearch = tagsSearch;
         self.vegetables = loadVegetables();
         self.selectedTags = [];
@@ -550,6 +550,34 @@
                 return veg;
             });
         }
+
+        /**
+         * 文件上传完成回调
+         */
+        $scope.file.done = function() {
+            $scope.fileForm.$setPristine();
+            this.uploaded = true;
+        };
+
+        /**
+         * 更新图片属性
+         */
+        self.update = function() {
+            if($scope.file.photo && $scope.file.photo.id) {
+                Photos.update($scope.file.photo.id, {
+                    title: $scope.file.title,
+                    description: $scope.file.description,
+                    location: angular.extend($scope.file.photo.location, {lat: $scope.file.position.lat,
+                        lng: $scope.file.position.lng, address: $scope.file.position.address}),
+                    is360: angular.extend($scope.file.photo.is360, $scope.file.is360)
+                }).then(function() {
+                    $scope.fileForm.$setPristine();
+                    $mmdMessage.success.update();
+                },function(err) {
+                    $mmdMessage.fail.update(err.statusText);
+                });
+            }
+        };
     }
 
     function MapsFileUploadDestoryCtrl($window, $scope, $log, $q, Photos, $mmdUtil) {

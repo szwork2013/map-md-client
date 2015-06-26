@@ -413,9 +413,6 @@ div.country {
   z-index: 1002;
   overflow: hidden; }
 
-.md-autocomplete-suggestions {
-  z-index: 1002; }
-
 .mmd-list md-list md-list-item {
   border-bottom: 1px dashed grey; }
   .mmd-list md-list md-list-item md-icon.leader {
@@ -431,48 +428,54 @@ div.country {
   .upload-file-form md-progress-linear .md-container {
     top: 0; }
 
-.upload-photo-card md-autocomplete.md-default-theme {
-  background-color: initial; }
-  .upload-photo-card md-autocomplete.md-default-theme md-autocomplete-wrap {
-    box-shadow: initial; }
-.upload-photo-card md-autocomplete input {
-  border-color: rgba(0, 0, 0, 0.12);
-  border-width: 0 0 1px 0;
-  border-style: solid; }
-.upload-photo-card .upload-photo-addr {
-  margin: 5px; }
-.upload-photo-card .photo-markable {
-  position: relative;
-  float: left;
-  padding: 3px;
-  cursor: pointer; }
-  .upload-photo-card .photo-markable md-icon {
-    position: absolute;
-    right: 1px;
-    top: 1px;
-    color: lightsalmon;
-    z-index: 1;
-    display: none; }
-  .upload-photo-card .photo-markable .photo-thumbnail {
-    min-width: 80px;
-    min-height: 80px; }
-    .upload-photo-card .photo-markable .photo-thumbnail img {
-      width: initial; }
-  .upload-photo-card .photo-markable.active md-icon {
-    display: block; }
-.upload-photo-card .preview.drag-marker {
-  position: fixed;
-  z-index: 9000; }
-  .upload-photo-card .preview.drag-marker .marker {
-    position: absolute;
-    z-index: 9000;
-    width: 30px;
-    height: 40px;
-    background-image: url("./images/marker-icon.png");
-    background-repeat: no-repeat; }
-  .upload-photo-card .preview.drag-marker img {
-    opacity: 0;
-    filter: alpha(opacity=0); }
+.upload-photo-form {
+  width: 100%;
+  padding: 10px; }
+
+.upload-photo-card {
+  margin: 0; }
+  .upload-photo-card md-autocomplete.md-default-theme {
+    background-color: initial; }
+    .upload-photo-card md-autocomplete.md-default-theme md-autocomplete-wrap {
+      box-shadow: initial; }
+  .upload-photo-card md-autocomplete input {
+    border-color: rgba(0, 0, 0, 0.12);
+    border-width: 0 0 1px 0;
+    border-style: solid; }
+  .upload-photo-card .upload-photo-addr {
+    margin: 5px; }
+  .upload-photo-card .photo-markable {
+    position: relative;
+    float: left;
+    padding: 3px;
+    cursor: pointer; }
+    .upload-photo-card .photo-markable md-icon {
+      position: absolute;
+      right: 1px;
+      top: 1px;
+      color: lightsalmon;
+      z-index: 1;
+      display: none; }
+    .upload-photo-card .photo-markable .photo-thumbnail {
+      min-width: 80px;
+      min-height: 80px; }
+      .upload-photo-card .photo-markable .photo-thumbnail img {
+        width: initial; }
+    .upload-photo-card .photo-markable.active md-icon {
+      display: block; }
+  .upload-photo-card .preview.drag-marker {
+    position: fixed;
+    z-index: 9000; }
+    .upload-photo-card .preview.drag-marker .marker {
+      position: absolute;
+      z-index: 9000;
+      width: 30px;
+      height: 40px;
+      background-image: url("./images/marker-icon.png");
+      background-repeat: no-repeat; }
+    .upload-photo-card .preview.drag-marker img {
+      opacity: 0;
+      filter: alpha(opacity=0); }
 
 md-card.caption {
   background-color: #6575cf;
@@ -684,6 +687,9 @@ md-toast {
 md-tooltip {
   z-index: 1005; }
 
+.md-autocomplete-suggestions {
+  z-index: 1005; }
+
 /**  */
 md-input-container.md-icon-float {
   margin-top: -16px;
@@ -721,5 +727,18 @@ pre {
   right: 20px;
   bottom: 20px;
   left: auto; }
+
+.md-top-right {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  bottom: auto;
+  left: auto; }
+
+md-fab-toolbar .md-fab-toolbar-wrapper {
+  height: initial; }
+
+.md-close {
+  z-index: 1; }
 
 /*# sourceMappingURL=app.css.map */

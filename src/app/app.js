@@ -20,8 +20,8 @@
         'app.user',
         'app.maps'
         ])
-        //.value('staticCtx', 'http://static.photoshows.cn')
-        .value('staticCtx', 'http://test.photoshows.cn')
+        .value('staticCtx', 'http://static.photoshows.cn')
+        //.value('staticCtx', 'http://test.photoshows.cn')
         //.value('serverBaseUrl', 'http://www.photoshows.cn')
         .value('serverBaseUrl', 'http://localhost:8080')
         .config(['$logProvider', '$urlRouterProvider', '$stateProvider', '$locationProvider',

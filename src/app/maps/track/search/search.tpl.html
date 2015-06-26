@@ -45,7 +45,10 @@
             <md-icon md-font-icon="pictogram activity-{{track.activity}}" alt="activity-1"
                     class="leader"></md-icon>
             <div class="md-list-item-text">
-                <h3> {{ track.name }} </h3>
+                <a href
+                   ng-click="$event.preventDefault();go('app.maps.track.display', {id: track.id})">
+                    <h3> {{ track.name }} </h3>
+                </a>
                 <p> {{ track.description }} </p>
             </div>
         </md-list-item>

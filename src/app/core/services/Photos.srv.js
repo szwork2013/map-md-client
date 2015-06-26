@@ -52,7 +52,7 @@
     ;
 
     function PhotoServiceFactory(Restangular) {
-        var photoService = Restangular.service('photo');
+        var service = Restangular.service('photo');
         Restangular.extendModel('photo', function(model) {
             model.getCameraInfo = function() {
                 return this.one('camerainfo').get();
@@ -66,19 +66,25 @@
             model.unFavorite = function() {
                 return this.one('like').remove();
             };
+
             return model;
         });
         return {
             get: getPhoto,
-            remove: removePhoto
+            remove: removePhoto,
+            update: update
         };
 
         function getPhoto(id) {
-            return photoService.one(id).get();
+            return service.one(id).get();
         }
 
         function removePhoto(id) {
-            return photoService.one(id).remove();
+            return service.one(id).remove();
+        }
+
+        function update(id, properties) {
+            return service.one(id).post('properties', properties);
         }
     }
 

@@ -26,8 +26,6 @@
 
     function MapsClusterUserController($scope, $log, Users, userId, Authenticate) {
 
-
-
         // configs
         $scope.loadMoreDisabled = false;
         $scope.photosLimitTo = 20;
@@ -48,6 +46,7 @@
         function init() {
             // 获取用户信息
             Users.getUser(userId).then(function(user) {
+                $scope.setUserTitle(user, user.name+"的图片");
                 $scope.user = user;
             });
             photos = [];

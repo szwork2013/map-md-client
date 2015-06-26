@@ -30,9 +30,21 @@
 
         $scope.linkItems = [
             {name: '热门图片', icon: 'maps:map', state: 'app.maps.popular'},
-            {name: '轨迹',    icon: 'maps:directions_walk', state: 'app.maps.track.search'},
-            {name: '图片管理', icon: 'image:photo_album', state: 'app.photos.all'},
-            {name: '设置', icon: 'action:settings_applications', state: 'app.settings.account'}
+            {name: '轨迹',    icon: 'maps:directions_walk', state: 'app.maps.track.search'}
+
+        ];
+
+        $scope.authItems = [
+            {
+                name: '图片管理',
+                icon: 'image:photo_album',
+                state: 'app.photos.all'
+            },
+            {
+                name: '设置',
+                icon: 'action:settings_applications',
+                state: 'app.settings.account'
+            }
         ];
 
         $scope.close = self.close = function () {

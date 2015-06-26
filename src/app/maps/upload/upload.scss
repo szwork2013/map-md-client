@@ -6,8 +6,13 @@
     }
   }
 }
-.upload-photo-card {
 
+.upload-photo-form {
+  width: 100%;
+  padding: 10px;
+}
+.upload-photo-card {
+  margin: 0;
   md-autocomplete {
     &.md-default-theme {
       background-color: initial;

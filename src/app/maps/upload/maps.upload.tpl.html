@@ -21,7 +21,7 @@
      ng-controller="MapsFileUploadCtrl as mfuc"
      file-upload="options">
 
-    <md-fab-speed-dial md-open="demo.isOpen" md-direction="left"
+    <md-fab-speed-dial md-open="speedDialOpen" md-direction="left"
                        class="md-fling md-bottom-right">
         <md-fab-trigger>
             <md-button aria-label="menu" class="md-fab md-warn">
@@ -29,11 +29,11 @@
             </md-button>
         </md-fab-trigger>
         <md-fab-actions>
-            <md-button aria-label="保存" class="md-fab md-raised"
+            <md-button aria-label="保存" class="md-fab md-raised md-primary md-mini"
                        ng-click="submit()">
                 <md-icon md-svg-icon="content:save"></md-icon>
             </md-button>
-            <md-button aria-label="上传" class="md-fab md-raised"
+            <md-button aria-label="上传" class="md-fab md-raised md-primary md-mini"
                        ngf-select
                        ngf-multiple="true"
                        ngf-capture="'camera'"
@@ -43,33 +43,6 @@
             </md-button>
         </md-fab-actions>
     </md-fab-speed-dial>
-
-    <!--<md-button class="md-fab md-primary md-fab-bottom-right" aria-label="上传"
-               ngf-select
-               ngf-multiple="true"
-               ngf-capture="'camera'"
-               ngf-change="mfuc.fileSelected($files, $event)"
-               accept="image/*" required="">
-        <md-icon md-svg-src="file:upload"></md-icon>
-    </md-button>-->
-
-    <!--<div ng-switch="processing()">
-        <div ng-switch-when="true">
-            <md-button  class="md-fab md-primary md-fab-bottom-left"
-                        aria-label="取消"
-                        ng-click="cancel()">
-                <md-icon md-svg-src="file:cloud_off"></md-icon>
-            </md-button>
-        </div>
-        <div ng-switch-default>
-            <md-button class="md-fab md-primary md-fab-bottom-left"
-                       aria-label="保存"
-                       ng-show="queue.length"
-                       ng-click="submit()">
-                <md-icon md-svg-src="file:cloud_upload"></md-icon>
-            </md-button>
-        </div>
-    </div>-->
 
     <div file-upload-progress="progress()" ng-show="active()">
         <md-progress-linear md-mode="determinate"
@@ -84,17 +57,21 @@
                     <p><b>选择照片上传</b></p>
                 </md-card-content>
             </md-card>
-
-            <md-select ng-model="album">
-                <md-select-label>{{ album ? album.name : '' }}</md-select-label>
-                <md-option ng-value="album" ng-repeat="album in albums">{{album.name}}</md-option>
-            </md-select>
+            <div layout="row" layout-align="end center">
+                <div layout-padding>
+                    添加到专辑
+                </div>
+                <md-select ng-model="album" aria-label="添加到专辑" layout-padding>
+                    <md-select-label>{{ album ? album.title : '' }}</md-select-label>
+                    <md-option ng-value="album" ng-repeat="album in albums">{{album.title}}</md-option>
+                </md-select>
+            </div>
 
             <md-list flex>
                 <md-list-item ng-repeat="file in queue"
                         ng-controller="MapsFileUploadPhotoCtrl as mupc">
+                    <form name="fileForm" class="upload-photo-form">
                     <md-card class="upload-photo-card">
-
                         <div file-upload-progress="file.$progress()">
                             <md-progress-linear class="md-accent"
                                                 md-mode="determinate"
@@ -153,6 +130,8 @@
                                               md-maxlength="150"></textarea>
                             </md-input-container>
 
+                            <!--<md-chips ng-model="file.tags"></md-chips>-->
+
                             <md-chips ng-model="mupc.selectedTags" md-autocomplete-snap>
                                 <md-autocomplete
                                         md-selected-item="mupc.selectedTag"
@@ -165,13 +144,19 @@
                                 <md-chip-template>
         <span>
           <strong>{{$chip.name}}</strong>
-          <em>({{$chip.type}})</em>
         </span>
                                 </md-chip-template>
                             </md-chips>
                         </md-card-content>
 
                         <div class="md-actions" layout="row" layout-align="end center">
+                            <div ng-show="file.uploaded">
+                                <md-button class="md-raised "
+                                           ng-disabled="!fileForm.$dirty"
+                                           ng-class="{'md-primary': fileForm.$dirty}"
+                                           ng-click="mupc.update()">更新
+                                </md-button>
+                            </div>
                             <div ng-show="!file.uploading&&!file.uploaded">
                                 <md-button class="md-raised md-primary"
                                            ng-click="mfuc.submit(file)">保存
@@ -191,6 +176,7 @@
 
                         </div>
                     </md-card>
+                    </form>
                 </md-list-item>
             </md-list>
 

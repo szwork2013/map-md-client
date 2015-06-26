@@ -25,7 +25,7 @@
          */
         function showPhoto(ev, photo) {
             return $mdDialog.show({
-                controller: ['$scope', '$mdDialog', 'photo', PhotoDialogController],
+                controller: ['$scope', '$mdDialog', '$PhotoLocateDialog', 'photo', PhotoDialogController],
                 templateUrl: 'components/photoDialog/photoDialog.tpl.html',
                 targetEvent: ev,
                 locals: {
@@ -38,10 +38,11 @@
          *
          * @param $scope
          * @param $mdDialog
+         * @param $PhotoLocateDialog
          * @param photo
          * @constructor
          */
-        function PhotoDialogController($scope, $mdDialog, photo) {
+        function PhotoDialogController($scope, $mdDialog, $PhotoLocateDialog, photo) {
 
             $scope.hide = function() {
                 $mdDialog.hide();
@@ -57,27 +58,22 @@
             Photos.get(photo.id).then(function(photo) {
                 $log.debug("get photo title = " + photo.title);
                 $scope.photo = photo;
-                if(photo.user_id > 0) {
-                    // 获取照片作者信息
-                    Users.getUser(photo.user_id).then(function(user) {
-                        $scope.user = user;
-                    });
-                }
+                $scope.user = photo.user;
+                //if(photo.user_id > 0) {
+                //    // 获取照片作者信息
+                //    Users.getUser(photo.user_id).then(function(user) {
+                //
+                //    });
+                //}
 
                 // 获取照片相机信息
                 photo.getCameraInfo().then(function(cameraInfo) {
-                    //$log.debug("camera info is");
-                    //$log.debug(cameraInfo);
                     setCameraInfos(photo, cameraInfo);
                 });
 
                 // 获取照片评论
                 photo.getComments().then(function(comments) {
                     $scope.comments = comments;
-                    $log.debug("comments:");
-                    angular.forEach(comments, function(value, key) {
-                        $log.debug("     "+value.content);
-                    });
                 });
             });
 
@@ -86,20 +82,8 @@
                 $scope.comments.push(comment);
             };
 
-            /**
-             * favorite photo
-             * @param photo
-             */
-            $scope.favorite = function(photo) {
-                if (photo.like) {
-                    photo.unFavorite().then(function() {
-                        photo.like = false;
-                    });
-                }else {
-                    photo.favorite().then(function() {
-                        photo.like = true;
-                    });
-                }
+            $scope.locate = function(ev) {
+                $PhotoLocateDialog.show(ev, $scope.photo);
             };
 
             /**

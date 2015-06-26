@@ -19,9 +19,9 @@
                         resolve: {}
                     });
             }])
-        .controller('MapsAlbumCtrl', ['$scope', '$log', MapsAlbumCtrl]);
+        .controller('MapsAlbumCtrl', ['$scope', '$log', '$timeout', MapsAlbumCtrl]);
 
-    function MapsAlbumCtrl($scope, $log) {
+    function MapsAlbumCtrl($scope, $log, $timeout) {
 
         var self = this;
 
@@ -57,9 +57,12 @@
         };
 
         $scope.$on('leafletDirectiveMap.geojsonCreated', function(e, geoJSON) {
-            $scope.getMap().then(function(map) {
-                map.fitBounds(geoJSON.getBounds());
-            });
+            var bounds = geoJSON.getBounds();
+            if(bounds.isValid()) {
+                $scope.getMap().then(function(map) {
+                    map.fitBounds(bounds);
+                });
+            }
         });
 
         $scope.$on('$destroy', function(e) {

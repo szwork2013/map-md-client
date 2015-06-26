@@ -31,6 +31,12 @@
                 <p> {{ item.name }}  </p>
             </md-list-item>
 
+            <md-list-item ng-repeat="item in authItems" ng-show="Authenticate.login"
+                          ng-click="navigateTo(item.state, $event)">
+                <md-icon md-svg-icon="{{item.icon}}"></md-icon>
+                <p> {{ item.name }}  </p>
+            </md-list-item>
+
             <md-list-item ng-show="Authenticate.login"
                     ng-click="signout()">
                 <md-icon md-svg-icon="action:exit_to_app"></md-icon>
@@ -39,7 +45,7 @@
         </md-list>
 
         <md-button ng-click="close()" class="md-primary" hide-gt-md>
-            Close Sidenav Left
+            Close
         </md-button>
     </md-content>
 </md-sidenav>

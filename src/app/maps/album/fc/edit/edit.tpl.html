@@ -20,8 +20,13 @@
                                   class="md-accent"
                                   md-mode="indeterminate"></md-progress-circular>
         </md-button>
-        <md-button aria-label="csv" class="md-fab md-raised md-primary md-mini">csv
-            <md-icon md-svg-src="img/icons/hangout.svg"></md-icon>
+        <md-button aria-label="csv" class="md-fab md-raised md-primary md-mini"
+                   ngf-select
+                   accept=".csv"
+                   ngf-multiple="true"
+                   ngf-change="fileSelected($files, $event)"
+                   ng-disabled="uploading">
+            csv
         </md-button>
     </md-fab-actions>
 </md-fab-speed-dial>
