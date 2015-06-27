@@ -42,7 +42,11 @@
          * @param photos
          */
         function addClusterMarkers(album) {
-            $scope.addLayer(album.photos);
+            $scope.create(album.title, album.photos);
         }
+
+        $scope.$on('$destroy', function(e) {
+            $scope.clear();
+        });
     }
 })();

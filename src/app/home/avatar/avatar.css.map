@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,cAAe;EACb,MAAM,EAAE,IAAI",
+"sources": ["avatar.scss"],
+"names": [],
+"file": "avatar.css"
+}

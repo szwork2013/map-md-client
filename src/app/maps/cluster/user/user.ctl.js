@@ -48,10 +48,11 @@
             Users.getUser(userId).then(function(user) {
                 $scope.setUserTitle(user, user.name+"的图片");
                 $scope.user = user;
+                $scope.create(user.name, []);
+                photos = [];
+                // 开始调用获取用户图片
+                callGetPhotos(userId, 0);
             });
-            photos = [];
-            // 开始调用获取用户图片
-            callGetPhotos(userId, 0);
         }
 
         /**

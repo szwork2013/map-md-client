@@ -42,6 +42,12 @@
                 self.group = group;
                 setEditable(self.group);
                 Groups.getAlbums(group.id).then(function(albums) {
+                    // TODO
+                    angular.forEach(albums, function(album, key) {
+                        if(!album.cover) {
+                            album.cover = album.photos[0];
+                        }
+                    });
                     self.albums = albums;
                 });
             }

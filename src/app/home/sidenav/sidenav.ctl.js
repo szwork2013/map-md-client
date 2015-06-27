@@ -81,11 +81,15 @@
         $scope.$on('auth:loginRequired', function () {
             $log.debug("auth:login required -> token refresh");
             if(!Authenticate.user) {
+                $log.debug("auth:login required -> signout");
                 Authenticate.signout();
             }else {
+                $log.debug("auth:login required -> refresh token");
                 Oauth2Service.refreshToken().then(function () {
+                    $log.debug("auth:login required -> refresh token success");
                     // init logged user
                     Authenticate.getUser().then(function() {
+                        $log.debug("auth:login required -> get user success");
                         $rootScope.$broadcast('auth:oauthed');
                     });
                 },function(error) {

@@ -18,9 +18,9 @@
                         resolve: {}
                     });
             }])
-        .controller('MapsClusterCtrl', ['$scope', '$log', '$mmdLeafletUtil', MapsClusterCtrl]);
+        .controller('MapsClusterCtrl', ['$scope', '$log', 'ClusterControl', '$menuBottomSheet', MapsClusterCtrl]);
 
-    function MapsClusterCtrl($scope, $log, $mmdLeafletUtil) {
+    function MapsClusterCtrl($scope, $log, ClusterControl, $menuBottomSheet) {
         var self = this;
 
         $scope.setUserTitle = function(user, title) {
@@ -29,53 +29,34 @@
         };
 
         $scope.showBottomSheet = function($event) {
-            $scope.showGridBottomSheet($event, [
-                { name: '我的热点', icon: 'social:person', link: 'app.maps.heatmap.user', params:{id:''} },
-                { name: '上传', icon: 'image:camera', link: 'app.maps.upload', params:{id:''} },
-                { name: 'Help', icon: 'action:help' , link: 'app.helps.cluster'}
-            ]).then(function(clickedItem) {
-                $scope.alert = clickedItem.name + ' clicked!';
-            });
+            $menuBottomSheet.show($event, [
+                'app.maps.popular',
+                'app.maps.heatmap.my',
+                'app.maps.upload',
+                'app.helps.upload']);
         };
 
         // 图片图标组层
-        var clusterGroup = L.markerClusterGroup();
-        $scope.getMap().then(function(map) {
-            map.addLayer(clusterGroup);
-        });
-
-        self.photos = [];
-        $scope.addLayer = function(photo) {
+        $scope.create = function(name, photos) {
             $scope.getMap().then(function(map) {
-                if (angular.isArray(photo)) {
-                    angular.forEach(photo, function (photo, key) {
-                        if(photo.location) {
-                            clusterGroup.addLayer($mmdLeafletUtil.photoMarker(photo, map));
-                            self.photos.push(photo);
-                        }
-                    });
-                } else if (angular.isObject(photo)) {
-                    if(photo.location) {
-                        clusterGroup.addLayer($mmdLeafletUtil.photoMarker(photo, map));
-                        self.photos.push(photo);
-                    }
-                }
-
-                map.fitBounds(clusterGroup.getBounds());
-
+                self.clusterControl = new ClusterControl(map, photos, name);
+                self.clusterControl.fitBounds();
             });
+        };
 
+        $scope.addLayer = function(photo) {
+            self.clusterControl.addPhotos(photo);
+            self.clusterControl.fitBounds();
         };
 
         $scope.clear = function() {
-            clusterGroup.clearLayers();
+            self.clusterControl.clear();
         };
 
         $scope.$on('$destroy', function(e) {
-            $scope.clear();
-            $scope.getMap().then(function(map) {
-                map.removeLayer(clusterGroup);
-            });
+            if(self.clusterControl) {
+                self.clusterControl.remove();
+            }
         });
     }
 })();

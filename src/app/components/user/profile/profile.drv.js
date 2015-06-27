@@ -5,14 +5,15 @@
     'use strict';
 
     angular.module('app.components').
-        directive('userProfile', ['staticCtx', UserProfileDirective]);
+        directive('userProfile', ['staticCtx', '$state', UserProfileDirective]);
 
-    function UserProfileDirective(staticCtx) {
+    function UserProfileDirective(staticCtx, $state) {
         return {
             restrict: 'EA',
             transclude: true,
             scope: {
-                user: "=user"
+                user: "=user",
+                leave: '&?onLeave'
             },
             templateUrl: 'components/user/profile/profile.tpl.html',
             link: link
@@ -20,6 +21,11 @@
 
         function link(scope, element, attrs) {
             scope.staticCtx = staticCtx;
+
+            scope.toUserPage = function(ev) {
+                scope.leave(ev);
+                $state.go('app.user', {name: scope.user.username});
+            };
         }
     }
 })();

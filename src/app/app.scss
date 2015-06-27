@@ -30,6 +30,7 @@
 @import './user/user.scss';
 @import './settings/settings.scss';
 @import './settings/map/map.scss';
+@import '../scss/animation.scss';
 
 body {
   font-family: Microsoft YaHei;
@@ -87,8 +88,11 @@ md-toast {
 md-tooltip {
   z-index: 1005;
 }
+.md-autocomplete-suggestions {
+  z-index: 1005;
+}
 
-/**  */
+/** input */
 md-input-container.md-icon-float {
 
   margin-top: -16px;
@@ -137,4 +141,28 @@ pre {
   right: 20px;
   bottom: 20px;
   left: auto;
+}
+.md-top-right {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  bottom: auto;
+  left: auto;
+}
+.md-bottom-left {
+  position: absolute;
+  top: auto;
+  right: auto;
+  bottom: 10px;
+  left: 10px;
+}
+
+md-fab-toolbar {
+  .md-fab-toolbar-wrapper {
+    height: initial;
+  }
+}
+
+.md-close {
+  z-index: 1;
 }

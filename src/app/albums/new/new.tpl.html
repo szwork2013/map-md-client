@@ -29,11 +29,23 @@
 
 <md-card ng-show="anc.step>1">
     <md-card-content>
-
+        <b>基本图片专辑</b> 只能保存图片<br>
+        <b>标记地图专辑</b> 除了可以保存图片，还可以标记各种类型的地理信息
     </md-card-content>
     <div class="md-actions" layout="row" layout-align="end center">
-        <md-button class="md-icon-button md-primary" title="上传图片"
+        <md-button class="md-icon-button md-primary" aria-label="上传地图标记"
+                   ng-show="anc.album.type=='FeatureCollection'"
+                   ng-click="go('app.maps.album.fc.edit', {id: anc.album.id})">
+            <md-tooltip>
+                上传地图标记
+            </md-tooltip>
+            <md-icon md-svg-icon="maps:upload_marker"></md-icon>
+        </md-button>
+        <md-button class="md-icon-button md-primary" aria-label="上传图片"
                    ng-click="go('app.maps.upload', {album: anc.album.id})">
+            <md-tooltip>
+                上传图片
+            </md-tooltip>
             <md-icon md-svg-icon="image:photo_camera"></md-icon>
         </md-button>
     </div>

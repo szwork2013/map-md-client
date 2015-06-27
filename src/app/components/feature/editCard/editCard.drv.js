@@ -53,6 +53,35 @@
             $scope.featureRemove($scope.feature);
         };
 
+        /**
+         * 新增一个属性
+         */
+        self.addProperty = function(e) {
+            $log.debug(e.keyCode);
+            self.property = {
+                key: '',
+                value: ''
+            };
+        };
+
+        self.removeProperty = function(key) {
+            delete self.feature[key];
+            $scope.featureForm.$setDirty();
+        };
+
+        /**
+         * 更新Feature的属性
+         * @param properties
+         */
+        self.update = function(properties) {
+            if(self.property && self.property.key) {
+                properties[self.property.key] = self.property.value;
+            }
+            $scope.featureUpdated(properties);
+            $scope.featureForm.$setPristine();
+            delete self.property;
+        };
+
         self.filterSecId = function(properties) {
             var result = {};
             angular.forEach(properties, function(value, key) {

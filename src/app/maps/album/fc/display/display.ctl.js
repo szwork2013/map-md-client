@@ -19,34 +19,34 @@
                         }
                     });
             }])
-        .controller('MapsAlbumFCDisplayCtrl', ['$scope', '$log', 'Albums', 'albumId',
+        .controller('MapsAlbumFCDisplayCtrl', ['$scope', '$log', '$FeatureCollection', 'ClusterControl', 'Albums', 'albumId',
             MapsAlbumFCDisplayCtrl]);
 
-    function MapsAlbumFCDisplayCtrl($scope, $log, Albums, albumId) {
+    function MapsAlbumFCDisplayCtrl($scope, $log, $FeatureCollection, ClusterControl, Albums, albumId) {
         var self = this;
+        var clusterControl;
 
         Albums.get(albumId).then(function(album) {
             //$scope.setTitle(album.name, album.user);
             $scope.setAlbum(album);
             self.album = album;
-            self.album.featureCollection = self.album.featureCollection||{
-                    type: 'FeatureCollection',
-                    properties: {style: {}},
-                    features: []
-                };
-            if(angular.isString(self.album.featureCollection.properties.style)) {
-                self.album.featureCollection.properties.style =
-                    JSON.parse(self.album.featureCollection.properties.style);
-            }
-            angular.forEach(self.album.featureCollection.features, function(feature, key) {
-                if(feature.properties && feature.properties.style) {
-                    feature.properties.style = JSON.parse(feature.properties.style);
-                }
-            });
+            self.album.featureCollection = $FeatureCollection.detransform(self.album.featureCollection);
             $scope.setGeoJSON(self.album.featureCollection);
+            addCluster(album);
         });
 
-        $scope.$on('leafletDirectiveMap.geojsonClick', function(e, feature, oe) {
+        function addCluster(album) {
+            $scope.getMap().then(function(map) {
+                clusterControl = new ClusterControl(map, album.photos, album.title);
+            });
+        }
+
+        //$scope.$on('leafletDirectiveMap.geojsonClick', function(e, feature, oe) {
+        //    self.feature = feature;
+        //});
+
+        $scope.$on('leafletDirectiveMap.geojsonMouseover', function(e, feature, oe) {
+            oe.target.openPopup();
             self.feature = feature;
         });
 
@@ -64,8 +64,10 @@
         };
 
         $scope.$on('$destroy', function(e) {
-            $scope.getMap().then(function(map) {
-            });
+            if(clusterControl) {
+                clusterControl.remove();
+            }
+            $scope.setGeoJSON();
         });
     }
 })();

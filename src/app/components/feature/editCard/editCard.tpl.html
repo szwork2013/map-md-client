@@ -1,4 +1,4 @@
-<form name="featureForm" ng-submit="featureUpdated(fecc.feature);featureForm.$setPristine()">
+<form name="featureForm" ng-submit="fecc.update(fecc.feature)">
     <md-card >
         <md-card-content>
             <h3>{{fecc.feature.name}}</h3>
@@ -30,7 +30,7 @@
                         <input type="number" name="weight"
                                min="0" max="100" step="1"
                                string-to-number
-                               ng-model="fecc.feature.style.weight" >
+                               ng-model="fecc.feature.style.weight">
                     </md-input-container>
                     <md-input-container>
                         <label>(opacity)</label>
@@ -54,16 +54,40 @@
                 </div>
                 <div layout="column">
                     <md-input-container ng-repeat="(key,val) in fecc.filterSecId(fecc.feature)">
-                        <label>{{key}}</label>
+                        <md-icon md-svg-icon="navigation:close" class="clickable"
+                                ng-click="fecc.removeProperty(key)"></md-icon>
                         <input type="string" name="{{key}}"
-                               ng-model="fecc.feature[key]">
+                               ng-model="fecc.feature[key]"
+                               placeholder="{{key}}" >
                     </md-input-container>
+                </div>
+                <div layout="column">
+                    <div layout="row" ng-if="fecc.property">
+                        <md-input-container>
+                            <label>名</label>
+                            <input type="string" name="newPropKey"
+                                   ng-model="fecc.property.key">
+                        </md-input-container>
+                        <md-input-container>
+                            <label>值</label>
+                            <input type="string" name="newPropValue"
+                                   ng-model="fecc.property.value">
+                        </md-input-container>
+                    </div>
                 </div>
             </div>
         </md-card-content>
         <div class="md-actions" layout="row" layout-align="end center">
-            <md-button class="md-raised"
+            <md-button class="md-raised" type="submit"
+                       ng-disabled="!featureForm.$dirty"
                        ng-class="{'md-primary': featureForm.$dirty}">更新</md-button>
+
+            <md-button class="md-icon-button md-primary" aria-label="新增"
+                       ng-if="!fecc.property"
+                       ng-click="$event.preventDefault();fecc.addProperty($event)">
+                <md-icon md-svg-icon="content:add"></md-icon>
+            </md-button>
+
             <md-button class=""
                        ng-click="fecc.reset()">取消</md-button>
             <md-button class="md-warn"

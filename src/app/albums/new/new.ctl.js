@@ -39,7 +39,7 @@
 
         self.types = [
             {code: "Base", name: "基本图片专辑"},
-            {code: "FeatureCollection", name: "标记地图"}
+            {code: "FeatureCollection", name: "标记地图专辑"}
         ];
 
         self.save = function(e) {

@@ -20,7 +20,8 @@
         'app.home.signin',
         'app.home.signup',
         'app.home.avatar',
-        'app.home.message'
+        'app.home.message',
+        'app.home.menus'
     ])
     ;
 

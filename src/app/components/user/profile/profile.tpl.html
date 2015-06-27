@@ -3,7 +3,7 @@
          ng-src="{{staticCtx}}/cover{{user.avatar || 1}}.png"
          class="md-avatar" />
     <div class="profile-name">
-        <a ui-sref="app.user({name: user.username})">{{user.name}}</a>
+        <a href ng-click="toUserPage($event)">{{user.name}}</a>
     </div>
     <div ng-transclude></div>
 </div>

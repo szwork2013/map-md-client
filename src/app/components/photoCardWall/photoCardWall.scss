@@ -15,10 +15,6 @@
       position: absolute;
     }
 
-    .photo-card-image {
-      cursor: pointer;
-    }
-
     .action-container {
       position: absolute;
       bottom: 0;
@@ -73,8 +69,41 @@
   }
 }
 
+.photo-card-image {
+  cursor: pointer;
+  .photo-icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 65px;
+    height: 65px;
+    margin: -32px;
+  }
+}
+
 .photo-wall {
   md-tab-content {
     overflow-y: scroll;
   }
+}
+
+.icon-hover {
+  @include opacity(0.5);
+  @include transition(opacity 0.5s);
+  &:hover, &.hover {
+    @include opacity(1);
+  }
+}
+.icon-p360 {
+  @extend .icon-hover;
+  width: 65px;
+  height: 65px;
+  background: url(images/lightbox.png) no-repeat -63px 0;
+}
+
+.icon-pflat {
+  @extend .icon-hover;
+  width: 65px;
+  height: 65px;
+  background: url(images/lightbox.png) no-repeat -63px -94px;
 }

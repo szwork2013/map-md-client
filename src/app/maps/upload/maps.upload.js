@@ -56,7 +56,7 @@
 
                 });
             }])
-        .controller('MapsUploadCtrl', ['$scope', '$log', '$q', 'QQWebapi', 'Users', 'Albums',
+        .controller('MapsUploadCtrl', ['$scope', '$log', '$q', '$menuBottomSheet', 'QQWebapi', 'Users', 'Albums',
             'albumId', 'Authenticate', MapsUploadCtrl])
         .controller('MapsFileUploadCtrl', ['$window', '$scope', '$log', '$q', 'fileUpload',
             '$mmdUtil', 'serverBaseUrl', MapsFileUploadCtrl])
@@ -70,16 +70,14 @@
     var LOG_TAG = "[Maps-Upload] ";
     var PhotoMarkableControl;
 
-    function MapsUploadCtrl($scope, $log, $q, QQWebapi, Users, Albums, albumId, Authenticate) {
+    function MapsUploadCtrl($scope, $log, $q, $menuBottomSheet, QQWebapi, Users, Albums, albumId, Authenticate) {
         var self = this;
         $scope.showBottomSheet = function($event) {
-            $scope.showGridBottomSheet($event, [
-                { name: '我的图片', icon: 'social:person', link: 'app.maps.cluster.user', params:{id:''} },
-                { name: '上传Track', icon: 'maps:directions_walk', link: 'app.maps.track.upload' },
-                { name: 'Help', icon: 'action:help' , link: 'app.helps.upload'}
-            ]).then(function(clickedItem) {
-                $scope.alert = clickedItem.name + ' clicked!';
-            });
+            $menuBottomSheet.show($event, [
+                'app.maps.popular',
+                'app.maps.cluster.my',
+                'app.maps.track.upload',
+                'app.helps.upload']);
         };
 
         Authenticate.getUser().then(function(user) {
@@ -315,15 +313,15 @@
             },
 
             formData: function () {
-                var formDatas;
+                var formDatas, file = this.files[0];
                 var lat = 0,
                     lng = 0,
                     address = '',
                     vendor = "gps";
-                if (this.files[0].position) {
-                    lat = this.files[0].position.lat || 0;
-                    lng = this.files[0].position.lng || 0;
-                    address = this.files[0].position.address || '';
+                if (file.position) {
+                    lat = file.position.lat || 0;
+                    lng = file.position.lng || 0;
+                    address = file.position.address || '';
                 }
                 formDatas = [{
                     name: "lat",
@@ -339,10 +337,10 @@
                     value: vendor
                 },{
                     name: "title",
-                    value: this.files[0].title || ''
+                    value: file.title || ''
                 }, {
                     name: "description",
-                    value: this.files[0].description || ''
+                    value: file.description || ''
                 }
                 ];
                 // 添加到相册
@@ -350,6 +348,13 @@
                     formDatas.push({
                         name: "album",
                         value: $scope.album.id
+                    });
+                }
+                // 全景
+                if(file.is360) {
+                    formDatas.push({
+                        name: "is360",
+                        value: file.is360
                     });
                 }
                 return formDatas;

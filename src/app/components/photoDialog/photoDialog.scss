@@ -1,5 +1,6 @@
 
 .photo-dialog-left {
+  position: relative;
   box-shadow: 1px 1px 5px grey;
   z-index: 3;
 }
@@ -13,23 +14,6 @@
   .photo-info-content {
     padding: 5px;
     overflow-x: hidden;
-  }
-
-  md-list {
-    md-list-item {
-      //.md-button.md-no-style {
-      //  width: 100%;
-      //}
-      //.md-list-item-inner {
-      //  text-align: left;
-      //  md-icon {
-      //    margin-right: 12px;
-      //    margin-top: 5px;
-      //    margin-bottom: 5px;
-      //    box-sizing: content-box;
-      //  }
-      //}
-    }
   }
 
   .add-comment {

@@ -5,26 +5,49 @@
     <div flex="70"
          layout="column"
          class="photo-dialog-left">
-        <md-toolbar>
-            <div class="md-toolbar-tools">
-                <md-button class="md-icon-button" aria-label="Settings">
-                    <md-icon md-svg-icon="google_plus"></md-icon>
+        <md-button class="md-icon-button md-top-right md-close"
+                   ng-click="hide()">
+            <md-icon md-svg-icon="navigation:close" aria-label="Close dialog"></md-icon>
+        </md-button>
+        <md-fab-toolbar class="md-left">
+            <md-fab-trigger class="align-with-text">
+                <md-button aria-label="menu" class="md-fab md-primary">
+                    <md-icon md-svg-icon="navigation:menu"></md-icon>
                 </md-button>
-                <h2>
-                    <span>{{photo.title}}</span>
-                </h2>
-                <span flex></span>
-                <like-button like-type="photo" like-entity="photo"></like-button>
-                <md-button class="md-icon-button" aria-label="Close"
-                        ng-click="hide()">
-                    <md-icon md-svg-icon="navigation:close"></md-icon>
-                </md-button>
-            </div>
-        </md-toolbar>
-        <md-content flex layout-fill layout="row" style="overflow: hidden;">
-            <mmd-photo-slider flex layout-fill
-                    mmd-photo="photo">
+            </md-fab-trigger>
+            <md-toolbar layout="row">
+                <md-fab-actions class="md-toolbar-tools" >
+                    <md-button aria-label="comment" class="md-icon-button"
+                               ng-click="save()">
+                        <md-icon md-svg-icon="content:save"></md-icon>
+                    </md-button>
 
+                    <like-button like-type="photo" like-entity="photo"></like-button>
+                </md-fab-actions>
+
+                <md-button class="md-icon-button md-top-right md-close" layout-padding
+                           ng-click="hide()">
+                    <md-icon md-svg-icon="navigation:close" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </md-toolbar>
+        </md-fab-toolbar>
+        <md-progress-linear md-mode="indeterminate" ng-if="!photo.imageLoaded"></md-progress-linear>
+        <md-content flex layout-fill layout="row" style="overflow: hidden;" ng-switch="photo.is360">
+
+            <!--<md-progress-circular class="md-accent"
+                                  style="position: absolute;top: 50%;left: 50%;"
+                                  md-mode="determinate"
+                                  value="{{photo.determinateValue}}"></md-progress-circular>-->
+
+            <panorama photo="photo"
+                      progress="photo.determinateValue"
+                      onloaded="onloaded"
+                      flex layout-fill style="position: absolute"
+                      ng-switch-when="true"></panorama>
+
+            <mmd-photo-slider mmd-photo="photo" ng-init="photo.imageLoaded=true"
+                              flex layout-fill style="position: absolute"
+                              ng-switch-default>
             </mmd-photo-slider>
         </md-content>
     </div>
@@ -33,9 +56,13 @@
          class="photo-dialog-info">
         <md-toolbar md-scroll-shrink
                 class="md-tall md-warn md-hue-3">
+            <h3>
+                <span>{{photo.title}}</span>
+            </h3>
             <span flex></span>
             <div class="md-toolbar-tools md-toolbar-tools-bottom">
                 <user-profile user="user"
+                              on-leave="hide()"
                               flex layout-fill>
                 </user-profile>
             </div>
@@ -56,20 +83,22 @@
                     <pre class="">{{photo.description}}</pre>
                 </md-list-item>
                 <md-list-item ng-if="photo.location.address" layout="row" layout-align="start center">
-                    <md-icon md-svg-icon="social:location_city"></md-icon>
+                    <md-icon md-svg-icon="social:location_city"
+                            style="margin: 0 5px;"></md-icon>
                     <md-button class="">
                         {{photo.location.address}}
                     </md-button>
                 </md-list-item>
                 <md-list-item layout="row" layout-align="start center" >
-                    <md-icon md-svg-icon="maps:place" layout-margin></md-icon>
-                    <md-button class="" ng-click="locate($event)">
+                    <md-icon md-svg-icon="maps:place"
+                             style="margin: 0 5px;"></md-icon>
+                    <md-button class="" ng-click="isMy&&locate($event)">
                         {{photo.location.position[1] | number}}, {{photo.location.position[0] | number}}
                     </md-button>
                 </md-list-item>
 
                 <md-divider></md-divider>
-                <md-subheader md-no-sticky>相机信息</md-subheader>
+                <md-subheader style="background-color: initial">相机信息</md-subheader>
                 <md-list-item ng-repeat="info in cameraInfos">
                     <md-icon md-svg-icon="{{info.icon}}"></md-icon>
                     <p>{{info.value}}</p>

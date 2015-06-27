@@ -109,7 +109,8 @@ module.exports = {
       'vendor/Jcrop/js/jquery.Jcrop.js',
       'vendor/ui-rect-select/dist/ui-rect-select.min.js',
       'node_modules/leaflet-image/leaflet-image.js',
-      'vendor/leaflet-draw/dist/leaflet.draw.js'
+      'vendor/leaflet-draw/dist/leaflet.draw.js',
+      'vendor/three.js/three.min.js'
     ],
     css: [
       'vendor/angular-material/angular-material.css',

@@ -25,7 +25,7 @@
          */
         function showPhoto(ev, photo) {
             return $mdDialog.show({
-                controller: ['$scope', '$mdDialog', '$PhotoLocateDialog', 'photo', PhotoDialogController],
+                controller: ['$scope', '$mdDialog', '$PhotoLocateDialog', 'Authenticate', 'photo', PhotoDialogController],
                 templateUrl: 'components/photoDialog/photoDialog.tpl.html',
                 targetEvent: ev,
                 locals: {
@@ -42,7 +42,7 @@
          * @param photo
          * @constructor
          */
-        function PhotoDialogController($scope, $mdDialog, $PhotoLocateDialog, photo) {
+        function PhotoDialogController($scope, $mdDialog, $PhotoLocateDialog, Authenticate, photo) {
 
             $scope.hide = function() {
                 $mdDialog.hide();
@@ -54,11 +54,20 @@
                 $mdDialog.hide(answer);
             };
 
+            $scope.onloaded = function(e) {
+                $scope.photo.imageLoaded = true;
+            };
+
             // 根据照片ID获取详细信息
             Photos.get(photo.id).then(function(photo) {
                 $log.debug("get photo title = " + photo.title);
                 $scope.photo = photo;
                 $scope.user = photo.user;
+
+                Authenticate.isMy($scope.photo).then(function(res) {
+                    $scope.isMy = res;
+                });
+
                 //if(photo.user_id > 0) {
                 //    // 获取照片作者信息
                 //    Users.getUser(photo.user_id).then(function(user) {

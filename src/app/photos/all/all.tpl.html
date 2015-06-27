@@ -11,7 +11,7 @@
                     ng-click="displayPhoto($event, photo)"
                     ng-mouseover="photo.actionSelectable = true"
                     ng-mouseleave="photo.actionSelectable = false"
-                    class="photo"
+                    class="photo photo-card-image"
                     ng-style="{
                         'background': photo.color
                       }"
@@ -22,6 +22,11 @@
                              ng-show="photo.actionSelectable||photo.actionSelected"
                              ng-click="$event.stopPropagation();">
                 </md-checkbox>
+
+                <div ng-if="photo.is360" class="photo-icon">
+                    <div class="icon-p360">
+                    </div>
+                </div>
 
                 <img ng-src="{{staticCtx}}/{{photo.oss_key}}@!photo-preview-sm"
                         ng-style="{
@@ -40,11 +45,24 @@
     <div class="md-actions" layout="row" layout-align="end center">
         <md-button class="md-warn"
                    ng-click="pac.remove($event)">删除</md-button>
-        <md-button class="md-raised md-primary"
-                   ng-click="pac.addToAlbum($event)">移动</md-button>
+        <md-button class="md-icon-button md-primary"
+                   ng-click="pac.addToAlbum($event)">
+            <md-tooltip>
+                添加到相册
+            </md-tooltip>
+            <md-icon md-svg-icon="image:add_to_photos"></md-icon>
+        </md-button>
         <md-button class="md-raised md-primary"
                    ng-disabled="true"
                    ng-show="sac.saving">保存中...</md-button>
         <md-button ng-disabled="!accountForm.$dirty||sac.saving" ng-click="reset()">取消</md-button>
+
+        <md-button class="md-icon-button md-primary" aria-label="上传图片"
+                   ng-click="go('app.maps.upload')">
+            <md-tooltip>
+                上传图片
+            </md-tooltip>
+            <md-icon md-svg-icon="image:photo_camera"></md-icon>
+        </md-button>
     </div>
 </md-card>

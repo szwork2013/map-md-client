@@ -20,19 +20,17 @@
                         }
                     });
             }])
-        .controller('MapsHeatmapCtrl', ['$scope', '$log', 'mapCode', MapsHeatmapCtrl])
+        .controller('MapsHeatmapCtrl', ['$scope', '$log', '$menuBottomSheet', MapsHeatmapCtrl])
     ;
 
-    function MapsHeatmapCtrl($scope, $log, mapCode) {
+    function MapsHeatmapCtrl($scope, $log, $menuBottomSheet) {
 
         $scope.showBottomSheet = function($event) {
-            $scope.showGridBottomSheet($event, [
-                { name: '我的', icon: 'social:person', link: 'app.maps.cluster.user', params:{id:''} },
-                { name: '上传', icon: 'image:camera', link: 'app.maps.upload', params:{id:''} },
-                { name: 'Help', icon: 'action:help' , link: 'app.helps.heatmap'}
-            ]).then(function(clickedItem) {
-                $scope.alert = clickedItem.name + ' clicked!';
-            });
+            $menuBottomSheet.show($event, [
+                'app.maps.popular',
+                'app.maps.cluster.my',
+                'app.maps.upload',
+                'app.helps.heatmap']);
         };
 
         $scope.heatMap = {};
@@ -75,10 +73,6 @@
                 }
                 map.fitBounds(latlngs);
             });
-        }
-
-        if(mapCode) {
-            $scope.setMapLayer(mapCode);
         }
 
         $scope.removeHeatMap = function(name) {

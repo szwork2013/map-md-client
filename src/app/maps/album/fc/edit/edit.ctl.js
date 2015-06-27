@@ -101,24 +101,15 @@
          * 获取专辑
          */
         Albums.get(albumId).then(function(album) {
+            setAlbum(album);
+        });
+
+        function setAlbum(album) {
             $scope.setAlbum(album);
             self.album = album;
-            self.album.featureCollection = self.album.featureCollection||{
-                    type: 'FeatureCollection',
-                    properties: {style: angular.copy(defalutStyle)},
-                    features: []
-                };
-            if(angular.isString(self.album.featureCollection.properties.style)) {
-                self.album.featureCollection.properties.style =
-                    JSON.parse(self.album.featureCollection.properties.style);
-            }
-            angular.forEach(self.album.featureCollection.features, function(feature, key) {
-                if(feature.properties && feature.properties.style) {
-                    feature.properties.style = JSON.parse(feature.properties.style);
-                }
-            });
+            self.album.featureCollection = $FeatureCollection.detransform(self.album.featureCollection);
             resetGeoJSON();
-        });
+        }
 
         /**
          * 加载文件内容
@@ -191,7 +182,6 @@
         self.save = function() {
             $log.debug(LOG_TAG + " tojson");
             var newGeoJSON = drawnItems.toGeoJSON();
-            $log.debug(newGeoJSON);
             self.album.featureCollection.features =
                 self.album.featureCollection.features.concat(newGeoJSON.features);
             // 保存成功后删除draw工具里的feature layers
@@ -199,6 +189,7 @@
             Albums.modifyFC(self.album.id, $FeatureCollection.tranform(self.album.featureCollection))
                 .then(function(album) {
                     $mmdMessage.success.save();
+                    setAlbum(album);
                 },function(err) {
                     $mmdMessage.fail.save(err.statusText);
                 });

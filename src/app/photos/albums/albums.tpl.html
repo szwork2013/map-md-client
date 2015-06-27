@@ -14,4 +14,20 @@
             </album-card>
         </md-grid-tile>
     </md-grid-list>
+
+    <!-- Add album -->
+    <md-card>
+        <md-card-content layout="column">
+            相册是保存地图上图片的一种专辑，任何类型的专辑都可以保存图片
+        </md-card-content>
+        <div class="md-actions" layout="row" layout-align="end center">
+            <md-button class="md-icon-button md-primary" aria-label="新建专辑"
+                       ng-click="go('app.albums.new')">
+                <md-tooltip>
+                    新建专辑
+                </md-tooltip>
+                <md-icon md-svg-icon="content:add"></md-icon>
+            </md-button>
+        </div>
+    </md-card>
 </div>

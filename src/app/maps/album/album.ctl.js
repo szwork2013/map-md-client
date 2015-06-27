@@ -19,11 +19,19 @@
                         resolve: {}
                     });
             }])
-        .controller('MapsAlbumCtrl', ['$scope', '$log', '$timeout', MapsAlbumCtrl]);
+        .controller('MapsAlbumCtrl', ['$scope', '$log', '$menuBottomSheet', MapsAlbumCtrl]);
 
-    function MapsAlbumCtrl($scope, $log, $timeout) {
+    function MapsAlbumCtrl($scope, $log, $menuBottomSheet) {
 
         var self = this;
+
+        $scope.showBottomSheet = function($event) {
+            $menuBottomSheet.show($event, [
+                'app.albums.new',
+                'app.user.my',
+                'app.maps.upload',
+                'app.helps.upload']);
+        };
 
         $scope.setGeoJSON = function(geojson) {
             try {
@@ -37,16 +45,16 @@
                         return L.circleMarker(latlng);
                     },
                     onEachFeature: function(feature, layer) {
-                        layer.bindPopup(feature.properties.name);
-                        layer.on({
-                            mouseover: function(e) {
-                            },
-                            click: function(e) {
-                            },
-                            mouseout: function(e) {
-                                //resetHighlight
-                            }
-                        });
+                        layer.bindPopup(buildPopup(feature.properties)[0]);
+                        //layer.on({
+                        //    mouseover: function(e) {
+                        //    },
+                        //    click: function(e) {
+                        //    },
+                        //    mouseout: function(e) {
+                        //        //resetHighlight
+                        //    }
+                        //});
                     }
                 });
 
@@ -55,6 +63,21 @@
             } finally {
             }
         };
+
+        function buildPopup(properties) {
+            var html = angular.element('<table></table>');
+            for(var name in properties) {
+                if(name != "style") {
+                    var row = angular.element('<tr></tr>');
+                    var propName = angular.element('<td>'+name+':</td>');
+                    var propValue = angular.element('<td>'+properties[name]+'</td>');
+                    row.append(propName);
+                    row.append(propValue);
+                    html.append(row);
+                }
+            }
+            return html;
+        }
 
         $scope.$on('leafletDirectiveMap.geojsonCreated', function(e, geoJSON) {
             var bounds = geoJSON.getBounds();

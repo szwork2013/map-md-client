@@ -8,13 +8,13 @@
         .factory('$mmdLeafletUtil', ['staticCtx', function (staticCtx) {
 
             return {
-                photoMarker: function(photo, map) {
+                photoMarker: function(photo, map, opts) {
                     var self = this;
                     var myIcon = L.divIcon({
                         className: 'icon-marker',
                         html: '<img src="' + self._getIconUrl(photo.oss_key) + '">'
                     });
-                    var markerStyle = {icon: myIcon, riseOnHover: true};
+                    var markerStyle = angular.extend({icon: myIcon, riseOnHover: true}, opts);
                     var marker = L.marker({lat: photo.location.position[1], lng: photo.location.position[0]},
                                             markerStyle);
                     if(map) {

@@ -12,9 +12,8 @@
          hm-pinchmove="onPinchmove($event)"
          hm-pinchend="onPinchend($event)">
         <img ng-src="http://www.photoshows.cn:9292/static.photoshows.cn/{{photo.oss_key}}@!photo-preview-lg"
-             class="md-card-image"
-             layout-margin
-             hm-pinch="onPinch($event)">
+             ng-style="(photo.width>photo.height)?{width:'100%'}:{height:'100%'}"
+             hm-pan="onPan($event)">
     </div>
     <!--<div class="slide slide-right"-->
          <!--layout="row" layout-align="center center">-->

@@ -72,7 +72,8 @@
         return {
             get: getPhoto,
             remove: removePhoto,
-            update: update
+            update: update,
+            updateLocation: updateLocation
         };
 
         function getPhoto(id) {
@@ -85,6 +86,10 @@
 
         function update(id, properties) {
             return service.one(id).post('properties', properties);
+        }
+
+        function updateLocation(id, location) {
+            return service.one(id).post('location', location);
         }
     }
 

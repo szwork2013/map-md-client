@@ -14,7 +14,9 @@
             'app.components.album',
             'app.components.feature',
             'app.components.card',
-            'app.components.like'
+            'app.components.like',
+            'app.components.panorama',
+            'app.components.leaflet'
         ]);
 
 })();

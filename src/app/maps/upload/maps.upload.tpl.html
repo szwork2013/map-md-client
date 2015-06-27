@@ -68,7 +68,7 @@
             </div>
 
             <md-list flex>
-                <md-list-item ng-repeat="file in queue"
+                <div ng-repeat="file in queue"
                         ng-controller="MapsFileUploadPhotoCtrl as mupc">
                     <form name="fileForm" class="upload-photo-form">
                     <md-card class="upload-photo-card">
@@ -149,7 +149,11 @@
                             </md-chips>
                         </md-card-content>
 
-                        <div class="md-actions" layout="row" layout-align="end center">
+                        <div class="md-actions" layout="row">
+                            <md-checkbox ng-model="file.is360" aria-label="全景">
+                                全景
+                            </md-checkbox>
+                            <span flex></span>
                             <div ng-show="file.uploaded">
                                 <md-button class="md-raised "
                                            ng-disabled="!fileForm.$dirty"
@@ -177,7 +181,7 @@
                         </div>
                     </md-card>
                     </form>
-                </md-list-item>
+                </div>
             </md-list>
 
             <mmd-footer layout="column">

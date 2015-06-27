@@ -20,8 +20,8 @@
         'app.user',
         'app.maps'
         ])
-        .value('staticCtx', 'http://static.photoshows.cn')
-        //.value('staticCtx', 'http://test.photoshows.cn')
+        //.value('staticCtx', 'http://static.photoshows.cn')
+        .value('staticCtx', 'http://test.photoshows.cn')
         //.value('serverBaseUrl', 'http://www.photoshows.cn')
         .value('serverBaseUrl', 'http://localhost:8080')
         .config(['$logProvider', '$urlRouterProvider', '$stateProvider', '$locationProvider',
@@ -67,6 +67,21 @@
 
         $rootScope.setAppTitle = function(title) {
             $rootScope.appTitle = title;
+        };
+
+        $rootScope.safeApply = function($scope, fn) {
+            var phase = $scope.$root && $scope.$root.$$phase;
+            if(phase == '$apply' || phase == '$digest') {
+                if (fn) {
+                    $scope.$eval(fn);
+                }
+            } else {
+                if (fn) {
+                    $scope.$apply(fn);
+                } else {
+                    $scope.$apply();
+                }
+            }
         };
 
         //$rootScope.$on('$stateChangeStart',

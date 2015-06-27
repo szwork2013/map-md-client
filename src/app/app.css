@@ -120,8 +120,6 @@ mmd-footer {
       transition: all linear 0.3s; }
     .photo-card-wall mmd-photo-card .selector, [mmd-photo-card-wall] mmd-photo-card .selector, mmd-photo-card-wall mmd-photo-card .selector {
       position: absolute; }
-    .photo-card-wall mmd-photo-card .photo-card-image, [mmd-photo-card-wall] mmd-photo-card .photo-card-image, mmd-photo-card-wall mmd-photo-card .photo-card-image {
-      cursor: pointer; }
     .photo-card-wall mmd-photo-card .action-container, [mmd-photo-card-wall] mmd-photo-card .action-container, mmd-photo-card-wall mmd-photo-card .action-container {
       position: absolute;
       bottom: 0;
@@ -171,10 +169,40 @@ mmd-footer {
       .photo-card-wall mmd-photo-card:hover .action-container:hover .ponm-photo-footer, .photo-card-wall mmd-photo-card:hover .action-container.hover .ponm-photo-footer, .photo-card-wall mmd-photo-card.hover .action-container:hover .ponm-photo-footer, .photo-card-wall mmd-photo-card.hover .action-container.hover .ponm-photo-footer, [mmd-photo-card-wall] mmd-photo-card:hover .action-container:hover .ponm-photo-footer, [mmd-photo-card-wall] mmd-photo-card:hover .action-container.hover .ponm-photo-footer, [mmd-photo-card-wall] mmd-photo-card.hover .action-container:hover .ponm-photo-footer, [mmd-photo-card-wall] mmd-photo-card.hover .action-container.hover .ponm-photo-footer, mmd-photo-card-wall mmd-photo-card:hover .action-container:hover .ponm-photo-footer, mmd-photo-card-wall mmd-photo-card:hover .action-container.hover .ponm-photo-footer, mmd-photo-card-wall mmd-photo-card.hover .action-container:hover .ponm-photo-footer, mmd-photo-card-wall mmd-photo-card.hover .action-container.hover .ponm-photo-footer {
         background-color: rgba(128, 128, 128, 0.8); }
 
+.photo-card-image {
+  cursor: pointer; }
+  .photo-card-image .photo-icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 65px;
+    height: 65px;
+    margin: -32px; }
+
 .photo-wall md-tab-content {
   overflow-y: scroll; }
 
+.icon-hover, .icon-p360, .icon-pflat {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s; }
+  .icon-hover:hover, .icon-p360:hover, .icon-pflat:hover, .icon-hover.hover, .hover.icon-p360, .hover.icon-pflat {
+    opacity: 1;
+    filter: alpha(opacity=100); }
+
+.icon-p360 {
+  width: 65px;
+  height: 65px;
+  background: url(images/lightbox.png) no-repeat -63px 0; }
+
+.icon-pflat {
+  width: 65px;
+  height: 65px;
+  background: url(images/lightbox.png) no-repeat -63px -94px; }
+
 .photo-dialog-left {
+  position: relative;
   box-shadow: 1px 1px 5px grey;
   z-index: 3; }
 
@@ -210,9 +238,6 @@ mmd-photo-slider .slider, [mmd-photo-slider] .slider {
     left: 0;
     right: 0;
     height: 100%; }
-    mmd-photo-slider .slider .slide img, [mmd-photo-slider] .slider .slide img {
-      max-width: 100%;
-      max-height: 100%; }
     mmd-photo-slider .slider .slide.slide-left, [mmd-photo-slider] .slider .slide.slide-left {
       left: -100%;
       right: 100%; }
@@ -643,6 +668,28 @@ md-card.album-photos {
   .settings-map-container md-tab-item md-checkbox {
     margin: 0 10px; }
 
+/* Have to set height explicity on ui-view
+to prevent collapsing during animation*/
+.ui-view-container {
+  position: relative; }
+
+[ui-view].ng-enter {
+  opacity: 0;
+  -webkit-transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out; }
+
+[ui-view].ng-enter-active {
+  opacity: 1; }
+
+[ui-view].ng-leave {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0; }
+
+[ui-view].ng-leave-active {
+  opacity: 0; }
+
 body {
   font-family: Microsoft YaHei;
   background: #F5F5F5;
@@ -690,7 +737,7 @@ md-tooltip {
 .md-autocomplete-suggestions {
   z-index: 1005; }
 
-/**  */
+/** input */
 md-input-container.md-icon-float {
   margin-top: -16px;
   transition: margin-top 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); }
@@ -734,6 +781,13 @@ pre {
   right: 10px;
   bottom: auto;
   left: auto; }
+
+.md-bottom-left {
+  position: absolute;
+  top: auto;
+  right: auto;
+  bottom: 10px;
+  left: 10px; }
 
 md-fab-toolbar .md-fab-toolbar-wrapper {
   height: initial; }

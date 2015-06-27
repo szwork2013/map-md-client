@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AACE,8BAAmB;EACjB,OAAO,EAAE,GAAG",
+"sources": ["saveAs.scss"],
+"names": [],
+"file": "saveAs.css"
+}

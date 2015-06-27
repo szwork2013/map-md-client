@@ -21,7 +21,7 @@
                     });
             }])
         .controller('MapsPopularCtrl',
-        ['$scope', '$mmdPhotoDialog', '$log', '$q', 'leafletData', 'staticCtx', '$mmdUtil', 'Panoramios',
+        ['$scope', '$mmdPhotoDialog', '$log', '$q', 'leafletData', '$menuBottomSheet', '$mmdUtil', 'Panoramios',
             MapsPopularCtrl])
         ;
 
@@ -39,28 +39,24 @@
      * @param Panoramios
      * @constructor
      */
-    function MapsPopularCtrl( $scope, $mmdPhotoDialog, $log, $q, leafletData, staticCtx, $mmdUtil, Panoramios) {
+    function MapsPopularCtrl( $scope, $mmdPhotoDialog, $log, $q, leafletData, $menuBottomSheet, $mmdUtil, Panoramios) {
         var self = this;
 
         self.scope = $scope;
-        self.scope.staticCtx = staticCtx;
 
         $scope.showBottomSheet = function($event) {
-            $scope.showGridBottomSheet($event, [
-                { name: '我的', icon: 'social:person', link: 'app.maps.cluster.user', params:{id:''} },
-                { name: '上传', icon: 'image:camera', link: 'app.maps.upload', params:{id:''} },
-                { name: 'Help', icon: 'action:help' , link: 'app.helps.upload'}
-            ]).then(function(clickedItem) {
-                $scope.alert = clickedItem.name + ' clicked!';
-            });
+            $menuBottomSheet.show($event, [
+                'app.maps.cluster.my',
+                'app.maps.upload',
+                'app.helps.upload']);
         };
 
-        leafletData.getMap('main-map').then(function(map) {
+        $scope.getMap().then(function(map) {
 
             var markerLayer =
                 L.iconsLayer({
                     auto: true,
-                    staticCtx: staticCtx
+                    staticCtx: $scope.staticCtx
                 }).setReadData(function(bounds, level, size) {
                     var deferred = $q.defer();
                     Panoramios.getList(

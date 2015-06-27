@@ -28,5 +28,9 @@
             $scope.user = album.user;
             $scope.album = album;
         };
+
+        $scope.transform = function() {
+
+        };
     }
 })();
