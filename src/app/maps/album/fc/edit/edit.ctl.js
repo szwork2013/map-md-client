@@ -241,5 +241,9 @@
             }
             resetGeoJSON();
         };
+
+        $scope.$on('$destroy', function(e) {
+            $scope.setGeoJSON();
+        });
     }
 })();

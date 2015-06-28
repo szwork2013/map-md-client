@@ -4,7 +4,12 @@
 (function() {
     'use strict';
 
-    angular.module('app.core', ['app', 'app.core.theme', 'app.core.services', 'app.core.oauth'])
+    angular.module('app.core', [
+        'app',
+        'app.core.theme',
+        'app.core.services',
+        'app.core.oauth',
+        'app.core.filters'])
         .factory('MainRestangular', ['Restangular', 'serverBaseUrl',
             function(Restangular, serverBaseUrl) {
             return Restangular.withConfig(function(RestangularConfigurer) {
@@ -34,4 +39,6 @@
             });
         }])
     ;
+
+    angular.module('app.core.filters', []);
 })();

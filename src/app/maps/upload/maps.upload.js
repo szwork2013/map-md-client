@@ -60,7 +60,7 @@
             'albumId', 'Authenticate', MapsUploadCtrl])
         .controller('MapsFileUploadCtrl', ['$window', '$scope', '$log', '$q', 'fileUpload',
             '$mmdUtil', 'serverBaseUrl', MapsFileUploadCtrl])
-        .controller('MapsFileUploadPhotoCtrl', ['$scope', '$log', '$q', 'Photos', '$mmdMessage',
+        .controller('MapsFileUploadPhotoCtrl', ['$scope', '$log', '$q', 'Photos', '$mmdMessage', '$mmdUtil',
             MapsFileUploadPhotoCtrl])
         .controller('MapsFileUploadDestoryCtrl', ['$window', '$scope', '$log', '$q', 'Photos',
             '$mmdUtil', MapsFileUploadDestoryCtrl])
@@ -80,28 +80,26 @@
                 'app.helps.upload']);
         };
 
+        /**
+         * 获取登录用户
+         */
         Authenticate.getUser().then(function(user) {
-            getUserAlbum(user);
+            self.user = user;
         });
 
-        function getUserAlbum(user) {
-            Users.getAlbums(user.id).then(function(albums) {
-                $scope.albums = albums;
-                setAlbum();
-            });
-        }
-
-        function setAlbum() {
-            if(albumId) {
-                angular.forEach($scope.albums, function(album, key) {
-                    if(album.id == albumId) {
-                        $scope.album = album;
-                    }
+        /**
+         * 获取用户专辑信息
+         */
+        $scope.getUserAlbum = function () {
+            if(!$scope.albums) {
+                Users.getAlbums(self.user.id).then(function(albums) {
+                    $scope.albums = albums;
                 });
-                if(!$scope.album) {
-                    getAlbum(albumId);
-                }
             }
+        };
+
+        if(albumId) {
+            getAlbum(albumId);
         }
 
         function getAlbum(albumId) {
@@ -110,6 +108,9 @@
             });
         }
 
+        /**
+         * 地图标记控件
+         */
         var photoMarkableControl;
         $scope.getMap().then(function (map) {
             photoMarkableControl = new PhotoMarkableControl().addTo(map);
@@ -153,12 +154,17 @@
             photoMarkableControl.addMarker(file);
         };
 
+        /**
+         * 获取和设置图片位置
+         * @param file
+         * @param latLng
+         */
         $scope.setLocation = function setLocation(file, latLng) {
-            file.setPosition(latLng);
+            file.setPosition([latLng.lng, latLng.lat]);
             QQWebapi.geodecoder(latLng.lat + "," + latLng.lng).then(function (res) {
                 if (res.status === 0) {
                     latLng.address = res.result.address;
-                    file.setPosition(latLng);
+                    file.setPosition([latLng.lng, latLng.lat]);
                     file.setAddress(res.result.address);
                     if (res.result.pois) {
                         file.addresses = res.result.pois;
@@ -172,6 +178,9 @@
             });
         };
 
+        /**
+         * 控制器退出时执行清空操作
+         */
         $scope.$on('$destroy', function (e) {
             $scope.getMap().then(function (map) {
                 map.removeControl(photoMarkableControl);
@@ -214,7 +223,7 @@
             },
             addMarker: function(file) {
                 if(!file.marker) {
-                    this.createMarker(file, L.latLng(file.position));
+                    this.createMarker(file, L.latLng(file.position[1], file.position[0]));
                 }
             },
             cancel: function () {
@@ -266,6 +275,17 @@
         });
     }
 
+    /**
+     * 图片上传控制器
+     * @param $window
+     * @param $scope
+     * @param $log
+     * @param $q
+     * @param fileUpload
+     * @param $mmdUtil
+     * @param serverBaseUrl
+     * @constructor
+     */
     function MapsFileUploadCtrl($window, $scope, $log, $q, fileUpload, $mmdUtil, serverBaseUrl) {
 
         var self = this;
@@ -314,24 +334,10 @@
 
             formData: function () {
                 var formDatas, file = this.files[0];
-                var lat = 0,
-                    lng = 0,
-                    address = '',
-                    vendor = "gps";
-                if (file.position) {
-                    lat = file.position.lat || 0;
-                    lng = file.position.lng || 0;
-                    address = file.position.address || '';
-                }
+                var vendor = "gps";
                 formDatas = [{
-                    name: "lat",
-                    value: lat
-                },{
-                    name: "lng",
-                    value: lng
-                },{
-                    name: "address",
-                    value: address
+                    name: "location",
+                    value: JSON.stringify(file.photo.location)
                 },{
                     name: "vendor",
                     value: vendor
@@ -357,6 +363,11 @@
                         value: file.is360
                     });
                 }
+                // 标签
+                formDatas.push({
+                    name: "tags",
+                    value: file.photo.tags
+                });
                 return formDatas;
             },
             done: function (e, data) {
@@ -388,12 +399,6 @@
             file.photoId = photo.id;
             file.is360 = photo.is360;
 
-            if (!file.lat &&
-                photo.location &&
-                photo.location.position) {
-                file.setPosition({lat: photo.location.position[1], lng: photo.location.position[0]});
-            }
-
             angular.extend(file.photo, photo);
 
             if (!file.address) {
@@ -412,39 +417,27 @@
                     fileUpload.defaults.add(e, data);
                     // load image's gps info
                     var file = data.files[0];
-                    file.uuid = $mmdUtil.uuid();
-                    file.photo = {
-                        uuid: file.uuid
-                    };
-                    file.position = {};
-                    file.setPosition = function (position) {
-                        position.latPritty = $mmdUtil.map.GPS.convert(position.lat);
-                        position.lngPritty = $mmdUtil.map.GPS.convert(position.lng);
-                        this.position = angular.extend(this.position, position);
-                        return this.position;
-                    };
 
-                    file.tags = [];
-
+                    // 读取图片的gps信息
                     loadImage.parseMetaData(file, function (data) {
                         if (data.exif) {
-                            var position = {};
+                            var position = [];
                             var lat = data.exif.getText('GPSLatitude');
                             if (lat && lat != "undefined") {
-                                position.lat = Number(lat);
-                                if (!position.lat) {
-                                    position.lat = $mmdUtil.map.GPS.convert(lat);
+                                position[1] = Number(lat);
+                                if (!position[1]) {
+                                    position[1] = $mmdUtil.map.GPS.convert(lat);
                                 }
                             }
 
                             var lng = data.exif.getText('GPSLongitude');
                             if (lng && lng != "undefined") {
-                                position.lng = Number(lng);
-                                if (!position.lng) {
-                                    position.lng = $mmdUtil.map.GPS.convert(lng);
+                                position[0] = Number(lng);
+                                if (!position[0]) {
+                                    position[0] = $mmdUtil.map.GPS.convert(lng);
                                 }
                             }
-                            if(position.lat && position.lng) {
+                            if(position[0] && position[1]) {
                                 file.setPosition(position);
                                 $scope.addMarker(file);
                             }
@@ -455,21 +448,32 @@
     }
 
     /**
-     *
+     * 每行上传图片的控制器
      * @param $scope
      * @param $log
      * @param $q
      * @param Photos
      * @param $mmdMessage
+     * @param $mmdUtil
      * @constructor
      */
-    function MapsFileUploadPhotoCtrl($scope, $log, $q, Photos, $mmdMessage) {
+    function MapsFileUploadPhotoCtrl($scope, $log, $q, Photos, $mmdMessage, $mmdUtil) {
         var self = this;
 
         var file = $scope.file;
+        file.photo = {
+            tags: [],
+            location: {
+                position: []
+            }
+        };
+        file.setPosition = function (position) {
+            return this.photo.location.position = position;
+        };
         file.addresses = [];
         file.setAddress = function (address) {
-            self.searchText = address;
+            this.photo.location.address = address;
+            //self.searchText = address;
         };
 
         self.remove = function (file) {
@@ -491,19 +495,18 @@
         }
 
         function searchTextChange(text) {
-            $log.info('Text changed to ' + text);
-            file.position.address = text;
+            //$log.info('Text changed to ' + text);
+            file.photo.location.address = text;
         }
 
         function selectedItemChange(item) {
-            $log.info('Item changed to ' + JSON.stringify(item));
+            //$log.info('Item changed to ' + JSON.stringify(item));
             if(item) {
-                file.position.address = item.display;
+                file.photo.location.address = item.display;
             }
         }
 
         // tags
-        self.tags = [];
         self.tagsSearch = tagsSearch;
         self.vegetables = loadVegetables();
         self.selectedTags = [];
@@ -572,9 +575,9 @@
                 Photos.update($scope.file.photo.id, {
                     title: $scope.file.title,
                     description: $scope.file.description,
-                    location: angular.extend($scope.file.photo.location, {lat: $scope.file.position.lat,
-                        lng: $scope.file.position.lng, address: $scope.file.position.address}),
-                    is360: angular.extend($scope.file.photo.is360, $scope.file.is360)
+                    location: $scope.file.photo.location,
+                    is360: angular.extend($scope.file.photo.is360, $scope.file.is360),
+                    tags: $scope.file.photo.tags
                 }).then(function() {
                     $scope.fileForm.$setPristine();
                     $mmdMessage.success.update();
@@ -585,6 +588,16 @@
         };
     }
 
+    /**
+     * 上传图片的销毁控制器
+     * @param $window
+     * @param $scope
+     * @param $log
+     * @param $q
+     * @param Photos
+     * @param $mmdUtil
+     * @constructor
+     */
     function MapsFileUploadDestoryCtrl($window, $scope, $log, $q, Photos, $mmdUtil) {
         var self = this;
         var file = $scope.file;

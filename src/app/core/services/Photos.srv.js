@@ -49,6 +49,7 @@
         .factory('Groups',     ['ApiRestangular', GroupServiceFactory])
         .factory('Covers',     ['ApiRestangular', CoverServiceFactory])
         .factory('Likes',      ['ApiRestangular', LikeServiceFactory])
+        .factory('Maps',       ['ApiRestangular', MapServiceFactory])
     ;
 
     function PhotoServiceFactory(Restangular) {
@@ -354,6 +355,18 @@
 
         function isLike(type, id) {
             return service.one().get({type: type, id: id});
+        }
+    }
+
+    function MapServiceFactory(Restangular) {
+        var service = Restangular.service('map');
+
+        return {
+            getAll: getAll
+        };
+
+        function getAll() {
+            return service.one().all('').getList();
         }
     }
 

@@ -29,6 +29,10 @@
         Albums.get(albumId).then(function(album) {
             //$scope.setTitle(album.name, album.user);
             $scope.setAlbum(album);
+            if(album.map) {
+                $scope.setBaseLayer(album.map.baseLayer, album.map.name);
+            }
+
             self.album = album;
             self.album.featureCollection = $FeatureCollection.detransform(self.album.featureCollection);
             $scope.setGeoJSON(self.album.featureCollection);

@@ -61,7 +61,8 @@
                 <div layout-padding>
                     添加到专辑
                 </div>
-                <md-select ng-model="album" aria-label="添加到专辑" layout-padding>
+                <md-select ng-model="album" md-on-open="getUserAlbum()"
+                           aria-label="添加到专辑" layout-padding>
                     <md-select-label>{{ album ? album.title : '' }}</md-select-label>
                     <md-option ng-value="album" ng-repeat="album in albums">{{album.title}}</md-option>
                 </md-select>
@@ -101,8 +102,9 @@
 
                             <div flex layout="column">
                                 <div>
-                                    <label>经纬度:</label><span>{{file.position.latPritty}}</span>
-                                    <span>{{file.position.lngPritty}}</span>
+                                    <label>经纬度:</label><span>{{file.photo.location.position[1] |
+                                    gps}}</span>,
+                                    <span>{{file.photo.location.position[0] | gps}}</span>
                                 </div>
                                 <md-autocomplete
                                         md-selected-item="mupc.selectedItem"
@@ -130,9 +132,13 @@
                                               md-maxlength="150"></textarea>
                             </md-input-container>
 
-                            <!--<md-chips ng-model="file.tags"></md-chips>-->
+                            <md-chips ng-model="file.photo.tags"
+                                      placeholder="输入一个标签"
+                                      delete-button-label="删除标签"
+                                      delete-hint="按删除键删除标签"
+                                      secondary-placeholder="+标签"></md-chips>
 
-                            <md-chips ng-model="mupc.selectedTags" md-autocomplete-snap>
+                            <!--<md-chips ng-model="mupc.selectedTags" md-autocomplete-snap>
                                 <md-autocomplete
                                         md-selected-item="mupc.selectedTag"
                                         md-search-text="mupc.tag"
@@ -146,7 +152,7 @@
           <strong>{{$chip.name}}</strong>
         </span>
                                 </md-chip-template>
-                            </md-chips>
+                            </md-chips>-->
                         </md-card-content>
 
                         <div class="md-actions" layout="row">

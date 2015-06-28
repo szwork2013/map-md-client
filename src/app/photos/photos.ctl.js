@@ -39,20 +39,25 @@
         //        $state.go($scope.linkItems[current].state);
         //    }
         //});
-
+        self.state = '';
         $scope.selectPage = function(page) {
-            $state.go(page.state);
+            if(self.state && self.state != page.state) {
+                self.state = page.state;
+                $state.go(page.state, page.params);
+            }
         };
 
-        $scope.setPage = function(state, name) {
+        $scope.setPage = function(state, name, params) {
+            self.state = state;
             if(state == "app.photos.all") {
                 $scope.menuSelectedIndex = 0;
             }else if(state == "app.photos.albums") {
                 $scope.menuSelectedIndex = 1;
-                delete $scope.linkItems[2];
             }else if(state == "app.photos.album") {
                 $scope.linkItems[2] = {
-                    name: name
+                    name: name,
+                    state: state,
+                    params: params
                 };
                 $scope.menuSelectedIndex = 2;
             }

@@ -20,25 +20,36 @@
                     })
                 ;
             }])
-        .controller('PhotosAlbumCtrl', ['$scope', '$log', 'Albums', 'id', '$mmdMessage', PhotosAlbumCtrl])
+        .controller('PhotosAlbumCtrl', ['$scope', '$log', 'Albums', 'id', '$mmdMessage', 'Maps',
+            PhotosAlbumCtrl])
     ;
 
-    function PhotosAlbumCtrl($scope, $log, Albums, id, $mmdMessage) {
+    function PhotosAlbumCtrl($scope, $log, Albums, id, $mmdMessage, Maps) {
         var self = this;
         var originalAlbum = {};
+        self.album = {tags: []};
 
         Albums.get(id).then(function(album) {
             self.album = album;
             originalAlbum = angular.copy(album);
-            $scope.setPage("app.photos.album", self.album.title);
+            $scope.setPage("app.photos.album", self.album.title, {id: self.album.id});
         });
 
         self.save = function(ev) {
-            Albums.modify(self.album.id, {
+            var album = {
                 name: self.album.name,
-                description: self.album.description
-            }).then(function(album) {
+                description: self.album.description,
+                tags: self.album.tags
+            };
+            if(self.album.map) {
+                album.map = {
+                  id: self.album.map.id
+                };
+            }
+
+            Albums.modify(self.album.id, album).then(function(album) {
                 $mmdMessage.success.update();
+                $scope.albumForm.$setPristine();
             },function(err) {
                 $mmdMessage.fail.update(err.statusText);
             });
@@ -47,6 +58,7 @@
         self.cancel = function(ev) {
             self.album.name = originalAlbum.name;
             self.album.description = originalAlbum.description;
+            self.album.tags = originalAlbum.tags;
             $scope.albumForm.$setPristine();
         };
 
@@ -97,6 +109,15 @@
             });
         };
 
+        self.select = function() {
+            self.all = !self.all;
+            if(self.all) {
+                self.selectAll();
+            } else {
+                self.cancelSelect();
+            }
+        };
+
         self.selectAll = function(ev) {
             angular.forEach(self.album.photos, function(photo, key) {
                 photo.actionSelected = true;
@@ -134,5 +155,11 @@
                 self.album.photos.splice(self.album.photos.indexOf(photo), 1);
             });
         }
+
+        $scope.getMaps = function() {
+            Maps.getAll().then(function(maps) {
+                self.maps = maps;
+            });
+        };
     }
 })();

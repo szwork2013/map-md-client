@@ -89,8 +89,6 @@
         });
 
         $scope.$on('$destroy', function(e) {
-            $scope.getMap().then(function(map) {
-            });
         });
     }
 })();

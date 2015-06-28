@@ -19,7 +19,7 @@
             },
             'app.maps.cluster.my': {
                 login: true,
-                name: '我的', icon: 'social:person', link: 'app.maps.cluster.user', params:{id:''}
+                name: '我的图片', icon: 'social:person', link: 'app.maps.cluster.user', params:{id:''}
             },
             'app.maps.heatmap.my': {
                 login: true,
@@ -27,7 +27,7 @@
             },
             'app.maps.track.my': {
                 login: true,
-                name: '我的Track', icon: 'social:person', link: 'app.maps.track.my'
+                name: '我的轨迹', icon: 'social:person', link: 'app.maps.track.my'
             },
             'app.maps.upload': {
                 login: true,
@@ -35,7 +35,7 @@
             },
             'app.maps.track.upload': {
                 login: true,
-                name: '上传Track', icon: 'maps:directions_walk', link: 'app.maps.track.upload'
+                name: '上传轨迹', icon: 'maps:directions_walk', link: 'app.maps.track.upload'
             },
             'app.albums.new': {
                 login: true,
@@ -45,13 +45,13 @@
                 name: '搜索', icon: 'action:search', link: 'app.maps.track.search'
             },
             'app.helps.upload': {
-                name: 'Help', icon: 'action:help' , link: 'app.helps.upload'
+                name: '帮助', icon: 'action:help' , link: 'app.helps.upload'
             },
             'app.helps.heatmap': {
-                name: 'Help', icon: 'action:help' , link: 'app.helps.heatmap'
+                name: '帮助', icon: 'action:help' , link: 'app.helps.heatmap'
             },
             'app.helps.track': {
-                name: 'Help', icon: 'action:help' , link: 'app.helps.track'
+                name: '帮助', icon: 'action:help' , link: 'app.helps.track'
             },
             'app.user.my': {
                 login: true,

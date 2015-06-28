@@ -36,6 +36,8 @@ angular
             "./assets/svg/action/ic_account_circle_24px.svg", 24)
             .icon("action:visibility",    "./assets/svg/action/ic_visibility_24px.svg", 24)
             .icon("content:add",           "./assets/svg/content/ic_add_24px.svg", 24)
+            .icon("content:block",         "./assets/svg/content/ic_block_24px.svg", 24)
+            .icon("content:clear",         "./assets/svg/content/ic_clear_24px.svg", 24)
             .icon("content:remove",        "./assets/svg/content/ic_remove_24px.svg", 24)
             .icon("content:remove_circle", "./assets/svg/content/ic_remove_circle_24px.svg", 24)
             .icon("content:remove_circle_outline", "./assets/svg/content/ic_remove_circle_outline_24px.svg", 24)

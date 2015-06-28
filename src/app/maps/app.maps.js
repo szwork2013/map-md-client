@@ -300,8 +300,8 @@
             $location.hash($mmdUtil.param({ c: centerHash }));
         };
 
-        $scope.setBaseLayer = function(mapCode) {
-            controlLayers.setBaseLayer(mapCode);
+        $scope.setBaseLayer = function(mapCode, name) {
+            controlLayers.setBaseLayer(mapCode, name);
         };
 
         var mapBaseLayer = "MapBox.DaithStar", mapOverLayers;
@@ -320,8 +320,8 @@
         controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
         mapBaseLayer = "MapBox.SatelliteStreets";
         controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
-        mapBaseLayer = "Esri.WorldImagery";
-        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        //mapBaseLayer = "Esri.WorldImagery";
+        //controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
         mapBaseLayer = "QQMap";
         controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
         mapBaseLayer = "AMap.Base";

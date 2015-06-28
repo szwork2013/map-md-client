@@ -13,10 +13,20 @@
             <label>描述</label>
             <textarea ng-model="pac.album.description" columns="1" md-maxlength="150"></textarea>
         </md-input-container>
+        <md-chips ng-model="pac.album.tags"
+                  placeholder="输入一个标签"
+                  delete-button-label="删除标签"
+                  delete-hint="按删除键删除标签"
+                  secondary-placeholder="+标签"></md-chips>
+        <md-select ng-model="pac.album.map" md-on-open="getMaps()"
+                   aria-label="地图" layout-padding>
+            <md-select-label>{{ pac.album.map ? pac.album.map.name : '' }}</md-select-label>
+            <md-option ng-value="map" ng-repeat="map in pac.maps">{{map.name}}</md-option>
+        </md-select>
     </md-card-content>
     <div class="md-actions" layout="row" layout-align="end center">
-        <md-button class="md-raised md-primary"
-                   ng-disabled="!albumForm.$dirty"
+        <md-button class="md-raised"
+                   ng-class="{'md-primary': albumForm.$dirty}"
                    ng-click="pac.save($event)">保存</md-button>
         <md-button ng-click="pac.cancel($event)"
                    ng-disabled="!albumForm.$dirty">取消</md-button>
@@ -40,18 +50,41 @@
         </div>
     </md-card-content>
     <div class="md-actions" layout="row" layout-align="end center">
-        <md-button class="md-warn"
-                   ng-click="pac.deleteAlbum($event)">删除相册</md-button>
-        <md-button class="md-warn"
-                   ng-click="pac.removePhotos($event)">移出</md-button>
-        <md-button class="md-warn"
-                   ng-click="pac.deletePhotos($event)">删除</md-button>
-        <md-button class="md-primary"
-                   ng-click="pac.selectAll($event)">全选</md-button>
-        <md-button class="md-primary"
-                   ng-click="pac.cancelSelect($event)">取消</md-button>
-        <md-button class="md-icon-button md-primary" title="上传图片"
+        <md-button class="md-icon-button md-warn" aria-label="删除相册"
+                   ng-click="pac.deleteAlbum($event)">
+            <md-tooltip>
+                删除相册
+            </md-tooltip>
+            <md-icon md-svg-icon="content:clear"></md-icon>
+        </md-button>
+        <md-button class="md-icon-button md-warn" aria-label="移出"
+                   ng-click="pac.removePhotos($event)">
+            <md-tooltip>
+                移出相册
+            </md-tooltip>
+            <md-icon md-svg-icon="content:remove_circle_outline"></md-icon>
+        </md-button>
+        <md-button class="md-icon-button md-warn" aria-label="删除"
+                   ng-click="pac.deletePhotos($event)">
+            <md-tooltip>
+                删除图片
+            </md-tooltip>
+            <md-icon md-svg-icon="content:block"></md-icon>
+        </md-button>
+        <md-button class="md-primary" aria-label="全选"
+                   ng-click="pac.select($event)">
+            <md-tooltip>
+                <span ng-if="pac.all">取消</span>
+                <span ng-if="!pac.all">全选</span>
+            </md-tooltip>
+            <md-icon ng-if="pac.all" md-svg-icon="toggle:check_box"></md-icon>
+            <md-icon ng-if="!pac.all" md-svg-icon="toggle:check_box_outline_blank"></md-icon>
+        </md-button>
+        <md-button class="md-icon-button md-primary" aria-label="上传图片"
                 ng-click="go('app.maps.upload', {album: pac.album.id})">
+            <md-tooltip>
+                上传图片
+            </md-tooltip>
             <md-icon md-svg-icon="image:photo_camera"></md-icon>
         </md-button>
     </div>
