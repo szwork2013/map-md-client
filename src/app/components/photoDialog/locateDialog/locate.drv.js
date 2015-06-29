@@ -12,7 +12,7 @@
         .factory('$PhotoLocateDialog', ['$mdDialog', '$log', '$filter', 'Photos', 'Users',
             MmdPhotoLocateDialogProvider]);
 
-    var LOG_TAG = "[Photo locate dislog] ";
+    var LOG_TAG = "[Photo locate dialog] ";
 
     function MmdPhotoLocateDialogProvider($mdDialog, $log, $filter, Photos, Users) {
 
@@ -99,14 +99,17 @@
                 map.setView(marker.getLatLng(), 18);
             });
 
-            var mapBaseLayer = "Esri.WorldImagery";
-            controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
-            mapBaseLayer = "MapBox.Streets";
-            controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
-            mapBaseLayer = "AMap.Satellite";
-            controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
-            mapBaseLayer = "AMap.Base";
-            controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+            controlLayers.addMap({
+                id: '1',
+                name: 'WorldImagery',
+                baseLayer: 'Esri.WorldImagery'
+            });
+            //mapBaseLayer = "MapBox.Streets";
+            //controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+            //mapBaseLayer = "AMap.Satellite";
+            //controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+            //mapBaseLayer = "AMap.Base";
+            //controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
 
             $scope.searchText = photo.location.address;
             $scope.addresses = [];

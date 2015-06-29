@@ -4,10 +4,17 @@
         <md-icon md-svg-icon="navigation:close" aria-label="Close dialog"></md-icon>
     </md-button>
 
-    <md-content layout="column" flex>
-        <leaflet id="locate-map" layout-fill flex
+    <md-content layout="row" flex>
+        <leaflet id="selector-map" layout-fill flex
                  layers="layers"></leaflet>
-        <mmd-search get-map="getMap"></mmd-search>
+        <div>
+            <md-list>
+                <md-list-item ng-repeat="map in maps" ng-click="mapSelected(map)">
+                    <md-checkbox ng-model="map.selected"></md-checkbox>
+                    <p> {{ map.name }} </p>
+                </md-list-item>
+            </md-list>
+        </div>
     </md-content>
 
     <md-fab-toolbar class="md-right">
@@ -24,21 +31,9 @@
 
             <md-fab-actions class="md-toolbar-tools" >
                 <md-button aria-label="comment" class="md-icon-button"
-                        ng-click="save()">
+                           ng-click="save()">
                     <md-icon md-svg-icon="content:save"></md-icon>
                 </md-button>
-
-                <md-autocomplete
-                                 md-selected-item="selectedItem"
-                                 md-search-text-change="searchTextChange(mupc.searchText)"
-                                 md-search-text="searchText"
-                                 md-selected-item-change="selectedItemChange(item)"
-                                 md-items="item in querySearch(mupc.searchText)"
-                                 md-item-text="item.display"
-                                 md-min-length="0"
-                                 md-floating-label="地址">
-                    <span md-highlight-text="searchText">{{item.display}}</span>
-                </md-autocomplete>
             </md-fab-actions>
         </md-toolbar>
     </md-fab-toolbar>

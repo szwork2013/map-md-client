@@ -18,11 +18,7 @@
                   delete-button-label="删除标签"
                   delete-hint="按删除键删除标签"
                   secondary-placeholder="+标签"></md-chips>
-        <md-select ng-model="pac.album.map" md-on-open="getMaps()"
-                   aria-label="地图" layout-padding>
-            <md-select-label>{{ pac.album.map ? pac.album.map.name : '' }}</md-select-label>
-            <md-option ng-value="map" ng-repeat="map in pac.maps">{{map.name}}</md-option>
-        </md-select>
+        <map-selector map="pac.album.map"></map-selector>
     </md-card-content>
     <div class="md-actions" layout="row" layout-align="end center">
         <md-button class="md-raised"

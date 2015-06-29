@@ -33,6 +33,9 @@
         Albums.get(albumId).then(function(album) {
             self.album = album;
             $log.debug(LOG_TAG + "album name is " + album.name);
+            if(album.map) {
+                $scope.setBaseLayer(album.map);
+            }
             $scope.setUserTitle(album.user, album.title);
             addClusterMarkers(album);
         });

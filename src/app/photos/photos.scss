@@ -1,10 +1,9 @@
-.albums-grid-list {
-  md-grid-list {
-    .album-card {
-      height: 100%;
-    }
+.photos-albums-page {
+  .albums-grid-list {
+    margin: 8px;
   }
 }
+
 md-card.album-photos {
   position: relative;
 }

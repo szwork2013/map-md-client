@@ -14,15 +14,16 @@ L.Control.LayersManager = L.Control.Layers.extend({
         self._overLayers = {};
         self._baseLayer = null;
         self._overLayer = {};
+        this.maps = {};
     },
     onAdd: function(map) {
         var container = L.Control.Layers.prototype.onAdd.call(this, map);
-        if(this._baseLayer) {
-            map.addLayer(this._baseLayer);
+
+        for(var id in this.maps) {
+            if(this.maps[id].map) {
+                this.addMap(this.maps[id].map);
+            }
         }
-        angular.forEach(this._overLayer, function(overLayer, key) {
-            map.addLayer(overLayer);
-        });
         return container;
     },
     onRemove: function() {
@@ -34,72 +35,121 @@ L.Control.LayersManager = L.Control.Layers.extend({
             self._map.addLayer(overLayer);
         });
     },
-    setBaseLayer: function(mapCode, name) {
-        if(!mapCode) {
-            this._changeBaseLayer(null);
-            return;
+    _findActiveBaseLayer: function () {
+        var layers = this._layers;
+        for (var layerId in layers) {
+            if (this._layers.hasOwnProperty(layerId)) {
+                var layer = layers[layerId];
+                if (!layer.overlay && this._map.hasLayer(layer.layer)) {
+                    return layer;
+                }
+            }
         }
-        if(this._baseLayers[mapCode]) {
-            this._changeBaseLayer(this._baseLayers[mapCode]);
+        throw new Error('Control doesn\'t have any active base layer!');
+    },
+
+    _findActiveOverlayLayers: function () {
+        var result = {};
+        var layers = this._layers;
+        for (var layerId in layers) {
+            if (this._layers.hasOwnProperty(layerId)) {
+                var layer = layers[layerId];
+                if (layer.overlay && this._map.hasLayer(layer.layer)) {
+                    result[layerId] = layer;
+                }
+            }
+        }
+        return result;
+    },
+    _onLayerChange: function () {
+        L.Control.Layers.prototype._onLayerChange.apply(this, arguments);
+        this._recountLayers();
+    },
+
+    _onInputClick: function () {
+        this._handlingClick = true;
+
+        //this._recountLayers();
+        L.Control.Layers.prototype._onInputClick.call(this);
+
+        this._handlingClick = false;
+    },
+
+    _recountLayers: function () {
+        var i, input, obj,
+            inputs = this._form.getElementsByTagName('input'),
+            inputsLen = inputs.length;
+
+        for (i = 0; i < inputsLen; i++) {
+            input = inputs[i];
+            obj = this._layers[input.layerId];
+
+            if (input.checked && !this._map.hasLayer(obj.layer)) {
+                if (obj.overlay) {
+                    this._activeOverlayLayers[input.layerId] = obj;
+                } else {
+                    this._activeBaseLayer = obj;
+                }
+            } else if (!input.checked && this._map.hasLayer(obj.layer)) {
+                if (obj.overlay) {
+                    delete this._activeOverlayLayers[input.layerId];
+                }
+            }
+        }
+    },
+    addMap: function(map) {
+        if(!this._map) {
+            this.maps[map.id] = {
+               map: map
+            };
         }else {
-            var baseLayer = L.tileLayer.provider(mapCode);
-            this._changeBaseLayer(baseLayer);
-            this._baseLayers[mapCode] = baseLayer;
-            this.addBaseLayer(baseLayer, name);
-        }
-    },
-    setOverLayers: function(mapCodes) {
-        var self = this;
-        angular.forEach(this._overLayer, function(overLayer, key) {
-            //if(!mapCodes[key]) {
-            if(self._map) {
-                self._map.removeLayer(overLayer);
-            }
-            self.removeLayer(overLayer);
-            delete self._overLayer[key];
-            //}
-        });
-        angular.forEach(mapCodes, function(mapCode, key) {
-            if(!self._overLayer[key]) {
-                if(self._overLayers[mapCode]) {
-                    if(self._map) {
-                        self._map.addLayer(self._overLayers[mapCode]);
+            if(!this.maps[map.id]||!this.maps[map.id].baseLayer) {
+                var baseLayer = L.tileLayer.provider(map.baseLayer);
+                this.addBaseLayer(baseLayer, map.name);
+                var overLayers = {};
+                if(map.overLayers) {
+                    for(var name in map.overLayers) {
+                        var overLayer = L.tileLayer.provider(map.overLayers[name]);
+                        //this.addOverlay(overLayer, name);
+                        overLayers[name] = overLayer;
                     }
-                    self._overLayer[key] = self._overLayers[mapCode];
-                }else {
-                    var overLayer = L.tileLayer.provider(mapCode);
-                    if(self._map) {
-                        self._map.addLayer(overLayer);
+                }
+                this.maps[map.id] = {
+                    baseLayer: baseLayer,
+                    overLayers: overLayers
+                };
+            }
+            this.activeMap(this.maps[map.id]);
+        }
+    },
+    activeMap: function(mapLayers) {
+        var obj;
+        // 添加overLayer到控制器
+        for(var name in mapLayers.overLayers) {
+            obj = this._layers[L.stamp(mapLayers.overLayers[name])];
+            if(!obj) {
+                this.addOverlay(mapLayers.overLayers[name], name);
+            }
+        }
+        for(var id in this._layers) {
+            obj = this._layers[id];
+            if(obj.overlay) {
+                if(mapLayers.overLayers[obj.name] && !this._map.hasLayer(obj.layer)) {
+                    this._map.addLayer(obj.layer);
+                }else if(!mapLayers.overLayers[obj.name]) {
+                    if(this._map.hasLayer(obj.layer)) {
+                        this._map.removeLayer(obj.layer);
                     }
-                    self._overLayers[mapCode] = overLayer;
-                    self._overLayer[key] = overLayer;
-                    self.addOverlay(overLayer, key);
+                    this.removeLayer(obj.layer);
                 }
-            }
-        });
-    },
-    _addOverLayer: function(overLayer) {
-        var self = this;
-        if(self._map) {
-            self._map.addLayer(overLayer);
-        }
-    },
-    _changeBaseLayer: function(baseLayer) {
-        if(this._map) {
-            if(this._baseLayer !== baseLayer) {
-                if(this._baseLayer) {
-                    this._map.removeLayer(this._baseLayer);
-                }
-                if(baseLayer) {
-                    baseLayer.addTo(this._map);
+            }else {
+                if(mapLayers.baseLayer == obj.layer && !this._map.hasLayer(obj.layer)) {
+                    this._map.addLayer(obj.layer);
+                }else if(mapLayers.baseLayer != obj.layer && this._map.hasLayer(obj.layer)) {
+                    this._map.removeLayer(obj.layer);
                 }
             }
         }
-        this._baseLayer = baseLayer;
-    },
-    clear: function() {
-        this.setBaseLayer(null);
-        this.setOverLayers();
     }
 });
 

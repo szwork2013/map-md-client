@@ -1,7 +1,7 @@
-<form name="albumNewForm" ng-submit="anc.save($event)">
+<form name="albumNewForm" ng-submit="anc.album.id?anc.update($event):anc.save($event)">
 <md-card>
     <md-card-content>
-        <md-select placeholder="类型" ng-model="anc.album.type" required>
+        <md-select placeholder="专辑类型" ng-model="anc.album.type" required>
             <md-option ng-repeat="type in anc.types" value="{{type.code}}">{{type.name}}</md-option>
         </md-select>
         <md-input-container>
@@ -16,6 +16,12 @@
             <label>描述</label>
             <textarea ng-model="anc.album.description" columns="1" md-maxlength="150"></textarea>
         </md-input-container>
+        <md-chips ng-model="anc.tags"
+                  placeholder="输入一个标签"
+                  delete-button-label="删除标签"
+                  delete-hint="按删除键删除标签"
+                  secondary-placeholder="+标签"></md-chips>
+        <map-selector map="anc.map"></map-selector>
     </md-card-content>
     <div class="md-actions" layout="row" layout-align="end center">
         <md-button class="md-raised md-primary"

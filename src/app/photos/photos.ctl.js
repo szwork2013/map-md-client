@@ -41,7 +41,7 @@
         //});
         self.state = '';
         $scope.selectPage = function(page) {
-            if(self.state && self.state != page.state) {
+            if(self.state != page.state) {
                 self.state = page.state;
                 $state.go(page.state, page.params);
             }

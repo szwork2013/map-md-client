@@ -587,11 +587,14 @@ md-grid-list md-grid-tile {
     top: 1px;
     margin: 0; }
 
-.albums-grid-list md-grid-list .album-card {
-  height: 100%; }
+.photos-albums-page .albums-grid-list {
+  margin: 8px; }
 
 md-card.album-photos {
   position: relative; }
+
+.albums-grid-list .album-card {
+  height: 100%; }
 
 .albums-grid-card md-grid-list .album-card {
   padding: 0;

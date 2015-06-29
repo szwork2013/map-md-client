@@ -21,16 +21,21 @@
                     })
                 ;
             }])
-        .controller('AlbumsNewCtrl', ['$scope', '$state', '$log', '$mmdMessage', 'Albums', 'userId', AlbumsNewCtrl])
+        .controller('AlbumsNewCtrl', ['$scope', '$state', '$log', '$mmdMessage', '$MapSelectDialog',
+            'Maps', 'Albums', 'userId', AlbumsNewCtrl])
     ;
 
-    function AlbumsNewCtrl($scope, $state, $log, $mmdMessage, Albums, userId) {
+    var LOG_TAG = "[Albums new]";
+
+    function AlbumsNewCtrl($scope, $state, $log, $mmdMessage, $MapSelectDialog, Maps, Albums, userId) {
         var self = this;
         self.step = 1;
+        self.tags = [];
 
         if(userId) {
             self.album = {
                 type: "Base",
+                tags: [],
                 user: {
                     id: userId
                 }
@@ -43,13 +48,42 @@
         ];
 
         self.save = function(e) {
-            Albums.create(self.album).then(function(album) {
+            var album = angular.copy(self.album);
+            if(self.map) {
+                album.map = {id: self.map.id};
+            }
+            album.tags = self.tags;
+            Albums.create(album).then(function(album) {
                 self.album = album;
                 $mmdMessage.success.create();
                 $scope.albumNewForm.$setPristine();
                 self.step = 2;
             },function(err) {
                 $mmdMessage.fail.create(err.statusText);
+            });
+        };
+
+        self.update = function(ev) {
+            var album = angular.copy(self.album);
+            if(self.map) {
+                album.map = {id: self.map.id};
+            }else {
+                delete album.map;
+            }
+            album.tags = self.tags;
+
+            Albums.modify(self.album.id, album).then(function(album) {
+                $mmdMessage.success.update();
+                $scope.albumForm.$setPristine();
+            },function(err) {
+                $mmdMessage.fail.update(err.statusText);
+            });
+        };
+
+        $scope.getMaps = function(ev) {
+            $MapSelectDialog.show(ev).then(function(map) {
+                $log.debug(LOG_TAG + "selected map is " + map.name);
+                self.map = map;
             });
         };
     }

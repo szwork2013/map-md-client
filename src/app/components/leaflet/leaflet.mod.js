@@ -10,6 +10,7 @@
      * @name app.components.leaflet
      */
     angular.module('app.components.leaflet', [
-        'app.components.leaflet.clusterControl'
+        'app.components.leaflet.clusterControl',
+        'app.components.leaflet.select'
     ]);
 })();

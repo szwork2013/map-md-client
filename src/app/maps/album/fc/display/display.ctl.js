@@ -30,7 +30,7 @@
             //$scope.setTitle(album.name, album.user);
             $scope.setAlbum(album);
             if(album.map) {
-                $scope.setBaseLayer(album.map.baseLayer, album.map.name);
+                $scope.setBaseLayer(album.map);
             }
 
             self.album = album;

@@ -264,6 +264,7 @@
 
             controlLayers.addTo(map);
 
+
             map.on('photoClick', onMapPhotoClicked);
 
             L.control.locate({
@@ -300,32 +301,37 @@
             $location.hash($mmdUtil.param({ c: centerHash }));
         };
 
-        $scope.setBaseLayer = function(mapCode, name) {
-            controlLayers.setBaseLayer(mapCode, name);
+        $scope.setBaseLayer = function(map) {
+            controlLayers.addMap(map);
         };
 
-        var mapBaseLayer = "MapBox.DaithStar", mapOverLayers;
-        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
-        mapBaseLayer = "MapBox.Outdoors";
-        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
-        mapBaseLayer = "MapBox.Streets";
-        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
-        mapBaseLayer = "MapBox.Penil";
-        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
-        mapBaseLayer = "MapBox.Hike";
-        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
-        mapBaseLayer = "MapBox.Pirate";
-        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
-        mapBaseLayer = "MapBox.Dark";
-        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
-        mapBaseLayer = "MapBox.SatelliteStreets";
-        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
-        //mapBaseLayer = "Esri.WorldImagery";
+        //var mapBaseLayer = "MapBox.DaithStar", mapOverLayers;
         //controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
-        mapBaseLayer = "QQMap";
-        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
-        mapBaseLayer = "AMap.Base";
-        controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        //mapBaseLayer = "MapBox.Outdoors";
+        //controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        //mapBaseLayer = "MapBox.Streets";
+        //controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        //mapBaseLayer = "MapBox.Penil";
+        //controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        //mapBaseLayer = "MapBox.Hike";
+        //controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        //mapBaseLayer = "MapBox.Pirate";
+        //controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        //mapBaseLayer = "MapBox.Dark";
+        //controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        //mapBaseLayer = "MapBox.SatelliteStreets";
+        //controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        ////mapBaseLayer = "Esri.WorldImagery";
+        ////controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        //mapBaseLayer = "QQMap";
+        //controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        //mapBaseLayer = "AMap.Base";
+        //controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
+        controlLayers.addMap({
+            id: "1",
+            name: "嘎嘎哦的",
+            baseLayer: 'AMap.Base'
+        });
 
         getLocationSearch();
         $scope.$on('$locationChangeSuccess', function (e) {

@@ -106,6 +106,9 @@
 
         function setAlbum(album) {
             $scope.setAlbum(album);
+            if(album.map) {
+                $scope.setBaseLayer(album.map);
+            }
             self.album = album;
             self.album.featureCollection = $FeatureCollection.detransform(self.album.featureCollection);
             resetGeoJSON();
@@ -163,7 +166,6 @@
         });
 
         self.modifyAlbum = function() {
-
             Albums.modify(self.album.id, {
                     name: self.album.name,
                     description: self.album.description
