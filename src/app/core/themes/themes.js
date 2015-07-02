@@ -71,6 +71,8 @@ angular
             .icon("file:cloud_off",        "./assets/svg/file/ic_cloud_off_24px.svg", 24)
             .icon("communication:comment", "./assets/svg/communication/ic_comment_24px.svg", 24)
             .icon("communication:email",   "./assets/svg/communication/ic_email_24px.svg", 24)
+            .icon("navigation:expand_less","./assets/svg/navigation/ic_expand_less_24px.svg", 24)
+            .icon("navigation:expand_more","./assets/svg/navigation/ic_expand_more_24px.svg", 24)
             .icon("navigation:menu",       "./assets/svg/navigation/ic_menu_24px.svg", 24)
             .icon("navigation:close",      "./assets/svg/navigation/ic_close_24px.svg", 24)
             .icon("editor:mode_edit",      "./assets/svg/editor/ic_mode_edit_24px.svg", 24)

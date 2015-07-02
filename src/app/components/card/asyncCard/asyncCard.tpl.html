@@ -1,0 +1,25 @@
+<md-card>
+    <md-card-content>
+        <div ng-transclude></div>
+    </md-card-content>
+    <md-progress-linear md-mode="indeterminate" ng-show="loading"></md-progress-linear>
+    <div class="md-actions" layout="row" layout-align="start center">
+        <md-button class=""
+                   ng-disabled="loading"
+                   ng-hide="loadDone"
+                   ng-click="more()">
+            <md-tooltip>
+                更多
+            </md-tooltip>
+            <md-icon md-svg-icon="navigation:expand_more"></md-icon>
+        </md-button>
+        <md-button class=""
+                   ng-class="{'md-primary': cardForm.$dirty}"
+                   ng-click="reset()">
+            <md-tooltip>
+                更少
+            </md-tooltip>
+            <md-icon md-svg-icon="navigation:expand_less"></md-icon>
+        </md-button>
+    </div>
+</md-card>

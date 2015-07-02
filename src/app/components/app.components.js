@@ -16,7 +16,8 @@
             'app.components.card',
             'app.components.like',
             'app.components.panorama',
-            'app.components.leaflet'
+            'app.components.leaflet',
+            'app.components.comment'
         ]);
 
 })();

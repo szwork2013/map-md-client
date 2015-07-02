@@ -1,11 +1,15 @@
 <md-dialog aria-label="Dialog"
            layout-margin
            layout="column">
-    <form name="albumForm">
+    <form name="albumForm" ng-submit="create(album)">
     <md-dialog-content>
         <md-input-container>
+            <label>url</label>
+            <input ng-model="album.name" required>
+        </md-input-container>
+        <md-input-container>
             <label>名称</label>
-            <input ng-model="album.name">
+            <input ng-model="album.title" required>
         </md-input-container>
         <md-input-container flex>
             <label>描述</label>
@@ -14,11 +18,11 @@
     </md-dialog-content>
     <div class="md-actions" layout="row">
         <span flex></span>
-        <md-button ng-click="cancel()" class="md-primary">
-            取消
-        </md-button>
-        <md-button ng-click="create(album)" class="md-primary">
+        <md-button class="md-raised md-primary">
             创建
+        </md-button>
+        <md-button ng-click="$event.preventDefault();cancel()">
+            取消
         </md-button>
     </div>
     </form>

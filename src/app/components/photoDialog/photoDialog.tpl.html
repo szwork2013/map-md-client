@@ -108,13 +108,16 @@
                 </md-list-item>
             </md-list>
 
+            <comment-list comment-type="photo"
+                          comment-entity="photo"
+                          comments="comments"></comment-list>
+
             <md-divider></md-divider>
-            <mmd-comments comments="comments"></mmd-comments>
         </md-content>
 
-        <post-comment
-                type="photo"
-                entity-id="photo.id"
-                on-saved="commentSaved"></post-comment>
+        <comment-create
+                comment-type="photo"
+                comment-entity="photo"
+                on-saved="commentSaved(comment)"></comment-create>
     </div>
 </md-dialog>

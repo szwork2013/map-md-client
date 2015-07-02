@@ -9,6 +9,7 @@
      * @name app.components.card
      */
     angular.module('app.components.card', [
-        'app.components.card.editCard'
+        'app.components.card.editCard',
+        'app.components.card.asyncCard'
     ]);
 })();

@@ -1,0 +1,84 @@
+<md-dialog aria-label="Dialog"
+           layout-fill
+           layout-margin
+           layout="column">
+    <md-content flex>
+        <md-grid-list
+                md-cols-gt-md="5" md-cols-sm="2" md-cols-md="4"
+                md-row-height-gt-md="1:1" md-row-height="4:3"
+                md-gutter-gt-md="1px" md-gutter-gt-sm="1px" md-gutter="1px">
+            <md-grid-tile
+                    ng-repeat="album in albums"
+                    md-colspan-gt-sm="1"
+                    md-rowspan-gt-sm="1"
+                    ng-click="selectAlbum(album)">
+                <div class="cover" ng-class="{select: selAlbum.id==album.id}">
+                    <a href="">
+                        <img ng-src="{{album.cover ? staticCtx+'/'+album.cover.oss_key+'@1e_200w_200h_1c_1o.jpg' : 'assets/images/album-cover.jpg'}}">
+                    </a>
+                </div>
+
+                <md-grid-tile-footer>
+                    <h3>{{album.name}}</h3>
+                </md-grid-tile-footer>
+            </md-grid-tile>
+            <!--<md-grid-tile ng-show="creating"
+                    md-colspan-gt-sm="1"
+                    md-rowspan-gt-sm="2">
+                <form name="newAlbumForm" ng-submit="create(album)">
+                    <md-input-container>
+                        <label>url</label>
+                        <input ng-model="album.name">
+                    </md-input-container>
+                    <md-input-container>
+                        <label>名称</label>
+                        <input ng-model="album.title">
+                    </md-input-container>
+                    <md-input-container flex>
+                        <label>描述</label>
+                        <textarea ng-model="album.description" columns="1" md-maxlength="150"></textarea>
+                    </md-input-container>
+                </form>
+            </md-grid-tile>-->
+        </md-grid-list>
+    </md-content>
+    <!--<div class="md-actions" layout="row">-->
+    <md-button class="md-icon-button md-bottom-left md-close"
+               ng-click="cancel('cancel')">
+        <md-icon md-svg-icon="navigation:close" aria-label="Close dialog"></md-icon>
+    </md-button>
+
+    <md-fab-toolbar class="md-right">
+        <md-fab-trigger class="align-with-text">
+            <md-button aria-label="menu" class="md-fab md-primary">
+                <md-icon md-svg-icon="navigation:menu"></md-icon>
+            </md-button>
+        </md-fab-trigger>
+        <md-toolbar layout="row">
+            <md-button class="md-icon-button md-bottom-left md-close"
+                       ng-click="cancel('cancel')">
+                <md-tooltip>
+                    取消操作
+                </md-tooltip>
+                <md-icon md-svg-icon="navigation:close" aria-label="Close dialog"></md-icon>
+            </md-button>
+
+            <md-fab-actions class="md-toolbar-tools" >
+                <md-button aria-label="确定" class="md-icon-button"
+                           ng-click="save()">
+                    <md-tooltip>
+                        确定
+                    </md-tooltip>
+                    <md-icon md-svg-icon="content:save"></md-icon>
+                </md-button>
+                <md-button aria-label="新建" class="md-icon-button"
+                           ng-click="newAlbum(ev)">
+                    <md-tooltip>
+                        新建相册
+                    </md-tooltip>
+                    <md-icon md-svg-icon="content:add"></md-icon>
+                </md-button>
+            </md-fab-actions>
+        </md-toolbar>
+    </md-fab-toolbar>
+</md-dialog>

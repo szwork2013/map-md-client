@@ -1,0 +1,22 @@
+<md-content layout-fill>
+    <async-card load-more="msac.searchMore"
+                load-reset="msac.searchReset()"
+                no-border="true"
+                class="albums-grid-card">
+        <md-grid-list class="albums-grid-list"
+                      md-cols-gt-md="3" md-cols-sm="2" md-cols-md="3"
+                      md-row-height-gt-md="1:1" md-row-height="1:1"
+                      md-gutter-gt-md="10px" md-gutter-gt-sm="5px" md-gutter="1px">
+            <md-grid-tile
+                    ng-repeat="album in albums"
+                    md-colspan-gt-sm="1"
+                    md-rowspan-gt-sm="1">
+                <album-card album="album" editable="false"
+                            layout-fill flex layout="row"
+                            class="album-card"
+                            ng-click="display(album)">
+                </album-card>
+            </md-grid-tile>
+        </md-grid-list>
+    </async-card>
+</md-content>

@@ -4,6 +4,11 @@
 (function() {
     'use strict';
 
+    /**
+     * 把图片添加到专辑的dialog
+     * @ngdoc module
+     * @name app.components.album.add
+     */
     angular.module('app.components.album.add', [])
         .factory('$albumAddPhoto', ['$mdDialog', '$log', '$albumNew', '$mmdMessage', 'Users', 'Albums',
             AlbumAddPhoto]);

@@ -4,6 +4,11 @@
 (function() {
     'use strict';
 
+    /**
+     * 展示专辑的card，可进行编辑 查看转向
+     * @ngdoc module
+     * @name app.components.album.card
+     */
     angular.module('app.components.album.card', [])
         .directive('albumCard', ['$mdDialog', '$log', 'staticCtx', '$state',
             albumCardDirective]);

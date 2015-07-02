@@ -81,19 +81,23 @@
                 });
 
                 // 获取照片评论
-                photo.getComments().then(function(comments) {
-                    $scope.comments = comments;
-                });
+                //photo.getComments().then(function(comments) {
+                //    $scope.comments = comments;
+                //});
             });
 
+            $scope.comments = [];
             $scope.commentSaved = function(comment) {
-                $scope.comments = $scope.comments || [];
                 $scope.comments.push(comment);
             };
 
             $scope.locate = function(ev) {
                 $PhotoLocateDialog.show(ev, $scope.photo);
             };
+
+            $scope.$on('$state-go', function(e) {
+                $scope.cancel();
+            });
 
             /**
              * 配置照片的属性和相机信息

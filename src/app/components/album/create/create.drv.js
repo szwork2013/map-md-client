@@ -4,6 +4,11 @@
 (function() {
     'use strict';
 
+    /**
+     * 新建专辑的dialog
+     * @ngdoc module
+     * @name app.components.album.create
+     */
     angular.module('app.components.album.create', [])
         .factory('$albumNew', ['$mdDialog', '$log', '$mmdMessage', 'Albums',
             NewAlbumFactory]);

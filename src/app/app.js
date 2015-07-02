@@ -13,6 +13,8 @@
         'app.core',
         'app.components',
         'app.home',
+        'app.index',
+        'app.admin',
         'app.photos',
         'app.group',
         'app.albums',
@@ -30,8 +32,7 @@
                 $locationProvider.html5Mode(false).hashPrefix('!');
 
                 $urlRouterProvider
-                    .when('/', '/maps/popular')
-                    .when('', '/maps/popular');
+                    .when('/', '/maps/popular');
                 $stateProvider
                     .state('app', {
                         abstract: true,

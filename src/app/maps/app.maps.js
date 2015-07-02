@@ -5,6 +5,7 @@
     'use strict';
 
     angular.module('app.maps', [
+        'app.maps.search',
         'app.maps.popular',
         'app.maps.user',
         'app.maps.cluster',
@@ -329,7 +330,7 @@
         //controlLayers.setBaseLayer(mapBaseLayer, mapBaseLayer);
         controlLayers.addMap({
             id: "1",
-            name: "嘎嘎哦的",
+            name: "高德地图",
             baseLayer: 'AMap.Base'
         });
 

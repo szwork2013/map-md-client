@@ -1,0 +1,13 @@
+<md-content layout-fill>
+    <async-card load-more="mspc.searchMore"
+                load-reset="searchReset()"
+                no-border="true">
+        <div mmd-photo-card-wall layout-fill flex
+             mmd-wall-options="{targetHeight: 160, fadeSpeed: 0, allowPartialLastRow: true}">
+            <mmd-photo-card ng-repeat="photo in photos"
+                            photo = "photo"
+                            mmd-photo-url = "{{staticCtx}}/{{photo.oss_key}}@!photo-preview-sm">
+            </mmd-photo-card>
+        </div>
+    </async-card>
+</md-content>

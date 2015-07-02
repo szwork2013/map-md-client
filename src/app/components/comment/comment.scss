@@ -1,69 +1,23 @@
-.media-left, .media > .pull-left {
-  padding-right: 10px;
-}
-
-.pull-left {
-  float: left !important;
-}
-
-.comments {
-  margin: 10px 0;
-  .media.comment {
+.comment-list {
+  .comment {
+    width: 100%;
     margin: 10px 0;
-    img.media-object {
-      width: 28px;
-      height: 28px;
+
+    .md-avatar {
+      width: 35px;
+      height: 35px;
     }
 
-    .media-body {
-      .header {
-        width: 130px;
-        float: left;
+    h4 {
+      font-size: 0.8em;
+      margin: 2px 0;
+      span {
+        font-weight: normal;
       }
+    }
 
-      .action {
-        float: right;
-      }
-
-      .content {
-        white-space: pre-wrap;       /* css-3 */
-        white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-        white-space: -pre-wrap;      /* Opera 4-6 */
-        white-space: -o-pre-wrap;    /* Opera 7 */
-        word-wrap: break-word;       /* Internet Explorer 5.5+ */
-        clear: both;
-        padding: 0;
-        margin: 0;
-        border: 0;
-        background-color: initial;
-      }
+    pre {
+      font-size: 0.8em;
     }
   }
 }
-
-.img-rounded {
-  border-radius: 6px;
-}
-img {
-  vertical-align: middle;
-}
-
-.media-left, .media-right, .media-body {
-  display: table-cell;
-  vertical-align: top;
-}
-
-
-.media-heading {
-  margin-top: 0;
-  margin-bottom: 5px;
-}
-
-span.footnotes {
-  font-size: 12px;
-  color: #999;
-  display: inline;
-  margin-left: 0;
-  text-align: left;
-}
-

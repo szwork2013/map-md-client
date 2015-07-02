@@ -1,0 +1,12 @@
+<async-card load-more="loadMore"
+            load-reset="loadRest"
+            no-border="true">
+<md-list class="comment-list">
+    <md-list-item ng-repeat="comment in comments">
+        <comment-item comment="comment"
+                      user="user">
+        </comment-item>
+        <md-divider md-inset ng-if="!$last"></md-divider>
+    </md-list-item>
+</md-list>
+</async-card>

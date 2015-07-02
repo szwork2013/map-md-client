@@ -5,6 +5,7 @@
     'use strict';
 
     /**
+     * 专辑的底图类型选择的button，调用底图选择dialog
      * @ngdoc module
      * @name app.components.album.mapSelector
      */

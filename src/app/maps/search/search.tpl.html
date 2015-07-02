@@ -1,0 +1,47 @@
+<md-toolbar md-scroll-shrink
+            class="md-accent track-search">
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Menu"
+                   ng-click="toggleLeftBar()">
+            <md-icon md-svg-icon="navigation:menu"></md-icon>
+        </md-button>
+        <span flex="">
+            <form ng-submit="search(keyword)"
+                  class="search-form">
+                <md-input-container>
+                    <input ng-model="keyword" placeholder="搜索">
+                </md-input-container>
+            </form>
+        </span>
+        <md-checkbox ng-model="within" aria-label="search within">
+            <md-tooltip>
+                视图内搜索
+            </md-tooltip>
+        </md-checkbox>
+        <md-button class="md-icon-button" aria-label="More"
+                   ng-click="showBottomSheet($event)">
+            <md-icon md-svg-icon="more_vert"></md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<div flex layout-fill layout="column">
+    <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="图片"
+                md-active="'photo'==tabName"
+                md-on-select="go('app.maps.search.photo', {keyword: keyword})">
+        </md-tab>
+        <md-tab label="专辑"
+                md-active="'album'==tabName"
+                md-on-select="go('app.maps.search.album', {keyword: keyword})">
+        </md-tab>
+        <md-tab label="用户"
+                md-active="'user'==tabName"
+                md-on-select="go('app.maps.search.user',  {keyword: keyword})">
+        </md-tab>
+        <md-tab label="组"
+                md-active="'group'==tabName"
+                md-on-select="go('app.maps.search.group', {keyword: keyword})">
+        </md-tab>
+    </md-tabs>
+    <div flex layout-fill layout="column" ui-view></div>
+</div>

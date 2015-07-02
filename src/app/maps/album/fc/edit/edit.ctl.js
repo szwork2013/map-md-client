@@ -40,6 +40,7 @@
         var drawnItems, drawControl;
         // init map draw tool
         $scope.getMap().then(function(map) {
+            self.map = map;
 
             drawnItems = new L.FeatureGroup();
             map.addLayer(drawnItems);

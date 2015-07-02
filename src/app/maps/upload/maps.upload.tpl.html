@@ -61,11 +61,16 @@
                 <div layout-padding>
                     添加到专辑
                 </div>
-                <md-select ng-model="album" md-on-open="getUserAlbum()"
+
+                <album-select user="mupc.user"
+                              preselect-album-id="albumId"
+                              album-selected="mupc.albumSelected($album)"></album-select>
+
+<!--                <md-select ng-model="album" md-on-open="getUserAlbum()"
                            aria-label="添加到专辑" layout-padding>
                     <md-select-label>{{ album ? album.title : '' }}</md-select-label>
                     <md-option ng-value="album" ng-repeat="album in albums">{{album.title}}</md-option>
-                </md-select>
+                </md-select>-->
             </div>
 
             <md-list flex>

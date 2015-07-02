@@ -41,7 +41,8 @@
 
         function addCluster(album) {
             $scope.getMap().then(function(map) {
-                clusterControl = new ClusterControl(map, album.photos, album.title);
+                clusterControl = new ClusterControl(map, album.title);
+                clusterControl.addPhotos(album.photos);
             });
         }
 
@@ -65,6 +66,11 @@
                 }
             });
             return result;
+        };
+
+        self.comments = [];
+        $scope.commentCreated = function(comment) {
+            self.comments.splice(0,0,comment);
         };
 
         $scope.$on('$destroy', function(e) {

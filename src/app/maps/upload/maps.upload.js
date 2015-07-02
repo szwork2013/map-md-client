@@ -80,6 +80,10 @@
                 'app.helps.upload']);
         };
 
+        if(albumId) {
+            $scope.albumId = albumId;
+        }
+
         /**
          * 获取登录用户
          */
@@ -87,26 +91,9 @@
             self.user = user;
         });
 
-        /**
-         * 获取用户专辑信息
-         */
-        $scope.getUserAlbum = function () {
-            if(!$scope.albums) {
-                Users.getAlbums(self.user.id).then(function(albums) {
-                    $scope.albums = albums;
-                });
-            }
+        self.albumSelected = function(album) {
+            $scope.album = album;
         };
-
-        if(albumId) {
-            getAlbum(albumId);
-        }
-
-        function getAlbum(albumId) {
-            Albums.get(albumId).then(function(album) {
-                $scope.album = album;
-            });
-        }
 
         /**
          * 地图标记控件

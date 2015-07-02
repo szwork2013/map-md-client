@@ -39,7 +39,8 @@
         // 图片图标组层
         $scope.create = function(name, photos) {
             $scope.getMap().then(function(map) {
-                self.clusterControl = new ClusterControl(map, photos, name);
+                self.clusterControl = new ClusterControl(map, name);
+                self.clusterControl.addPhotos(photos);
                 self.clusterControl.fitBounds();
             });
         };

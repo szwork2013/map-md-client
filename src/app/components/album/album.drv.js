@@ -8,6 +8,8 @@
         'app.components.album.add',
         'app.components.album.create',
         'app.components.album.card',
-        'app.components.album.mapSelector']);
+        'app.components.album.mapSelector',
+        'app.components.album.cover',
+        'app.components.album.select']);
 
 })();

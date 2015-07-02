@@ -14,7 +14,7 @@
 
     function ClusterControlFactory($mmdLeafletUtil) {
 
-        var ClusterControl = function(map, photos, name) {
+        var ClusterControl = function(map, name) {
             this._map = map;
             this._photos = [];
             this._name = name;
@@ -23,7 +23,6 @@
             this._clusterGroup = L.markerClusterGroup();
             map.addLayer(this._clusterGroup);
             this._clusterControl.addOverlay(this._clusterGroup, name);
-            this.addPhotos(photos);
         };
 
         ClusterControl.prototype.addPhotos = function(photo) {
@@ -48,7 +47,10 @@
         };
 
         ClusterControl.prototype.fitBounds = function() {
-            this._map.fitBounds(this._clusterGroup.getBounds());
+            var bounds = this._clusterGroup.getBounds();
+            if(bounds.isValid()) {
+                this._map.fitBounds(this._clusterGroup.getBounds());
+            }
         };
 
         ClusterControl.prototype.clear = function() {

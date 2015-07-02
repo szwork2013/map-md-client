@@ -1,0 +1,12 @@
+<div class="comment">
+    <img alt="{{ comment.user.name }}"
+         ng-src="{{UrlService.getAvatarUrl(comment.user.avatar)}}"
+         class="md-avatar" />
+    <div class="md-list-item-text">
+        <h4 class="profile-name">
+            <a href ng-click="toUserPage($event)">{{ comment.user.name }}</a>
+            <span>{{comment.create_date | date}}</span></h4>
+        <pre>{{ comment.content }}</pre>
+    </div>
+
+</div>

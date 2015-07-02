@@ -38,6 +38,7 @@
         self.save = function(ev) {
             var album = {
                 name: self.album.name,
+                title: self.album.title,
                 description: self.album.description,
                 tags: self.album.tags
             };

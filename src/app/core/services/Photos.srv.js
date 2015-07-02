@@ -50,6 +50,7 @@
         .factory('Covers',     ['ApiRestangular', CoverServiceFactory])
         .factory('Likes',      ['ApiRestangular', LikeServiceFactory])
         .factory('Maps',       ['ApiRestangular', MapServiceFactory])
+        .factory('Search',     ['ApiRestangular', SearchServiceFactory])
     ;
 
     function PhotoServiceFactory(Restangular) {
@@ -99,9 +100,10 @@
     }
 
     function CommentsServiceFactory(Restangular) {
-        var commentService = Restangular.service('comment');
+        var service = Restangular.service('comment');
         return {
-            create: createComment
+            create: createComment,
+            get: getComments
         };
 
         /**
@@ -110,7 +112,23 @@
          * @returns {*|{}}
          */
         function createComment(comment) {
-            return commentService.post(comment);
+            return service.post(comment);
+        }
+
+        /**
+         * 获取实体的评论
+         * @param type 评论的实体类型
+         * @param id   评论的实体ID
+         * @param pageNo   评论的实体ID
+         * @param id   评论的实体ID
+         * @returns Array[Comment{}] comments list
+         */
+        function getComments(type, id, pageNo, pageSize) {
+            return service.one().all('').getList({
+                type: type,
+                id: id,
+                pageNo: pageNo,
+                pageSize: pageSize});
         }
     }
 
@@ -362,11 +380,69 @@
         var service = Restangular.service('map');
 
         return {
-            getAll: getAll
+            getAll: getAll,
+            update: update,
+            create: create,
+            remove: remove
         };
 
         function getAll() {
             return service.one().all('').getList();
+        }
+
+        function update(map) {
+            return service.one(map.id).post('', map);
+        }
+
+        function create(map) {
+            return service.post(map);
+        }
+
+        function remove(id) {
+            return service.one(id).remove();
+        }
+    }
+
+    function SearchServiceFactory(Restangular) {
+        var service = Restangular.service('search');
+
+        return {
+            photo: searchPhoto,
+            album: searchAlbum,
+            user:  searchUser,
+            group: searchGroup
+        };
+
+        function searchPhoto(keyword, pageNo, pageSize) {
+            return service.one().all('photo').getList({
+                keyword: keyword,
+                pageNo: pageNo,
+                pageSize: pageSize
+            });
+        }
+
+        function searchAlbum(keyword, pageNo, pageSize) {
+            return service.one().all('album').getList({
+                keyword: keyword,
+                pageNo: pageNo,
+                pageSize: pageSize
+            });
+        }
+
+        function searchUser(keyword, pageNo, pageSize) {
+            return service.one().all('user').getList({
+                keyword: keyword,
+                pageNo: pageNo,
+                pageSize: pageSize
+            });
+        }
+
+        function searchGroup(keyword, pageNo, pageSize) {
+            return service.one().all('group').getList({
+                keyword: keyword,
+                pageNo: pageNo,
+                pageSize: pageSize
+            });
         }
     }
 

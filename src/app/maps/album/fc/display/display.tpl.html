@@ -1,4 +1,4 @@
-<div flex layout-fill
+<md-content flex layout-fill
      class="">
     <md-card class="caption">
         <md-card-content>
@@ -21,9 +21,18 @@
         </div>
     </md-card>
 
+    <comment-list comment-type="album"
+                  comment-entity="mafcdc.album"
+                  comments="mafcdc.comments"></comment-list>
+
+    <comment-create comment-type="album"
+                    comment-entity="mafcdc.album"
+                    on-saved="commentCreated(comment)"></comment-create>
+
     <mmd-save-as mmd-src="mafcdc.album.featureCollection"
                  mmd-file-name="{{mafcdc.album.name+'.geojson'}}"></mmd-save-as>
 
     <mmd-footer layout="column">
     </mmd-footer>
-</div>
+</md-content>
+

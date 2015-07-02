@@ -2,18 +2,10 @@
  * Created by tiwen.wang on 6/2/2015.
  */
 L.Control.LayersManager = L.Control.Layers.extend({
-    _baseLayers: {},
-    _overLayers: {},
-    _baseLayer: null,
-    _overLayer: {},
     initialize: function (options) {
         var self = this;
         //L.Control.Layers.initialize.call(this, options);
         self._layers = {};
-        self._baseLayers = {};
-        self._overLayers = {};
-        self._baseLayer = null;
-        self._overLayer = {};
         this.maps = {};
     },
     onAdd: function(map) {
@@ -24,6 +16,9 @@ L.Control.LayersManager = L.Control.Layers.extend({
                 this.addMap(this.maps[id].map);
             }
         }
+
+        this._activeBaseLayer = this._findActiveBaseLayer();
+        this._activeOverlayLayers = this._findActiveOverlayLayers();
         return container;
     },
     onRemove: function() {
@@ -45,7 +40,7 @@ L.Control.LayersManager = L.Control.Layers.extend({
                 }
             }
         }
-        throw new Error('Control doesn\'t have any active base layer!');
+        //throw new Error('Control doesn\'t have any active base layer!');
     },
 
     _findActiveOverlayLayers: function () {
@@ -61,7 +56,8 @@ L.Control.LayersManager = L.Control.Layers.extend({
         }
         return result;
     },
-    _onLayerChange: function () {
+
+    _onLayerChange: function (e) {
         L.Control.Layers.prototype._onLayerChange.apply(this, arguments);
         this._recountLayers();
     },
@@ -69,8 +65,13 @@ L.Control.LayersManager = L.Control.Layers.extend({
     _onInputClick: function () {
         this._handlingClick = true;
 
-        //this._recountLayers();
+        var _activeBaseLayer = this._activeBaseLayer;
+        this._recountLayers();
         L.Control.Layers.prototype._onInputClick.call(this);
+
+        if(_activeBaseLayer.layer != this._activeBaseLayer.layer) {
+            this.activeBaseLayer(this._activeBaseLayer.layer);
+        }
 
         this._handlingClick = false;
     },
@@ -84,7 +85,7 @@ L.Control.LayersManager = L.Control.Layers.extend({
             input = inputs[i];
             obj = this._layers[input.layerId];
 
-            if (input.checked && !this._map.hasLayer(obj.layer)) {
+            if (input.checked) {
                 if (obj.overlay) {
                     this._activeOverlayLayers[input.layerId] = obj;
                 } else {
@@ -122,15 +123,31 @@ L.Control.LayersManager = L.Control.Layers.extend({
             this.activeMap(this.maps[map.id]);
         }
     },
-    activeMap: function(mapLayers) {
-        var obj;
-        // 添加overLayer到控制器
-        for(var name in mapLayers.overLayers) {
-            obj = this._layers[L.stamp(mapLayers.overLayers[name])];
-            if(!obj) {
-                this.addOverlay(mapLayers.overLayers[name], name);
+    activeBaseLayer: function(baseLayer) {
+        var mapLayers, name;
+
+        for(name in this.maps) {
+            if(this.maps[name].baseLayer == baseLayer) {
+                mapLayers = this.maps[name];
             }
         }
+
+        this.activeMap(mapLayers);
+
+    },
+    activeMap: function(mapLayers) {
+        if(!mapLayers) {
+            return;
+        }
+        var baseLayer = mapLayers.baseLayer,
+            name;
+        if(!this._map.hasLayer(baseLayer)) {
+            this._map.addLayer(baseLayer);
+        }
+        if(!this._layers[L.stamp(baseLayer)]) {
+            this.addBaseLayer(baseLayer);
+        }
+
         for(var id in this._layers) {
             obj = this._layers[id];
             if(obj.overlay) {
@@ -143,11 +160,20 @@ L.Control.LayersManager = L.Control.Layers.extend({
                     this.removeLayer(obj.layer);
                 }
             }else {
-                if(mapLayers.baseLayer == obj.layer && !this._map.hasLayer(obj.layer)) {
-                    this._map.addLayer(obj.layer);
-                }else if(mapLayers.baseLayer != obj.layer && this._map.hasLayer(obj.layer)) {
+                if(mapLayers.baseLayer != obj.layer && this._map.hasLayer(obj.layer)) {
                     this._map.removeLayer(obj.layer);
                 }
+            }
+        }
+
+        var overLayer;
+        for(name in mapLayers.overLayers) {
+            overLayer = mapLayers.overLayers[name];
+            if(!this._layers[L.stamp(overLayer)]) {
+                if(!this._map.hasLayer(overLayer)) {
+                    this._map.addLayer(overLayer);
+                }
+                this.addOverlay(overLayer, name);
             }
         }
     }
