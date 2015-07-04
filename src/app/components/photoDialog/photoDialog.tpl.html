@@ -1,7 +1,7 @@
 <md-dialog aria-label="Photo Dialog"
            layout-fill
            layout="row"
-           layout-sm="column">
+           >
     <div flex="70"
          layout="column"
          class="photo-dialog-left">
@@ -11,13 +11,13 @@
         </md-button>
         <md-fab-toolbar class="md-left">
             <md-fab-trigger class="align-with-text">
-                <md-button aria-label="menu" class="md-fab md-primary">
+                <md-button aria-label="menu" class="md-fab md-primary md-hue-1">
                     <md-icon md-svg-icon="navigation:menu"></md-icon>
                 </md-button>
             </md-fab-trigger>
             <md-toolbar layout="row">
                 <md-fab-actions class="md-toolbar-tools" >
-                    <md-button aria-label="comment" class="md-icon-button"
+                    <md-button aria-label="toolbar" class="md-icon-button"
                                ng-click="save()">
                         <md-icon md-svg-icon="content:save"></md-icon>
                     </md-button>
@@ -32,7 +32,9 @@
             </md-toolbar>
         </md-fab-toolbar>
         <md-progress-linear md-mode="indeterminate" ng-if="!photo.imageLoaded"></md-progress-linear>
-        <md-content flex layout-fill layout="row" style="overflow: hidden;" ng-switch="photo.is360">
+        <md-content flex layout-fill layout="row"
+                    style="position:absolute;top: 0;overflow: hidden;"
+                    ng-switch="photo.is360">
 
             <!--<md-progress-circular class="md-accent"
                                   style="position: absolute;top: 50%;left: 50%;"
@@ -55,8 +57,8 @@
          layout="column"
          class="photo-dialog-info">
         <md-toolbar md-scroll-shrink
-                class="md-tall md-warn md-hue-3">
-            <h3>
+                class="md-tall">
+            <h3 class="md-toolbar-title">
                 <span>{{photo.title}}</span>
             </h3>
             <span flex></span>
@@ -71,14 +73,6 @@
         <md-content class="photo-info-content"
                 flex layout-fill >
             <md-list>
-                <md-list-item ng-show="photo.travel_id">
-                    <md-button class="md-primary"
-                               ng-href="#/maps/travel/{{photo.travel_id}}"
-                               target="_blank">
-                        <md-icon md-svg-icon="image:photo_library"></md-icon>
-                        {{photo.travel_name}}
-                    </md-button>
-                </md-list-item>
                 <md-list-item>
                     <pre class="">{{photo.description}}</pre>
                 </md-list-item>
@@ -98,7 +92,8 @@
                 </md-list-item>
 
                 <md-divider></md-divider>
-                <md-subheader style="background-color: initial">相机信息</md-subheader>
+
+                <md-subheader class="md-no-sticky">相机信息</md-subheader>
                 <md-list-item ng-repeat="info in cameraInfos">
                     <md-icon md-svg-icon="{{info.icon}}"></md-icon>
                     <p>{{info.value}}</p>

@@ -49,7 +49,7 @@
         ClusterControl.prototype.fitBounds = function() {
             var bounds = this._clusterGroup.getBounds();
             if(bounds.isValid()) {
-                this._map.fitBounds(this._clusterGroup.getBounds());
+                this._map.fitBounds(bounds);
             }
         };
 

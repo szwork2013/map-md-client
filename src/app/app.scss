@@ -1,13 +1,14 @@
 @import "../scss/_variables.scss";
 @import '../scss/_mixins.scss';
 @import '../scss/_icons.scss';
+@import '../scss/md.scss';
 @import '../common/leaflet/leaflet.scss';
 @import './home/home.scss';
 @import './home/sidenav/sidenav.scss';
 @import './home/signin/signin.scss';
 @import './home/footer/footer.scss';
 @import './home/avatar/avatar.scss';
-@import './components/photoCardWall/photoCardWall.scss';
+@import './components/photo/photo.scss';
 @import './components/photoDialog/photoDialog.scss';
 @import './components/photoSlider/photoSlider.scss';
 @import './components/user/profile/profile.scss';
@@ -38,10 +39,6 @@ body {
   font-family: Microsoft YaHei;
   background: #F5F5F5;
   overflow: hidden;
-}
-
-md-content.md-default-theme {
-   background-color: initial;
 }
 
 /* menu styles */

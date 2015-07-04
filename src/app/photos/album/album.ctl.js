@@ -110,6 +110,20 @@
             });
         };
 
+        self.setCover = function() {
+            var photos = getSelectPhotos(self.album);
+            if(!photos.length) {
+                $scope.showSelectPrompt(ev);
+                return;
+            }
+            Albums.setCover(self.album.id, {id: photos[0].id, type: "photo"})
+                .then(function(album) {
+                    $mmdMessage.success.update();
+                },function(err) {
+                    $mmdMessage.fail.update(err.statusText);
+                });
+        };
+
         self.select = function() {
             self.all = !self.all;
             if(self.all) {

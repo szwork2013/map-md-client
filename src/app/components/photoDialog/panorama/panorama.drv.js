@@ -372,8 +372,8 @@
                 self.onPointerDownPointerX = event.touches[0].pageX;
                 self.onPointerDownPointerY = event.touches[0].pageY;
 
-                self.onPointerDownLon = lon;
-                self.onPointerDownLat = lat;
+                self.onPointerDownLon = self.lon;
+                self.onPointerDownLat = self.lat;
 
             }
 

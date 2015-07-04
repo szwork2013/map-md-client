@@ -67,7 +67,7 @@
             </md-tooltip>
             <md-icon md-svg-icon="content:block"></md-icon>
         </md-button>
-        <md-button class="md-primary" aria-label="全选"
+        <md-button class="md-icon-button md-primary" aria-label="全选"
                    ng-click="pac.select($event)">
             <md-tooltip>
                 <span ng-if="pac.all">取消</span>
@@ -75,6 +75,14 @@
             </md-tooltip>
             <md-icon ng-if="pac.all" md-svg-icon="toggle:check_box"></md-icon>
             <md-icon ng-if="!pac.all" md-svg-icon="toggle:check_box_outline_blank"></md-icon>
+        </md-button>
+
+        <md-button class="md-icon-button md-primary" aria-label="设为封面"
+                   ng-click="pac.setCover()">
+            <md-tooltip>
+                设为封面
+            </md-tooltip>
+            <md-icon md-svg-icon="image:photo_library"></md-icon>
         </md-button>
         <md-button class="md-icon-button md-primary" aria-label="上传图片"
                 ng-click="go('app.maps.upload', {album: pac.album.id})">

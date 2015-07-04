@@ -1,22 +1,21 @@
+<md-content flex layout-fill>
+    <async-card load-more="mcuc.loadMorePhotos"
+                load-reset="mcuc.loadReset()"
+                no-border="true"
+                >
+        <div mmd-photo-card-wall layout-fill flex
+             mmd-wall-options="{targetHeight: 160, fadeSpeed: 0, allowPartialLastRow: true}">
+            <mmd-photo-card ng-repeat="photo in photos | limitTo:photosLimitTo"
+                            photo = "photo"
+                            mmd-photo-url = "{{staticCtx}}/{{photo.oss_key}}@!photo-preview-sm">
+            </mmd-photo-card>
+        </div>
+    </async-card>
 
+    <div style="width: 100%;height: 2px;">
 
-<md-content layout-fill
-            flex
-            >
-<!-- mmd-infinite-scroll="loadMorePhotos()"
-            mmd-infinite-scroll-distance="1"
-            mmd-infinite-scroll-container="md-content[mmd-infinite-scroll]"
-            mmd-infinite-scroll-disabled="loadMoreDisabled"
-            mmd-infinite-scroll-immediate-check="false" flex layout-fill -->
-    <div mmd-photo-card-wall layout-fill flex
-         mmd-wall-options="{targetHeight: 160, fadeSpeed: 0, allowPartialLastRow: true}">
-        <mmd-photo-card ng-repeat="photo in photos | limitTo:photosLimitTo"
-                        photo = "photo"
-                        mmd-photo-url = "{{staticCtx}}/{{photo.oss_key}}@!photo-preview-sm">
-        </mmd-photo-card>
     </div>
-    <md-button flex
-               ng-if="!loadMoreDisabled&&photos.length"
-               ng-click="loadMorePhotos()">加载更多</md-button>
+    <mmd-footer layout="column">
+    </mmd-footer>
 </md-content>
 

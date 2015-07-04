@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app" ng-controller="AppCtrl as appc">
+<html ng-app="app-starter" ng-controller="AppCtrl as appc">
     <head lang="zh">
         <meta charset="UTF-8">
         <title ng-bind="appTitle"></title>
@@ -33,8 +33,18 @@
         <script type="text/javascript" src="<%= file %>"></script>
         <% }); %>
 
+        <!--<script type="text/javascript">
+            L.Icon.Default.imagePath = "/assets/images";
+        </script>-->
     </head>
     <body layout="column">
+        <script type="text/javascript" >
+            angular.module('app-starter', ['app'])
+                //.value('staticCtx', 'http://static.photoshows.cn')
+                    .value('staticCtx', 'http://test.photoshows.cn')
+                //.value('serverBaseUrl', 'http://www.photoshows.cn')
+                    .value('serverBaseUrl', 'http://localhost:8080');
+        </script>
         <div ui-view="sidenav"></div>
         <div flex layout="column" ui-view
              class="main-view"></div>

@@ -1,38 +1,29 @@
-<md-content flex layout-fill
-     class="">
-    <md-card class="caption">
-        <md-card-content>
-            <pre>{{mafcdc.album.description}}</pre>
-        </md-card-content>
-    </md-card>
-    <md-card class="" flex>
-        <md-card-content >
-            <md-list>
-                <md-list-item class="md-3-line"
-                              ng-repeat="(key,val) in mafcdc.filterSecId(mafcdc.feature.properties)">
-                    <div class="md-list-item-text">
-                        <h3> {{ key }} </h3>
-                        <p> {{ val }} </p>
-                    </div>
-                </md-list-item>
-            </md-list>
-        </md-card-content>
-        <div class="md-actions" layout="row" layout-align="end center">
-        </div>
-    </md-card>
+<md-content flex layout-fill layout="column">
+    <div flex layout="column" style="position: absolute;min-height: 100%;">
+        <md-card class="caption">
+            <md-card-content>
+                <pre>{{mafcdc.album.description}}</pre>
+            </md-card-content>
+        </md-card>
 
-    <comment-list comment-type="album"
-                  comment-entity="mafcdc.album"
-                  comments="mafcdc.comments"></comment-list>
+        <feature-card feature="mafcdc.feature" flex>
+        </feature-card>
 
-    <comment-create comment-type="album"
-                    comment-entity="mafcdc.album"
-                    on-saved="commentCreated(comment)"></comment-create>
+        <comment-list comment-type="album"
+                      comment-entity="mafcdc.album"
+                      comments="mafcdc.comments"
+                      flex></comment-list>
 
-    <mmd-save-as mmd-src="mafcdc.album.featureCollection"
-                 mmd-file-name="{{mafcdc.album.name+'.geojson'}}"></mmd-save-as>
+        <mmd-save-as mmd-src="mafcdc.album.featureCollection"
+                     mmd-file-name="{{mafcdc.album.name+'.geojson'}}"></mmd-save-as>
 
-    <mmd-footer layout="column">
-    </mmd-footer>
+        <mmd-footer layout="column">
+        </mmd-footer>
+    </div>
 </md-content>
+<comment-create comment-type="album"
+                comment-entity="mafcdc.album"
+                on-saved="commentCreated(comment)"
+                class="bottom-right">
+</comment-create>
 

@@ -14,32 +14,15 @@
                     ng-click="selectAlbum(album)">
                 <div class="cover" ng-class="{select: selAlbum.id==album.id}">
                     <a href="">
-                        <img ng-src="{{album.cover ? staticCtx+'/'+album.cover.oss_key+'@1e_200w_200h_1c_1o.jpg' : 'assets/images/album-cover.jpg'}}">
+                        <img ng-src="{{UrlService.getAlbumCover(album.cover)}}">
                     </a>
                 </div>
 
                 <md-grid-tile-footer>
-                    <h3>{{album.name}}</h3>
+                    <h3>{{album.title}}</h3>
+                    <h4>{{album.name}}</h4>
                 </md-grid-tile-footer>
             </md-grid-tile>
-            <!--<md-grid-tile ng-show="creating"
-                    md-colspan-gt-sm="1"
-                    md-rowspan-gt-sm="2">
-                <form name="newAlbumForm" ng-submit="create(album)">
-                    <md-input-container>
-                        <label>url</label>
-                        <input ng-model="album.name">
-                    </md-input-container>
-                    <md-input-container>
-                        <label>名称</label>
-                        <input ng-model="album.title">
-                    </md-input-container>
-                    <md-input-container flex>
-                        <label>描述</label>
-                        <textarea ng-model="album.description" columns="1" md-maxlength="150"></textarea>
-                    </md-input-container>
-                </form>
-            </md-grid-tile>-->
         </md-grid-list>
     </md-content>
     <!--<div class="md-actions" layout="row">-->

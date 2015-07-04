@@ -34,11 +34,11 @@
             pageNo++;
             Users.getAlbums(userId).then(function(albums) {
                 // TODO
-                angular.forEach(albums, function(album, key) {
-                   if(!album.cover) {
-                       album.cover = album.photos[0];
-                   }
-                });
+                //angular.forEach(albums, function(album, key) {
+                //   if(!album.cover) {
+                //       album.cover = album.photos[0];
+                //   }
+                //});
                 self.albums = self.albums.concat(albums);
             });
         };

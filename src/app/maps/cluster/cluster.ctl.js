@@ -18,9 +18,10 @@
                         resolve: {}
                     });
             }])
-        .controller('MapsClusterCtrl', ['$scope', '$log', 'ClusterControl', '$menuBottomSheet', MapsClusterCtrl]);
+        .controller('MapsClusterCtrl', ['$scope', '$log', 'ClusterControl', '$menuBottomSheet',
+            '$timeout', MapsClusterCtrl]);
 
-    function MapsClusterCtrl($scope, $log, ClusterControl, $menuBottomSheet) {
+    function MapsClusterCtrl($scope, $log, ClusterControl, $menuBottomSheet, $timeout) {
         var self = this;
 
         $scope.setUserTitle = function(user, title) {
@@ -41,7 +42,12 @@
             $scope.getMap().then(function(map) {
                 self.clusterControl = new ClusterControl(map, name);
                 self.clusterControl.addPhotos(photos);
-                self.clusterControl.fitBounds();
+
+                // 页面转向时fitBounds会不起作用，不知道原因，暂时先用延时
+                $timeout(function() {
+                    self.clusterControl.fitBounds();
+                },1000);
+                //self.clusterControl.fitBounds();
             });
         };
 

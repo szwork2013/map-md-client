@@ -12,7 +12,7 @@
     angular.module('app.components.album.select', [])
         .factory('$albumSelect', ['$mdDialog', '$q', '$albumNew', '$mmdMessage', 'Users', 'Albums',
             AlbumSelectFactory])
-        .directive('albumSelect', ['$mdTheming', '$timeout', '$log', '$albumSelect', 'Albums', AlbumSelectDirective])
+        .directive('albumSelect', ['$mdTheming', '$log', '$albumSelect', 'Albums', AlbumSelectDirective])
     ;
 
     function AlbumSelectFactory($mdDialog, $q, $albumNew, $mmdMessage, Users, Albums) {
@@ -21,7 +21,7 @@
 
         function showSelectDialog(ev, user, albums) {
             return $mdDialog.show({
-                controller: ['$scope', '$mdDialog', 'user', 'albums', AlbumSelectDialogController],
+                controller: ['$scope', '$mdDialog', 'UrlService', 'user', 'albums', AlbumSelectDialogController],
                 templateUrl: 'components/album/select/select.tpl.html',
                 targetEvent: ev,
                 locals: {
@@ -31,7 +31,8 @@
             });
         }
 
-        function AlbumSelectDialogController($scope, $mdDialog, user, albums) {
+        function AlbumSelectDialogController($scope, $mdDialog, UrlService, user, albums) {
+            $scope.UrlService = UrlService;
             $scope.albums = [];
             if(!albums) {
                 Users.getAlbums(user.id).then(function(albums) {
@@ -70,24 +71,10 @@
                     deferred.resolve(album);
                 });
             };
-
-            //$scope.create = function(album) {
-            //    Albums.create(album).then(function(album) {
-            //        $mmdMessage.success.create();
-            //        $scope.albums.push(album);
-            //        $scope.selectAlbum(album);
-            //    },function(err) {
-            //        $mmdMessage.fail.create(err.statusText);
-            //    });
-            //};
-            //
-            //$scope.toggleCreating = function() {
-            //    $scope.creating = !$scope.creating;
-            //};
         }
     }
 
-    function AlbumSelectDirective($mdTheming, $timeout, $log, $albumSelect, Albums) {
+    function AlbumSelectDirective($mdTheming, $log, $albumSelect, Albums) {
         return {
             restrict: 'AE',
             scope: {

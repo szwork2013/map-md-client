@@ -55,19 +55,6 @@
             self.feature = feature;
         });
 
-        self.filterSecId = function(properties) {
-            var result = {};
-            angular.forEach(properties, function(value, key) {
-                switch (key) {
-                    case 'style':
-                        break;
-                    default :
-                        result[key] = value;
-                }
-            });
-            return result;
-        };
-
         self.comments = [];
         $scope.commentCreated = function(comment) {
             self.comments.splice(0,0,comment);

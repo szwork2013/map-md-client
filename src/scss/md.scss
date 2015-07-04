@@ -1,0 +1,32 @@
+@media (max-width: $screen-sm-min) {
+  md-dialog {
+    min-width: 100%;
+    min-height: 100%;
+  }
+
+  md-toolbar {
+    .md-toolbar-tools {
+      padding: 0 2px;
+    }
+  }
+}
+
+md-toolbar {
+  .md-toolbar-title {
+    margin: 5px;
+  }
+}
+
+button, select, html, textarea, input {
+  font-family: inherit;
+}
+
+.md-avatar {
+  &.md-avatar-square {
+    border-radius: 20%;
+  }
+}
+
+md-content.md-default-theme {
+   background-color: initial;
+}

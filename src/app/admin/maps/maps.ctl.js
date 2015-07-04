@@ -30,8 +30,11 @@
         self.overLayer = {};
 
         self.addOverLayer = function() {
-            self.map.overLayers[self.overLayer.key] = self.overLayer.value;
-            self.overLayer = {};
+            if(self.overLayer.key) {
+                self.map.overLayers = self.map.overLayers || {};
+                self.map.overLayers[self.overLayer.key] = self.overLayer.value;
+                self.overLayer = {};
+            }
         };
 
         self.save = function(map) {
@@ -48,6 +51,7 @@
                 });
             }else {
                 Maps.create(map).then(function(map) {
+                    self.map = map;
                     $mmdMessage.success.create();
                 },function(err) {
                     $mmdMessage.fail.create(err.statusText);

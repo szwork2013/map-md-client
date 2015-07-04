@@ -2,7 +2,8 @@
                    class="md-fling md-bottom-right">
     <md-fab-trigger>
         <md-button aria-label="menu" class="md-fab md-warn">
-            <md-icon ng-if="!uploading" md-svg-icon="navigation:menu"></md-icon>
+            <!--<md-icon ng-if="!uploading" md-svg-icon="navigation:menu"></md-icon>-->
+            <md-icon ng-if="!uploading" md-svg-icon="content:add"></md-icon>
             <md-progress-circular ng-if="uploading"
                                   class="md-accent"
                                   md-mode="indeterminate"></md-progress-circular>
@@ -69,7 +70,8 @@
          class="upload-content">
         <md-card class="caption">
             <md-card-content>
-                <p><b>选择包含​​GPS航迹(tracklogs)和航点(waypoints)的档案上传</b></p>
+                <span><b>选择包含GPS航迹(tracklogs)和航点(waypoints)的档案上传</b></span><br/>
+                <span>禁止上传违反法律的轨迹</span>
             </md-card-content>
         </md-card>
         <md-list flex>

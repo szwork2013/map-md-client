@@ -4,18 +4,18 @@
         <md-icon md-svg-icon="navigation:close" aria-label="Close dialog"></md-icon>
     </md-button>
 
-    <md-content layout="row" flex>
+    <div layout="row" flex>
         <leaflet id="selector-map" layout-fill flex
                  layers="layers"></leaflet>
-        <div>
+        <md-content>
             <md-list>
                 <md-list-item ng-repeat="map in maps" ng-click="mapSelected(map)">
                     <md-checkbox ng-model="map.selected"></md-checkbox>
                     <p> {{ map.name }} </p>
                 </md-list-item>
             </md-list>
-        </div>
-    </md-content>
+        </md-content>
+    </div>
 
     <md-fab-toolbar class="md-right">
         <md-fab-trigger class="align-with-text">

@@ -11,13 +11,31 @@
     h4 {
       font-size: 0.8em;
       margin: 2px 0;
-      span {
-        font-weight: normal;
-      }
+      //span {
+      //  font-weight: normal;
+      //}
     }
 
     pre {
       font-size: 0.8em;
+    }
+  }
+}
+
+.comment-create {
+  background-color: lightseagreen;
+  md-input-container {
+    background-color: lightseagreen;
+  }
+
+  &.bottom-right {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    .md-fab.add-comment {
+      position: absolute;
+      bottom: 10px;
+      right: 20px;
     }
   }
 }

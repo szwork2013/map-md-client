@@ -4,6 +4,12 @@
 (function() {
     'use strict';
 
+    /**
+     * 用户所有图片的地图聚集模块
+     *   在地图上以聚集的方式显示用户所有图片
+     * @ngdoc module
+     * @name app.maps.cluster.user
+     */
     angular.module('app.maps.cluster.user', [])
         .config(['$urlRouterProvider', '$stateProvider',
             function ($urlRouterProvider, $stateProvider) {
@@ -11,7 +17,7 @@
                     .state('app.maps.cluster.user', {
                         url: '/user/{id}',
                         templateUrl: 'maps/cluster/user/user.tpl.html',
-                        controller: 'MapsClusterUserCtrl',
+                        controller: 'MapsClusterUserCtrl as mcuc',
                         resolve: {
                             userId: ['$stateParams', function ($stateParams) {
                                 return $stateParams.id;
@@ -19,15 +25,15 @@
                         }
                     });
             }])
-        .controller('MapsClusterUserCtrl', ['$scope', '$log', 'Users', 'userId', 'Authenticate',
+        .controller('MapsClusterUserCtrl', ['$scope', '$log', '$q', 'Users', 'userId', 'Authenticate',
             MapsClusterUserController]);
 
     var LOG_TAG = "Maps-Cluster-User: ";
 
-    function MapsClusterUserController($scope, $log, Users, userId, Authenticate) {
+    function MapsClusterUserController($scope, $log, $q, Users, userId, Authenticate) {
+        var self = this;
 
         // configs
-        $scope.loadMoreDisabled = false;
         $scope.photosLimitTo = 20;
         var pageSize = 100, limitPageSize = 20;
         var photos = [];
@@ -80,13 +86,20 @@
             $scope.addLayer(photos);
         }
 
-        $scope.loadMorePhotos = function() {
-            $scope.photosLimitTo = $scope.photosLimitTo + limitPageSize;
-            $log.debug(LOG_TAG + "load more..." + $scope.photosLimitTo);
+        self.loadMorePhotos = function(pageNo) {
+            var deferred = $q.defer();
+            $scope.photosLimitTo = limitPageSize*(pageNo+1);
             if($scope.photos && $scope.photosLimitTo > $scope.photos.length) {
-                $scope.loadMoreDisabled = true;
+                deferred.resolve(false);
+            }else {
+                deferred.resolve(true);
             }
             $scope.$broadcast('mmd-photo-wall-resize');
+            return deferred.promise;
+        };
+
+        self.loadReset = function() {
+            $scope.photosLimitTo = limitPageSize;
         };
 
         $scope.$on('$destroy', function(e) {

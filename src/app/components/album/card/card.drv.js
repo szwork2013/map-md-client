@@ -27,6 +27,10 @@
         function link(scope, element, attrs) {
             scope.staticCtx = staticCtx;
 
+            if(scope.album&&!scope.album.cover) {
+                scope.album.cover = scope.album.photos[0];
+            }
+
             scope.go = function(state, params) {
                 $state.go(state, params);
             };

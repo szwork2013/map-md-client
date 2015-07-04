@@ -23,6 +23,6 @@
     var LOG_TAG = "[Index] ";
 
     function IndexCtrl($scope, $state, $log, $mmdPhotoDialog) {
-
+        $state.go('app.maps.popular');
     }
 })();

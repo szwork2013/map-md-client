@@ -9,36 +9,36 @@
         .config(['RestangularProvider', function(RestangularProvider) {
 
             // add a response intereceptor
-            RestangularProvider.addResponseInterceptor(
-                function(data, operation, what, url, response, deferred) {
-                var extractedData;
-                // .. to look for getList operations
-                if (operation === "getList") {
-                    // .. and handle the data and meta data
-                    //extractedData = data.data.data;
-                    //extractedData.meta = data.data.meta;
-                    switch(what) {
-                        default :
-                            extractedData = data;
-                    }
-                } else {
-                    switch(what) {
-                        case 'openinfo':
-                            if(data.open_info) {
-                                extractedData = data.open_info;
-                            }
-                            break;
-                        case 'camerainfo':
-                            if(data.camera_info) {
-                                extractedData = data.camera_info;
-                            }
-                            break;
-                        default :
-                            extractedData = data;
-                    }
-                }
-                return extractedData;
-            });
+            //RestangularProvider.addResponseInterceptor(
+            //    function(data, operation, what, url, response, deferred) {
+            //    var extractedData;
+            //    // .. to look for getList operations
+            //    if (operation === "getList") {
+            //        // .. and handle the data and meta data
+            //        //extractedData = data.data.data;
+            //        //extractedData.meta = data.data.meta;
+            //        switch(what) {
+            //            default :
+            //                extractedData = data;
+            //        }
+            //    } else {
+            //        switch(what) {
+            //            case 'openinfo':
+            //                if(data.open_info) {
+            //                    extractedData = data.open_info;
+            //                }
+            //                break;
+            //            case 'camerainfo':
+            //                if(data.camera_info) {
+            //                    extractedData = data.camera_info;
+            //                }
+            //                break;
+            //            default :
+            //                extractedData = data;
+            //        }
+            //    }
+            //    return extractedData;
+            //});
         }])
         .factory('Photos',     ['ApiRestangular', PhotoServiceFactory])
         .factory('Panoramios', ['ApiRestangular', PanoramiosServiceFactory])
@@ -230,6 +230,7 @@
             create: create,
             modify: modify,
             remove: remove,
+            setCover: setCover,
             addPhotos: addPhotos,
             removePhotos: removePhotos,
             deletePhotos: deletePhotos,
@@ -255,6 +256,10 @@
 
         function remove(id) {
             return service.one(id).remove();
+        }
+
+        function setCover(id, cover) {
+            return service.one(id).post('cover', cover);
         }
 
         function addPhotos(id, photoIds) {

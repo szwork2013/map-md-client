@@ -18,8 +18,8 @@
                 md-gutter-gt-md="10px" md-gutter-gt-sm="6px" md-gutter="4px">
             <md-grid-tile
                     ng-repeat="member in group.members"
-                    md-colspan-gt-sm="2"
-                    md-rowspan-gt-sm="1">
+                    md-colspan="2"
+                    md-rowspan="1">
                 <user-profile user="member" class="member-card" flex>
                     {{member.username}}
                 </user-profile>
@@ -38,13 +38,13 @@
 <md-card class="albums-grid-card">
     <md-card-content layout="column">
         <md-grid-list class="albums-grid-list"
-                md-cols-gt-md="10" md-cols-sm="4" md-cols-md="6"
+                md-cols-gt-md="5" md-cols-sm="2" md-cols-md="3"
                 md-row-height-gt-md="1:1" md-row-height="1:1"
                 md-gutter-gt-md="10px" md-gutter-gt-sm="6px" md-gutter="4px">
             <md-grid-tile
                     ng-repeat="album in ugpc.albums"
-                    md-colspan-gt-sm="2"
-                    md-rowspan-gt-sm="2">
+                    md-colspan="1"
+                    md-rowspan="1">
                 <album-card album="album" editable="editable"
                             layout-fill flex layout="column"
                             class="album-card">

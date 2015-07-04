@@ -18,10 +18,10 @@
                 multiUser: true
             });
         })
-        .directive('mmdPhotoSlider', ['$mdTheming', '$timeout', '$log', mmdPhotoSliderDirective]);
+        .directive('mmdPhotoSlider', ['$mdTheming', '$timeout', '$log', 'UrlService', mmdPhotoSliderDirective]);
 
 
-    function mmdPhotoSliderDirective($mdTheming, $timeout, $log) {
+    function mmdPhotoSliderDirective($mdTheming, $timeout, $log, UrlService) {
 
         return {
             restrict: 'AE',
@@ -35,6 +35,7 @@
 
         function link(scope, element, attrs) {
             $mdTheming(element);
+            scope.UrlService = UrlService;
 
             var reqAnimationFrame = (function () {
                 return window[Hammer.prefixed(window, 'requestAnimationFrame')] || function (callback) {

@@ -22,17 +22,19 @@
                         }
                     });
             }])
-        .controller('MapsClusterAlbumCtrl', ['$scope', '$log', 'Albums', 'albumId', 'album',
+        .controller('MapsClusterAlbumCtrl', ['$scope', '$log', '$q', 'Albums', 'albumId', 'album',
             MapsClusterAlbumController]);
 
     var LOG_TAG = "[Maps Cluster Album] ";
 
-    function MapsClusterAlbumController($scope, $log, Albums, albumId, album) {
+    function MapsClusterAlbumController($scope, $log, $q, Albums, albumId, album) {
         var self = this;
+        self.comments = [];
+        $scope.photosLimitTo = 20;
+        var pageSize = 100, limitPageSize = 20;
 
         Albums.get(albumId).then(function(album) {
             self.album = album;
-            $log.debug(LOG_TAG + "album name is " + album.name);
             if(album.map) {
                 $scope.setBaseLayer(album.map);
             }
@@ -47,6 +49,31 @@
         function addClusterMarkers(album) {
             $scope.create(album.title, album.photos);
         }
+
+        self.loadMorePhotos = function(pageNo) {
+            var deferred = $q.defer();
+            if(self.album) {
+                $scope.photosLimitTo = limitPageSize*(pageNo+1);
+                if(self.album.photos && $scope.photosLimitTo > self.album.photos.length) {
+                    deferred.resolve(false);
+                }else {
+                    deferred.resolve(true);
+                }
+                $scope.$broadcast('mmd-photo-wall-resize');
+            }else {
+                deferred.reject();
+            }
+
+            return deferred.promise;
+        };
+
+        self.loadReset = function() {
+            $scope.photosLimitTo = limitPageSize;
+        };
+
+        self.commentCreated = function(comment) {
+            self.comments.splice(0,0,comment);
+        };
 
         $scope.$on('$destroy', function(e) {
             $scope.clear();

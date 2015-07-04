@@ -73,7 +73,9 @@
 
             Maps.getAll().then(function(maps) {
                 $scope.maps = maps;
-                $scope.mapSelected($scope.maps[0]);
+                if($scope.maps&&$scope.maps.length) {
+                    $scope.mapSelected($scope.maps[0]);
+                }
             });
 
             $scope.mapSelected = function(map) {

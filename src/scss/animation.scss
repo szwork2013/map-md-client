@@ -45,3 +45,24 @@ to prevent collapsing during animation*/
   //-moz-transform:translate3d(100px, 0, 0);
   //transform:translate3d(100px, 0, 0);
 }
+
+md-input-container.ng-hide-add {
+  opacity: 1;
+  @include transition(all .5s ease-in-out);
+  @include scale(0 0);
+  &.ng-hide-add-active {
+    opacity: 0;
+    @include scale(0.5 0.5);
+  }
+}
+
+md-input-container.ng-hide-remove {
+  opacity: 0;
+  @include scale(0.5 0.5);
+  @include transition(all .5s ease-in-out);
+  &.ng-hide-remove-active {
+    opacity: 1;
+    @include scale(0 0);
+  }
+
+}

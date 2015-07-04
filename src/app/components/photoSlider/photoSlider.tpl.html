@@ -11,7 +11,7 @@
          hm-pinchstart="onPinchstart($event)"
          hm-pinchmove="onPinchmove($event)"
          hm-pinchend="onPinchend($event)">
-        <img ng-src="http://www.photoshows.cn:9292/static.photoshows.cn/{{photo.oss_key}}@!photo-preview-lg"
+        <img ng-src="{{UrlService.getPhotoUrl(photo, 'photo-preview-lg')}}"
              ng-style="(photo.width>photo.height)?{width:'100%'}:{height:'100%'}"
              hm-pan="onPan($event)">
     </div>

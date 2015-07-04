@@ -127,19 +127,19 @@
                     value: $filter('bytes')(photo.file_size, 2)
                 });
                 $scope.cameraInfos.push({
-                    icon: 'image:camera',
+                    icon: 'image:photo_camera',
                     name: '相机',
                     value: cameraInfo.model
                 });
                 $scope.cameraInfos.push({
-                    icon: 'image:camera',
+                    icon: 'image:photo_camera',
                     name: '相机品牌',
                     value: cameraInfo.make
                 });
                 $scope.cameraInfos.push({
-                    icon: 'image:camera',
+                    icon: 'image:lens',
                     name: '镜头',
-                    value: cameraInfo.jt
+                    value: cameraInfo.lensModel
                 });
 
                 $scope.cameraInfos.push({

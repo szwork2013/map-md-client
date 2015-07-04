@@ -13,17 +13,20 @@
             </div>
 
             <div flex layout="column" >
-                <div class="row image-selector">
-                    <md-button class="md-raised"
-                               ngf-select
-                               ngf-max-size='1000000'
-                               ngf-capture="'camera'"
-                               ngf-change="fileSelected($files, $event)"
-                               accept="image/*" required="">选择(小于1M)</md-button>
+                <div layout="row">
+                    <div class="row image-selector">
+                        <md-button class="md-raised"
+                                   ngf-select
+                                   ngf-max-size='1000000'
+                                   ngf-capture="'camera'"
+                                   ngf-change="fileSelected($files, $event)"
+                                   accept="image/*" required="">选择(小于1M)</md-button>
+                    </div>
+                    <div class="alert-row" ng-show="!!imageUrl">
+                        <div class="alert alert-info">在图片上框选出你的头像</div>
+                    </div>
                 </div>
-                <div class="alert-row" ng-show="!!imageUrl">
-                    <div class="alert alert-info">在图片上框选出你的头像</div>
-                </div>
+
                 <img-cropped src='{{imageUrl}}'
                              cropped='cropped'
                              flex layout-fill layout="column"></img-cropped>

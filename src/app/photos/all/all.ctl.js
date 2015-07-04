@@ -16,32 +16,43 @@
                     })
                 ;
             }])
-        .controller('PhotosAllCtrl', ['$scope', '$log', '$mmdPhotoDialog', '$mmdMessage',
+        .controller('PhotosAllCtrl', ['$scope', '$log', '$q', '$mmdPhotoDialog', '$mmdMessage',
             'Authenticate', 'Users', 'Photos', '$albumAddPhoto', PhotosAllCtrl])
     ;
 
-    function PhotosAllCtrl($scope, $log, $mmdPhotoDialog, $mmdMessage, Authenticate,
+    function PhotosAllCtrl($scope, $log, $q, $mmdPhotoDialog, $mmdMessage, Authenticate,
                            Users, Photos, $albumAddPhoto) {
         var self = this;
         self.photos = [];
-        var userId = 0, pageSize = 50, pageNo = -1;
-
-        Authenticate.getUser().then(function(user) {
-            userId = user.id;
-            self.loadMorePhotos();
-        });
+        var pageSize = 50;
 
         /**
          *
          */
-        self.loadMorePhotos = function() {
-            pageNo++;
-            Users.getPhotos(userId, pageSize, pageNo).then(function(photos) {
-                angular.forEach(photos, function(photo, key) {
-                    colRowSpan(photo);
+        self.loadMorePhotos = function(pageNo) {
+            var deferred = $q.defer();
+            Authenticate.getUser().then(function(user) {
+                self.user = user;
+                Users.getPhotos(user.id, pageSize, pageNo).then(function(photos) {
+                    angular.forEach(photos, function(photo, key) {
+                        colRowSpan(photo);
+                    });
+                    self.photos = self.photos.concat(photos);
+                    if(photos.length<pageSize) {
+                        deferred.resolve(false);
+                    }else {
+                        deferred.resolve(true);
+                    }
+                },function() {
+                    deferred.resolve(false);
                 });
-                self.photos = self.photos.concat(photos);
             });
+
+            return deferred.promise;
+        };
+
+        self.loadReset = function() {
+            self.photos.length = 0;
         };
 
         /*function colRowSpan(photo) {
@@ -110,9 +121,9 @@
                 return;
             }
             if(self.albums) {
-                $albumAddPhoto(ev, {id: userId}, self.albums, photos );
+                $albumAddPhoto(ev, {id: self.user.id}, self.albums, photos );
             }else {
-                $albumAddPhoto(ev, {id: userId}, self.albums, photos )
+                $albumAddPhoto(ev, {id: self.user.id}, self.albums, photos )
                     .then(function(albums) {
                         self.albums = albums;
                     });

@@ -1,19 +1,11 @@
 <md-card layout-fill flex layout="column">
-    <img ng-src="{{staticCtx}}/{{album.cover.oss_key}}@!photo-preview-sm">
-    <md-card-content flex>
-        <!--<md-grid-list
-                md-cols-gt-md="3" md-cols-sm="2" md-cols-md="3"
-                md-row-height-gt-md="1:1" md-row-height="1:1"
-                md-gutter-gt-md="1px" md-gutter-gt-sm="1px" md-gutter="1px">
-            <md-grid-tile ng-repeat="photo in album.photos | limitTo: 6"
-                          md-colspan-gt-sm="1"
-                          md-rowspan-gt-sm="1">
-                <img ng-src="{{staticCtx}}/{{photo.oss_key}}@!album-thumbnail">
-            </md-grid-tile>
-        </md-grid-list>-->
-        <h3 class="md-title">{{album.title}}</h3>
+    <photo-image photo="album.cover" flex
+            class="cover-image clickable"
+            ng-click="goDisplay(album)">
+        <span>{{album.title}}</span>
         <pre>{{album.description}}</pre>
-    </md-card-content>
+    </photo-image>
+
     <div class="md-actions" layout="row" layout-align="end center">
         <md-button class="md-icon-button md-mini" aria-label="查看"
                    ng-click="goDisplay(album)">

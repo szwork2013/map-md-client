@@ -51,9 +51,9 @@
         };
 
         function link(scope, element, attrs) {
-            scope.staticCtx = staticCtx;
+            $mdTheming(element);
 
-            //scope.saved = scope.saved || angular.noop;
+            scope.staticCtx = staticCtx;
 
             var status =
                 scope.status = {

@@ -9,6 +9,7 @@
      * @name app.components.feature
      */
     angular.module('app.components.feature', [
-        'app.components.feature.editCard'
+        'app.components.feature.editCard',
+        'app.components.feature.card'
     ]);
 })();

@@ -25,12 +25,17 @@
                        class="md-fling md-bottom-right">
         <md-fab-trigger>
             <md-button aria-label="menu" class="md-fab md-warn">
-                <md-icon md-svg-icon="navigation:menu"></md-icon>
+                <!--<md-icon md-svg-icon="navigation:menu"></md-icon>-->
+                <md-icon md-svg-icon="content:add"></md-icon>
             </md-button>
         </md-fab-trigger>
         <md-fab-actions>
-            <md-button aria-label="保存" class="md-fab md-raised md-primary md-mini"
+            <md-button aria-label="全部上传"
+                       class="md-fab md-raised md-primary md-mini"
                        ng-click="submit()">
+                <md-tooltip>
+                    全部上传
+                </md-tooltip>
                 <md-icon md-svg-icon="content:save"></md-icon>
             </md-button>
             <md-button aria-label="上传" class="md-fab md-raised md-primary md-mini"
@@ -54,7 +59,9 @@
         <div flex layout="column" class="upload-content">
             <md-card class="caption">
                 <md-card-content>
-                    <p><b>选择照片上传</b></p>
+                    <span><b>选择照片上传</b></span><br/>
+                    <span>单张图片小于10M</span><br/>
+                    <span>禁止上传违反法律的图片</span>
                 </md-card-content>
             </md-card>
             <div layout="row" layout-align="end center">
@@ -79,7 +86,7 @@
                     <form name="fileForm" class="upload-photo-form">
                     <md-card class="upload-photo-card">
                         <div file-upload-progress="file.$progress()">
-                            <md-progress-linear class="md-accent"
+                            <md-progress-linear ng-class="{'md-accent':!file.uploaded,'md-primary':file.uploaded}"
                                                 md-mode="determinate"
                                                 value="{{num}}">
                             </md-progress-linear>

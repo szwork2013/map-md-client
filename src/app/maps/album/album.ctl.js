@@ -19,9 +19,9 @@
                         resolve: {}
                     });
             }])
-        .controller('MapsAlbumCtrl', ['$scope', '$log', '$menuBottomSheet', MapsAlbumCtrl]);
+        .controller('MapsAlbumCtrl', ['$scope', '$log', '$menuBottomSheet', '$timeout', MapsAlbumCtrl]);
 
-    function MapsAlbumCtrl($scope, $log, $menuBottomSheet) {
+    function MapsAlbumCtrl($scope, $log, $menuBottomSheet, $timeout) {
 
         var self = this;
 
@@ -83,7 +83,10 @@
             var bounds = geoJSON.getBounds();
             if(bounds.isValid()) {
                 $scope.getMap().then(function(map) {
-                    map.fitBounds(bounds);
+                    // 页面转向时fitBounds会不起作用，不知道原因，暂时先用延时
+                    $timeout(function() {
+                        map.fitBounds(bounds);
+                    },1000);
                 });
             }
         });

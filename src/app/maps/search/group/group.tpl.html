@@ -4,13 +4,13 @@
                 no-border="true"
                 class="albums-grid-card">
         <md-grid-list class="albums-grid-list"
-                      md-cols-gt-md="3" md-cols-sm="2" md-cols-md="3"
+                      md-cols-gt-md="6" md-cols-sm="2" md-cols-md="4"
                       md-row-height-gt-md="1:1" md-row-height="1:1"
                       md-gutter-gt-md="10px" md-gutter-gt-sm="5px" md-gutter="1px">
             <md-grid-tile
                     ng-repeat="user in users"
-                    md-colspan-gt-sm="1"
-                    md-rowspan-gt-sm="1">
+                    md-colspan="2"
+                    md-rowspan="1">
                 <user-profile user="user" class="member-card" flex>
                     {{user.username}}
                 </user-profile>

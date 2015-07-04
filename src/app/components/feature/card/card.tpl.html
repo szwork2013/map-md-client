@@ -1,0 +1,15 @@
+<md-card class="" flex>
+    <md-card-content >
+        <md-list>
+            <md-list-item class="md-3-line"
+                          ng-repeat="(key,val) in filterSecId(feature.properties)">
+                <div class="md-list-item-text">
+                    <h3> {{ key }} </h3>
+                    <p> {{ val }} </p>
+                </div>
+            </md-list-item>
+        </md-list>
+    </md-card-content>
+    <div class="md-actions" layout="row" layout-align="end center">
+    </div>
+</md-card>

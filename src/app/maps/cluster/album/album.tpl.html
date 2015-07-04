@@ -1,2 +1,27 @@
-<div>
-</div>
+<md-content flex layout-fill layout="column" >
+    <div flex layout="column" style="position: absolute;min-height: 100%;">
+        <async-card load-more="mcac.loadMorePhotos"
+                    load-reset="mcac.loadReset()"
+                    no-border="true">
+            <div mmd-photo-card-wall layout-fill flex
+                 mmd-wall-options="{targetHeight: 160, fadeSpeed: 0, allowPartialLastRow: true}">
+                <mmd-photo-card ng-repeat="photo in mcac.album.photos | limitTo:photosLimitTo"
+                                photo = "photo"
+                                mmd-photo-url = "{{staticCtx}}/{{photo.oss_key}}@!photo-preview-sm">
+                </mmd-photo-card>
+            </div>
+        </async-card>
+        <comment-list comment-type="album"
+                      comment-entity="mcac.album"
+                      comments="mcac.comments"
+                      flex></comment-list>
+
+        <mmd-footer layout="column">
+        </mmd-footer>
+    </div>
+</md-content>
+<comment-create comment-type="album"
+                comment-entity="mcac.album"
+                on-saved="mcac.commentCreated(comment)"
+                class="bottom-right">
+</comment-create>

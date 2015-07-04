@@ -1,68 +1,78 @@
 <md-card>
-    <md-card-content ui-rect-select="{'selector': '.photo'}"
-                     ui-move-select="{{moveSelect}}"
-                     ui-selector="photo.actionSelected">
-        <md-grid-list
-                md-cols-gt-md="10" md-cols-sm="3" md-cols-md="6"
-                md-row-height-gt-md="1:1" md-row-height="1:1"
-                md-gutter-gt-md="1px" md-gutter-gt-sm="1px" md-gutter="1px">
-            <md-grid-tile
-                    ng-repeat="photo in pac.photos"
-                    ng-click="displayPhoto($event, photo)"
-                    ng-mouseover="photo.actionSelectable = true"
-                    ng-mouseleave="photo.actionSelectable = false"
-                    class="photo photo-card-image"
-                    ng-style="{
+    <async-card load-more="pac.loadMorePhotos"
+                load-reset="pac.loadReset()"
+                no-border="true">
+        <div ui-rect-select="{'selector': '.photo'}"
+                         ui-move-select="{{moveSelect}}"
+                         ui-selector="photo.actionSelected">
+            <md-grid-list
+                    md-cols-gt-md="10" md-cols-sm="3" md-cols-md="6"
+                    md-row-height-gt-md="1:1" md-row-height="1:1"
+                    md-gutter-gt-md="1px" md-gutter-gt-sm="1px" md-gutter="1px">
+                <md-grid-tile
+                        ng-repeat="photo in pac.photos"
+                        ng-click="displayPhoto($event, photo)"
+                        ng-mouseover="photo.actionSelectable = true"
+                        ng-mouseleave="photo.actionSelectable = false"
+                        class="photo photo-card-image"
+                        ng-style="{
                         'background': photo.color
                       }"
-                    md-colspan-gt-sm="{{photo.colspan}}"
-                    md-rowspan-gt-sm="{{photo.rowspan}}">
+                        md-colspan-gt-sm="{{photo.colspan}}"
+                        md-rowspan-gt-sm="{{photo.rowspan}}">
 
-                <md-checkbox ng-model="photo.actionSelected" aria-label="选择"
-                             ng-show="photo.actionSelectable||photo.actionSelected"
-                             ng-click="$event.stopPropagation();">
-                </md-checkbox>
+                    <md-checkbox ng-model="photo.actionSelected" aria-label="选择"
+                                 ng-show="photo.actionSelectable||photo.actionSelected"
+                                 ng-click="$event.stopPropagation();">
+                    </md-checkbox>
 
-                <div ng-if="photo.is360" class="photo-icon">
-                    <div class="icon-p360">
+                    <div ng-if="photo.is360" class="photo-icon">
+                        <div class="icon-p360">
+                        </div>
                     </div>
-                </div>
 
-                <img ng-src="{{staticCtx}}/{{photo.oss_key}}@!photo-preview-sm"
-                        ng-style="{
+                    <img ng-src="{{staticCtx}}/{{photo.oss_key}}@!photo-preview-sm"
+                         ng-style="{
                             'width': photo.style.width,
                             'height': photo.style.height,
                             'margin': photo.style.margin
                         }">
-<!--                <mmd-photo-card photo = "photo"
-                                mmd-photo-url = "">
-                </mmd-photo-card>-->
-            </md-grid-tile>
-        </md-grid-list>
-        <md-button ng-click="pac.loadMorePhotos()">加载更多</md-button>
-    </md-card-content>
+                </md-grid-tile>
+            </md-grid-list>
+        </div>
+    </async-card>
 
     <div class="md-actions" layout="row" layout-align="end center">
         <md-button class="md-warn"
                    ng-click="pac.remove($event)">删除</md-button>
-        <md-button class="md-icon-button md-primary"
+        <md-button class="md-icon-button"
                    ng-click="pac.addToAlbum($event)">
             <md-tooltip>
                 添加到相册
             </md-tooltip>
             <md-icon md-svg-icon="image:add_to_photos"></md-icon>
         </md-button>
-        <md-button class="md-raised md-primary"
+        <md-button class="md-raised"
                    ng-disabled="true"
                    ng-show="sac.saving">保存中...</md-button>
-        <md-button ng-disabled="!accountForm.$dirty||sac.saving" ng-click="reset()">取消</md-button>
 
-        <md-button class="md-icon-button md-primary" aria-label="上传图片"
+        <md-button ng-disabled="!accountForm.$dirty||sac.saving"
+                   ng-click="reset()">取消</md-button>
+
+        <md-button class="md-icon-button" aria-label="上传图片"
                    ng-click="go('app.maps.upload')">
             <md-tooltip>
                 上传图片
             </md-tooltip>
             <md-icon md-svg-icon="image:photo_camera"></md-icon>
+        </md-button>
+
+        <md-button class="md-icon-button" aria-label="在地图上查看"
+                   ng-click="go('app.maps.cluster.user', {id: pac.user.id})">
+            <md-tooltip>
+                在地图上查看
+            </md-tooltip>
+            <md-icon md-svg-icon="maps:navigation"></md-icon>
         </md-button>
     </div>
 </md-card>

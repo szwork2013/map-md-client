@@ -320,22 +320,23 @@
             },
 
             formData: function () {
-                var formDatas, file = this.files[0];
-                var vendor = "gps";
-                formDatas = [{
+                var file = this.files[0];
+                var imageProps = {
+                    title: file.title || '',
+                    description: file.description || ''
+                };
+                if(file.preview&&file.preview.color) {
+                    imageProps.color = file.preview.color;
+                }
+                var formDatas = [{
                     name: "location",
                     value: JSON.stringify(file.photo.location)
                 },{
-                    name: "vendor",
-                    value: vendor
-                },{
-                    name: "title",
-                    value: file.title || ''
-                }, {
-                    name: "description",
-                    value: file.description || ''
+                    name: "image",
+                    value: JSON.stringify(imageProps)
                 }
                 ];
+
                 // 添加到相册
                 if($scope.album) {
                     formDatas.push({
@@ -552,6 +553,7 @@
         $scope.file.done = function() {
             $scope.fileForm.$setPristine();
             this.uploaded = true;
+            $mmdMessage.success.save(this.name);
         };
 
         /**

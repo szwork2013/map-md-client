@@ -21,7 +21,7 @@ user-profile {
   padding-top: 8px;
   a {
     text-decoration: initial;
-    color: initial;
+    color: inherit;
     &:hover {
       text-decoration: underline;
     }

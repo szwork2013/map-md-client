@@ -7,8 +7,8 @@
     angular.module('app.components',
         [
             'app.components.infiniteScroll',
-            'app.components.photoCard',
             'app.components.photoSlider',
+            'app.components.photo',
             'app.components.search',
             'app.components.saveAs',
             'app.components.album',

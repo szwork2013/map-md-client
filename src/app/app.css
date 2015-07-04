@@ -12,6 +12,25 @@
 .activity-43 {
   background-position: 0 -1160px; }
 
+@media (max-width: 768px) {
+  md-dialog {
+    min-width: 100%;
+    min-height: 100%; }
+
+  md-toolbar .md-toolbar-tools {
+    padding: 0 2px; } }
+md-toolbar .md-toolbar-title {
+  margin: 5px; }
+
+button, select, html, textarea, input {
+  font-family: inherit; }
+
+.md-avatar.md-avatar-square {
+  border-radius: 20%; }
+
+md-content.md-default-theme {
+  background-color: initial; }
+
 .icon-marker img {
   border: 2px solid white;
   width: 34px;
@@ -83,6 +102,9 @@ md-backdrop.md-sidenav-backdrop {
 @media (max-width: 768px) {
   .sign-dialog {
     width: 100%; } }
+@media (max-width: 992px) {
+  .sign-dialog {
+    width: 65%; } }
 mmd-footer {
   height: 200px;
   width: 100%;
@@ -97,8 +119,12 @@ mmd-footer {
 .avatar-dislog {
   height: 100%; }
   .avatar-dislog .cropped-preview {
-    z-index: 1;
-    height: 100px; }
+    z-index: 600;
+    background-color: rgba(255, 255, 255, 0.29); }
+    .avatar-dislog .cropped-preview .cropped-img {
+      z-index: 600;
+      border-radius: 10%;
+      box-shadow: 1px 0 10px 0 grey; }
 
 .photo-card-wall, [mmd-photo-card-wall], mmd-photo-card-wall {
   overflow: hidden; }
@@ -191,6 +217,17 @@ mmd-footer {
     height: 65px;
     margin: -32px; }
 
+.photo-image {
+  position: relative; }
+  .photo-image .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    max-height: 50%;
+    background-color: rgba(0, 0, 0, 0.12);
+    color: white;
+    text-align: initial; }
+
 .photo-wall md-tab-content {
   overflow-y: scroll; }
 
@@ -230,12 +267,6 @@ mmd-footer {
     position: absolute;
     bottom: 10px;
     right: 20px; }
-  .photo-dialog-info post-comment {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.26);
-    background-color: wheat; }
 
 mmd-photo-slider .slider, [mmd-photo-slider] .slider {
   position: absolute;
@@ -288,7 +319,7 @@ user-profile {
   padding-top: 8px; }
   .profile-name a {
     text-decoration: initial;
-    color: initial; }
+    color: inherit; }
     .profile-name a:hover {
       text-decoration: underline; }
 
@@ -301,10 +332,21 @@ user-profile {
   .comment-list .comment h4 {
     font-size: 0.8em;
     margin: 2px 0; }
-    .comment-list .comment h4 span {
-      font-weight: normal; }
   .comment-list .comment pre {
     font-size: 0.8em; }
+
+.comment-create {
+  background-color: lightseagreen; }
+  .comment-create md-input-container {
+    background-color: lightseagreen; }
+  .comment-create.bottom-right {
+    position: absolute;
+    bottom: 0;
+    width: 100%; }
+    .comment-create.bottom-right .md-fab.add-comment {
+      position: absolute;
+      bottom: 10px;
+      right: 20px; }
 
 .geocoder-control {
   position: absolute;
@@ -354,19 +396,20 @@ md-grid-tile .cover {
 
 album-card {
   padding: 2px; }
-  album-card md-card md-card-content {
-    overflow: hidden;
-    padding: 6px; }
-  album-card md-card .md-title {
-    margin: 0; }
-  album-card md-card p {
-    margin: 0; }
+  album-card md-card .md-actions .md-button {
+    margin: 0;
+    height: 30px; }
   album-card md-grid-tile img {
     width: 100%; }
 
-.cover-image img {
-  width: 100%;
-  height: 100%; }
+.cover-image {
+  position: relative; }
+  .cover-image .photo-image {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    width: 100%;
+    overflow: hidden; }
 
 .md-card-no-border md-card {
   box-shadow: initial;
@@ -486,10 +529,6 @@ div.country {
       opacity: 0;
       filter: alpha(opacity=0); }
 
-md-card.caption {
-  background-color: #6575cf;
-  color: white; }
-
 md-content.upload-list {
   overflow-x: hidden; }
   md-content.upload-list.md-default-theme {
@@ -595,14 +634,6 @@ md-card.album-photos {
 .masthead-meta .md-avatar {
   margin-top: 20px; }
 
-.footer {
-  height: 200px;
-  background-color: #212121;
-  text-align: center;
-  vertical-align: middle;
-  color: grey;
-  width: 100%; }
-
 .masthead {
   position: relative;
   margin-bottom: -90px;
@@ -639,7 +670,7 @@ md-card.album-photos {
   max-width: 944px;
   margin: 0 auto;
   position: relative;
-  padding: 10px 0 100px 0; }
+  padding: 10px 20px 100px; }
   .masthead-container .masthead-meta {
     width: 100%; }
 
@@ -680,13 +711,36 @@ to prevent collapsing during animation*/
 [ui-view].ng-leave-active {
   opacity: 0; }
 
+md-input-container.ng-hide-add {
+  opacity: 1;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-transform: scale(0 0);
+  -ms-transform: scale(0 0);
+  transform: scale(0 0); }
+  md-input-container.ng-hide-add.ng-hide-add-active {
+    opacity: 0;
+    -webkit-transform: scale(0.5 0.5);
+    -ms-transform: scale(0.5 0.5);
+    transform: scale(0.5 0.5); }
+
+md-input-container.ng-hide-remove {
+  opacity: 0;
+  -webkit-transform: scale(0.5 0.5);
+  -ms-transform: scale(0.5 0.5);
+  transform: scale(0.5 0.5);
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out; }
+  md-input-container.ng-hide-remove.ng-hide-remove-active {
+    opacity: 1;
+    -webkit-transform: scale(0 0);
+    -ms-transform: scale(0 0);
+    transform: scale(0 0); }
+
 body {
   font-family: Microsoft YaHei;
   background: #F5F5F5;
   overflow: hidden; }
-
-md-content.md-default-theme {
-  background-color: initial; }
 
 /* menu styles */
 #menu {

@@ -5,8 +5,11 @@ angular
     .module('app.core.theme', ['ngMaterial'])
     .config(function ($mdThemingProvider, $mdIconProvider) {
         $mdThemingProvider.theme('default')
-            .primaryPalette('indigo')
-            .accentPalette('orange');
+            //.primaryPalette('indigo')
+            .primaryPalette('teal')
+            .accentPalette('orange')
+            .warnPalette('deep-orange')
+;
 
         $mdIconProvider
             .defaultIconSet("./assets/svg/avatars.svg", 128)
@@ -41,13 +44,15 @@ angular
             .icon("content:remove",        "./assets/svg/content/ic_remove_24px.svg", 24)
             .icon("content:remove_circle", "./assets/svg/content/ic_remove_circle_24px.svg", 24)
             .icon("content:remove_circle_outline", "./assets/svg/content/ic_remove_circle_outline_24px.svg", 24)
-            .icon("content:save", "./assets/svg/content/ic_save_24px.svg", 24)
+            .icon("content:save",          "./assets/svg/content/ic_save_24px.svg", 24)
+            .icon("content:send",          "./assets/svg/content/ic_send_24px.svg", 24)
             .icon("maps:place",            "./assets/svg/maps/ic_place_24px.svg", 24)
             .icon("maps:map",              "./assets/svg/maps/ic_map_24px.svg", 24)
             .icon("maps:directions_walk",  "./assets/svg/maps/ic_directions_walk_24px.svg", 24)
             .icon("maps:heatmap",          "./assets/svg/image/ic_hdr_strong_24px.svg", 24)
             .icon("maps:pin_drop",         "./assets/svg/maps/ic_pin_drop_24px.svg", 24)
             .icon("maps:new_album",        "./assets/svg/image/ic_add_to_photos_24px.svg", 24)
+            .icon("maps:navigation",       "./assets/svg/maps/ic_navigation_24px.svg", 24)
             .icon("maps:upload_marker",    "./assets/svg/image/ic_grain_24px.svg", 24)
             .icon("social:location_city",  "./assets/svg/social/ic_location_city_24px.svg", 24)
             .icon("social:person",         "./assets/svg/social/ic_person_24px.svg", 24)
@@ -64,6 +69,7 @@ angular
             .icon("image:exposure",        "./assets/svg/image/ic_exposure_24px.svg", 24)
             .icon("image:flash_on",        "./assets/svg/image/ic_flash_on_24px.svg", 24)
             .icon("image:iso",             "./assets/svg/image/ic_iso_24px.svg", 24)
+            .icon("image:lens",            "./assets/svg/image/ic_lens_24px.svg", 24)
             .icon("file:name",             "./assets/svg/file/ic_folder_24px.svg", 24)
             .icon("file:upload",           "./assets/svg/file/ic_file_upload_24px.svg", 24)
             .icon("file:download",         "./assets/svg/file/ic_file_download_24px.svg", 24)

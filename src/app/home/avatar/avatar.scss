@@ -1,7 +1,12 @@
 .avatar-dislog {
   height: 100%;
   .cropped-preview {
-    z-index: 1;
-    height: 100px;
+    z-index: 600;
+    background-color: rgba(255, 255, 255, 0.29);
+    .cropped-img {
+      z-index: 600;
+      border-radius: 10%;
+      box-shadow: 1px 0 10px 0 grey;
+    }
   }
 }
