@@ -11,8 +11,7 @@
     angular.module('app.user.user', [
     ])
         .directive('userUserPage', ['$mdTheming', '$log', userUserPageDirective])
-        .controller('UserUserPageCtrl', ['$scope', '$log', 'Users', '$state', 'Authenticate',
-            UserUserPageCtrl]);
+        .controller('UserUserPageCtrl', ['$scope', '$log', 'Users', '$state', UserUserPageCtrl]);
 
     function userUserPageDirective($mdTheming, $log) {
 
@@ -21,7 +20,7 @@
             replace: true,
             scope: {
                 user: '=',
-                editable: '=owned'
+                authority: '='
             },
             link: link,
             controller: 'UserUserPageCtrl as uupc',
@@ -32,28 +31,13 @@
         }
     }
 
-    function UserUserPageCtrl($scope, $log, Users, $state, Authenticate) {
+    function UserUserPageCtrl($scope, $log, Users, $state) {
         var self = this;
 
-        $scope.$watch('user', function(user) {
-            if(user) {
-                self.user = user;
-                Authenticate.isMe(user).then(function(res) {
-                    $scope.editable = res;
-                });
-                Users.getAlbums(user.id).then(function(albums) {
-                    // TODO
-                    angular.forEach(albums, function(album, key) {
-                        if(!album.cover) {
-                            album.cover = album.photos[0];
-                        }
-                    });
-                    self.albums = albums;
-                });
-                Users.getGroups(user.id).then(function(groups) {
-                    self.groups = groups;
-                });
-            }
+        self.user = $scope.user;
+
+        Users.getGroups($scope.user.id).then(function(groups) {
+            self.groups = groups;
         });
 
         $scope.go = function(state, params) {

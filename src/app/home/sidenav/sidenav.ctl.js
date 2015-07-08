@@ -27,6 +27,8 @@
         var self = this;
 
         $scope.Authenticate = Authenticate;
+        $scope.profileUploaded = profileUploaded;
+        setProfileCover();
 
         $scope.linkItems = [
             {name: '热门图片', icon: 'maps:map', state: 'app.maps.popular'},
@@ -63,6 +65,7 @@
         $scope.signin = function (ev) {
             Authenticate.openSignin(ev).then(function() {
                 $log.debug(LOG_TAG + "signed in");
+                setProfileCover();
             }, function() {
                 $log.debug(LOG_TAG + "sign in fail");
             });
@@ -99,6 +102,17 @@
                 });
             }
         });
+
+        function profileUploaded(cover) {
+            Authenticate.setProfileCover(cover);
+            setProfileCover();
+        }
+
+        function setProfileCover() {
+            if(Authenticate.user&&Authenticate.user.profileCover) {
+                $scope.backgroundImage = $scope.staticCtx+"/"+Authenticate.user.profileCover.oss_key;
+            }
+        }
     }
 
 })();

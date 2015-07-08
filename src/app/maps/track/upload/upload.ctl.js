@@ -222,7 +222,7 @@
 
         self.submit = function(track) {
             Tracks.create({
-                name: track.name,
+                title: track.name,
                 description: track.description,
                 geo_json: JSON.stringify(track.geoJson)
             }).then(function() {

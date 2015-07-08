@@ -2,14 +2,15 @@
  * Created by tiwen.wang on 5/21/2015.
  */
 angular
-    .module('app.core.theme', ['ngMaterial'])
+    .module('app.core.theme', [
+        'ngMaterial',
+        'app.core.theme.colors'])
     .config(function ($mdThemingProvider, $mdIconProvider) {
         $mdThemingProvider.theme('default')
             //.primaryPalette('indigo')
             .primaryPalette('teal')
             .accentPalette('orange')
-            .warnPalette('deep-orange')
-;
+            .warnPalette('deep-orange');
 
         $mdIconProvider
             .defaultIconSet("./assets/svg/avatars.svg", 128)

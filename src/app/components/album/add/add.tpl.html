@@ -14,7 +14,7 @@
                     ng-click="selectAlbum(album)">
                 <div class="cover" ng-class="{select: selAlbum.id==album.id}">
                     <a href="">
-                        <img ng-src="{{album.cover ? staticCtx+'/'+album.cover.oss_key+'@1e_200w_200h_1c_1o.jpg' : 'assets/images/album-cover.jpg'}}">
+                        <img ng-src="{{UrlService.getAlbumCover(album.cover)}}">
                     </a>
                 </div>
 

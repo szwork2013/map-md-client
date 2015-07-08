@@ -20,17 +20,18 @@
             show: showSelector
         };
 
-        function showSelector(ev) {
+        function showSelector(ev, multiple) {
             return $mdDialog.show({
-                controller: ['$scope', '$mdDialog', 'leafletData', '$timeout', '$q', 'Maps', MapSelectDialogController],
+                controller: ['$scope', '$mdDialog', 'leafletData', '$timeout', '$q', 'Maps', 'multiple', MapSelectDialogController],
                 templateUrl: 'components/leaflet/select/select.tpl.html',
                 targetEvent: ev,
                 locals: {
+                    multiple: multiple
                 }
             });
         }
 
-        function MapSelectDialogController($scope, $mdDialog, leafletData, $timeout, $q, Maps) {
+        function MapSelectDialogController($scope, $mdDialog, leafletData, $timeout, $q, Maps, multiple) {
             var self = this;
 
             $scope.hide = function () {
@@ -73,22 +74,44 @@
 
             Maps.getAll().then(function(maps) {
                 $scope.maps = maps;
+                // init select a map
                 if($scope.maps&&$scope.maps.length) {
                     $scope.mapSelected($scope.maps[0]);
+                    $scope.maps[0].selected = true;
                 }
             });
 
             $scope.mapSelected = function(map) {
-               if($scope.selMap) {
-                   $scope.selMap.selected = false;
-               }
-                $scope.selMap = map;
-                $scope.selMap.selected = true;
-                controlLayers.addMap($scope.selMap);
+                if(multiple) {
+                    // ng-click在checkbox之前执行
+                    if(!map.selected) {
+                        $scope.selMap = map;
+                        controlLayers.addMap($scope.selMap);
+                    }
+                }else {
+                    if($scope.selMap) {
+                        $scope.selMap.selected = false;
+                    }
+                    //map.selected = true;
+                    $scope.selMap = map;
+                    controlLayers.addMap($scope.selMap);
+                }
             };
 
             $scope.save = function() {
-                $scope.answer($scope.selMap);
+                if(multiple) {
+                    var selMaps = [];
+                    angular.forEach($scope.maps, function(map, key) {
+                        if(map.selected) {
+                            delete map.selected;
+                            selMaps.push(map);
+                        }
+                    });
+                    $scope.answer(selMaps);
+                }else {
+                    delete $scope.selMap.selected;
+                    $scope.answer([$scope.selMap]);
+                }
             };
         }
     }

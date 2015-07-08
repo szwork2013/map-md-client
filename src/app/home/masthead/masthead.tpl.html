@@ -1,0 +1,13 @@
+<md-toolbar class="masthead md-hue-1" background-image="{{backgroundImage||''}}">
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings"
+                   ng-click="toggleLeftBar()">
+            <md-icon md-svg-icon="navigation:menu"></md-icon>
+        </md-button>
+        <span flex></span>
+    </div>
+    <div class="masthead-container" flex layout="column" layout-align="end center">
+        <div class="masthead-meta" ng-transclude>
+        </div>
+    </div>
+</md-toolbar>

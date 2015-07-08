@@ -66,6 +66,15 @@ md-bottom-sheet.md-grid md-item {
     margin: 5px 10px 3px 0; }
   .md-sidenav-left md-list.md-default-theme md-list-item.md-clickable button:hover {
     background-color: lightgray; }
+  .md-sidenav-left .profile-cover-upload {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    bottom: auto;
+    left: auto;
+    width: 100%;
+    text-align: right;
+    opacity: 0.5; }
 
 md-backdrop.md-sidenav-backdrop {
   z-index: 1003; }
@@ -90,14 +99,11 @@ md-backdrop.md-sidenav-backdrop {
   .sign-dialog md-card {
     margin: 0; }
   .sign-dialog md-card-content {
-    background-color: #3887be;
     color: white; }
     .sign-dialog md-card-content h2 {
       text-align: center; }
   .sign-dialog md-input-container.md-default-theme > md-icon {
     color: white; }
-  .sign-dialog .md-raised.md-primary.md-button.md-default-theme {
-    background-color: #3887be; }
 
 @media (max-width: 768px) {
   .sign-dialog {
@@ -125,6 +131,24 @@ mmd-footer {
       z-index: 600;
       border-radius: 10%;
       box-shadow: 1px 0 10px 0 grey; }
+
+.masthead {
+  position: relative;
+  margin-bottom: -90px;
+  min-height: 340px;
+  height: 340px;
+  background-color: #00BCD4;
+  box-shadow: initial; }
+
+.masthead-container {
+  min-height: 268px;
+  height: 268px;
+  width: 100%;
+  max-width: 944px;
+  margin: 0 auto;
+  padding: 10px 20px 100px; }
+  .masthead-container .masthead-meta {
+    width: 100%; }
 
 .photo-card-wall, [mmd-photo-card-wall], mmd-photo-card-wall {
   overflow: hidden; }
@@ -404,18 +428,24 @@ album-card {
 
 .cover-image {
   position: relative; }
-  .cover-image .photo-image {
+  .cover-image .footer {
     position: absolute;
     bottom: 0;
-    top: 0;
     width: 100%;
-    overflow: hidden; }
+    max-height: 50%;
+    background-color: rgba(0, 0, 0, 0.12);
+    color: white;
+    text-align: initial; }
 
-.md-card-no-border md-card {
+.md-card-no-border > md-card {
   box-shadow: initial;
-  margin: 0; }
-  .md-card-no-border md-card md-card-content {
+  margin: 0;
+  background-color: initial; }
+  .md-card-no-border > md-card > md-card-content {
     padding: 0; }
+
+.card-header {
+  padding: 10px 20px; }
 
 div.country {
   font: 14px/16px Arial, Helvetica, sans-serif;
@@ -634,52 +664,40 @@ md-card.album-photos {
 .masthead-meta .md-avatar {
   margin-top: 20px; }
 
-.masthead {
-  position: relative;
-  margin-bottom: -90px;
-  min-height: 340px;
-  height: 340px;
-  background-color: #00BCD4;
-  box-shadow: initial; }
+.masthead-header {
+  padding: 0 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 3px; }
 
 .settings-pane {
   position: relative;
   z-index: 10; }
-  .settings-pane .subpage-container md-card {
-    background-color: white; }
 
 @media (min-width: 992px) {
-  .settings-pane {
-    margin: 0 50px; }
-    .settings-pane .subpage-container {
-      margin: 0 150px; } }
-@media (min-width: 768px) {
-  .settings-pane {
-    margin: 0 40px; }
-    .settings-pane .subpage-container {
-      margin: 0 100px; } }
+  .settings-pane .subpage-container {
+    margin: 0 150px; } }
+@media (min-width: 768px) and (max-width: 992px) {
+  .settings-pane .subpage-container {
+    margin: 0 100px; } }
 @media (max-width: 768px) {
   .settings-pane {
     margin: 0; }
     .settings-pane .subpage-container {
       margin: 0 10px; } }
-.masthead-container {
-  min-height: 268px;
-  height: 268px;
-  width: 100%;
-  max-width: 944px;
-  margin: 0 auto;
-  position: relative;
-  padding: 10px 20px 100px; }
-  .masthead-container .masthead-meta {
-    width: 100%; }
-
 .img-rounded {
   border-radius: 5px; }
 
 .avatar_picture {
   width: 100px;
   height: 100px; }
+
+.cover-upload {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  text-align: right; }
+  .cover-upload button {
+    background-color: rgba(255, 255, 255, 0.25); }
 
 .settings-map-container {
   height: 500px; }

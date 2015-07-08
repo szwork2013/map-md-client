@@ -16,21 +16,37 @@
                         abstract: true,
                         url: '/settings',
                         templateUrl: 'settings/setting.tpl.html',
-                        controller: 'SettingsCtrl',
-                        resolve: {}
+                        controller: 'SettingsCtrl as sc',
+                        resolve: {
+                            user: ['Authenticate', function(Authenticate) {
+                                return Authenticate.getUser();
+                            }]
+                        }
                     })
                 ;
             }])
-        .controller('SettingsCtrl', ['$scope', '$state', '$log', '$mdSidenav', '$mdToast', SettingsCtrl])
+        .controller('SettingsCtrl', ['$scope', '$state', '$log', 'user', '$mdToast', 'Authenticate', SettingsCtrl])
     ;
 
-    function SettingsCtrl($scope, $state, $log, $mdSidenav, $mdToast) {
+    var LOG_TAG = "[Settings] ";
+
+    function SettingsCtrl($scope, $state, $log, user, $mdToast, Authenticate) {
         var self = this;
+        self.mastheadUploaded = mastheadUploaded;
+        self.user = user;
 
         $scope.linkItems = [
             {name: '账户', icon: 'action:account_box', state: 'app.settings.account'},
             {name: '地图', icon: 'maps:map', state: 'app.settings.map'}
         ];
+
+        self.tabSelected = function(item) {
+            if(self.item&&(self.item.name == item.name)) {
+            }else {
+                self.item = item;
+                $scope.navigateTo(item.state);
+            }
+        };
 
         $scope.$watch('menuSelectedIndex', function(current, old){
             if(old!==undefined && current!==undefined) {
@@ -64,5 +80,8 @@
             });
         };
 
+        function mastheadUploaded(cover) {
+            Authenticate.setMastheadCover(cover);
+        }
     }
 })();

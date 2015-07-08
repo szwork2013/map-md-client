@@ -14,9 +14,9 @@
             getAlbumCover: getAlbumCover
         };
 
-        function getAvatarUrl(avatarId) {
-            return avatarId ? staticCtx + '/cover' + avatarId + '.png' :
-            staticCtx + '/avatar1.png' ;
+        function getAvatarUrl(avatar) {
+            return avatar ? staticCtx + '/cover' + avatar.id + '.png' :
+            staticCtx + '/cover1.png' ;
         }
 
         function getPhotoUrl(image, style) {
@@ -34,7 +34,7 @@
             if(!image||!image.oss_key) {
                 return 'assets/images/album-cover.jpg';
             }else {
-                return staticCtx+'/'+image.oss_key+'@1e_200w_200h_1c_1o.jpg';
+                return staticCtx + '/' + image.oss_key+'@1e_200w_200h_1c_1o.jpg';
             }
         }
     }

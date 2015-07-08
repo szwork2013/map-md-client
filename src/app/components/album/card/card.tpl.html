@@ -1,10 +1,12 @@
 <md-card layout-fill flex layout="column">
-    <photo-image photo="album.cover" flex
-            class="cover-image clickable"
-            ng-click="goDisplay(album)">
-        <span>{{album.title}}</span>
-        <pre>{{album.description}}</pre>
-    </photo-image>
+    <div flex class="cover-image clickable"
+         background-image="{{UrlService.getAlbumCover(album.cover)}}"
+              ng-click="goDisplay(album)">
+        <div class="footer">
+            <span>{{album.title}}</span>
+            <pre>{{album.description}}</pre>
+        </div>
+    </div>
 
     <div class="md-actions" layout="row" layout-align="end center">
         <md-button class="md-icon-button md-mini" aria-label="查看"

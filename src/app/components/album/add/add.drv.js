@@ -19,7 +19,7 @@
 
         function showAddPhotoDialog(ev, user, albums, photos) {
             return $mdDialog.show({
-                controller: ['$scope', '$mdDialog', 'user', 'albums', 'photos', AlbumAddPhotoDialogController],
+                controller: ['$scope', '$mdDialog', 'user', 'albums', 'photos', 'UrlService', AlbumAddPhotoDialogController],
                 templateUrl: 'components/album/add/add.tpl.html',
                 targetEvent: ev,
                 locals: {
@@ -30,7 +30,8 @@
             });
         }
 
-        function AlbumAddPhotoDialogController($scope, $mdDialog, user, albums, photos) {
+        function AlbumAddPhotoDialogController($scope, $mdDialog, user, albums, photos, UrlService) {
+            $scope.UrlService = UrlService;
             $scope.albums = [];
             if(!albums) {
                 Users.getAlbums(user.id).then(function(albums) {

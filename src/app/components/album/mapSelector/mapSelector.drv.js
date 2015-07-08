@@ -18,15 +18,20 @@
             restrict: 'EA',
             link: link,
             scope: {
-                map: '='
+                maps: '=',
+                multiple: '=?',
+                readonly: '=?',
+                placeholder: '@?',
+                secondaryPlaceholder: '@?'
             },
             templateUrl: 'components/album/mapSelector/mapSelector.tpl.html'
         };
 
         function link(scope, element, attrs) {
             scope.getMap = function(ev) {
-                $MapSelectDialog.show(ev).then(function(map) {
-                    scope.map = map;
+                $MapSelectDialog.show(ev, scope.multiple).then(function(maps) {
+                    scope.maps.length = 0;
+                    scope.maps = scope.maps.concat(maps);
                 });
             };
         }

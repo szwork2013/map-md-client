@@ -5,7 +5,7 @@
 
     'use strict';
 
-    angular.module('app.core.services', ['restangular'])
+    angular.module('app.core.services', ['restangular', 'LocalStorageModule'])
         .config(['RestangularProvider', function(RestangularProvider) {
 
             // add a response intereceptor
@@ -292,7 +292,7 @@
             create: create,
             isMember: isMember,
             applyJoin: applyJoin,
-            getAlbums: getAlbums,
+            //getAlbums: getAlbums,
             saveAvatar: saveAvatar,
             remove: remove
             //modify: modify,
@@ -322,9 +322,9 @@
             return service.one(id).post('join');
         }
 
-        function getAlbums(id) {
-            return service.one(id).all('albums').getList();
-        }
+        //function getAlbums(id, pageNo, pageSize) {
+        //    return service.one(id).all('albums').getList({pageNo: pageNo, pageSize: pageSize});
+        //}
 
         function saveAvatar(id, imageId) {
             return service.one(id).one('avatar').post(imageId);
@@ -339,12 +339,17 @@
         var service = Restangular.service('cover');
 
         return {
-            upload: upload
+            uploadAvatar: uploadAvatar
         };
 
-        function upload(data) {
+        function uploadAvatar(data) {
             var boundary = Math.random().toString().substr(2);
             var multipart = "";
+
+            multipart += "--" + boundary +
+                "\r\nContent-Disposition: form-data; name=" +
+                "\"type\"" + "\r\n\r\n" + "AVATAR" + "\r\n";
+
             multipart += "--" + boundary +
                 "\r\nContent-Disposition: form-data; name=" +
                 "\"file\"" + '; filename="cover.png"' +

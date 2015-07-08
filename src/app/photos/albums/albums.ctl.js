@@ -16,31 +16,32 @@
                     })
                 ;
             }])
-        .controller('PhotosAlbumsCtrl', ['$scope', '$log', '$mmdPhotoDialog', 'Authenticate', 'Users', PhotosAlbumsCtrl])
+        .controller('PhotosAlbumsCtrl', ['$scope', '$log', '$q', 'user', 'Users', PhotosAlbumsCtrl])
     ;
 
-    function PhotosAlbumsCtrl($scope, $log, $mmdPhotoDialog, Authenticate, Users) {
+    function PhotosAlbumsCtrl($scope, $log, $q, user, Users) {
         var self = this;
         $scope.setPage("app.photos.albums");
         self.albums = [];
-        var userId = 0, pageSize = 20, pageNo = -1;
+        var pageSize = 20;
 
-        Authenticate.getUser().then(function(user) {
-            userId = user.id;
-            self.loadMoreAlbums();
-        });
-
-        self.loadMoreAlbums = function() {
-            pageNo++;
-            Users.getAlbums(userId).then(function(albums) {
-                // TODO
-                //angular.forEach(albums, function(album, key) {
-                //   if(!album.cover) {
-                //       album.cover = album.photos[0];
-                //   }
-                //});
+        self.loadMoreAlbums = function(pageNo) {
+            var deferred = $q.defer();
+            Users.getAlbums(user.id, pageNo, pageSize).then(function(albums) {
                 self.albums = self.albums.concat(albums);
+                if(albums.length<pageSize) {
+                    deferred.resolve(false);
+                }else {
+                    deferred.resolve(true);
+                }
+            },function() {
+                deferred.resolve(false);
             });
+            return deferred.promise;
+        };
+
+        self.loadReset = function() {
+            self.albums.length = 0;
         };
     }
 })();

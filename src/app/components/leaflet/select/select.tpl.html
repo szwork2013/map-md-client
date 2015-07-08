@@ -9,8 +9,9 @@
                  layers="layers"></leaflet>
         <md-content>
             <md-list>
-                <md-list-item ng-repeat="map in maps" ng-click="mapSelected(map)">
-                    <md-checkbox ng-model="map.selected"></md-checkbox>
+                <md-list-item ng-repeat="map in maps">
+                    <md-checkbox ng-model="map.selected"
+                                 ng-click="mapSelected(map)"></md-checkbox>
                     <p> {{ map.name }} </p>
                 </md-list-item>
             </md-list>

@@ -10,6 +10,11 @@
             return {
                 photoMarker: function(photo, map, opts) {
                     var self = this;
+
+                    if(!photo.location || !photo.location.position) {
+                        return null;
+                    }
+
                     var myIcon = L.divIcon({
                         className: 'icon-marker',
                         html: '<img src="' + self._getIconUrl(photo.oss_key) + '">'

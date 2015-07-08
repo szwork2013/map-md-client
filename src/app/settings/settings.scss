@@ -1,34 +1,26 @@
-.masthead {
-  position: relative;
-  margin-bottom: -90px;
-  min-height: 340px;
-  height: 340px;
-  background-color: #00BCD4;
-  box-shadow: initial;
-}
 
 .settings-pane {
   position: relative;
   z-index: 10;
   .subpage-container {
     md-card {
-      background-color: white;
+      //background-color: white;
     }
   }
 }
 
 @media (min-width: $screen-md-min) {
   .settings-pane {
-    margin: 0 50px;
+    //margin: 0 50px;
     .subpage-container {
       margin: 0 150px;
     }
   }
 }
 
-@media (min-width: $screen-sm-min) {
+@media (min-width: $screen-sm-min) and (max-width: $screen-md-min) {
   .settings-pane {
-    margin: 0 40px;
+    //margin: 0 40px;
     .subpage-container {
       margin: 0 100px;
     }
@@ -44,19 +36,7 @@
   }
 }
 
-.masthead-container {
-  min-height: 268px;
-  height: 268px;
-  width: 100%;
-  max-width: 944px;
-  margin: 0 auto;
-  position: relative;
-  padding: 10px 20px 100px;
 
-  .masthead-meta {
-    width: 100%;
-  }
-}
 
 .img-rounded {
   border-radius: 5px;
@@ -64,4 +44,14 @@
 .avatar_picture {
   width: 100px;
   height: 100px;
+}
+
+.cover-upload {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  text-align: right;
+  button {
+    background-color: rgba(255, 255, 255, 0.25);
+  }
 }

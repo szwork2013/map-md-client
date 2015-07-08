@@ -89,6 +89,32 @@
         //    function(event, toState, toParams, fromState, fromParams){
         //        $log.debug(LOG_TAG + '$stateChangeStart');
         //    });
+
+        $rootScope.$on('$viewContentLoading',
+            function(event, viewConfig){
+                // Access to all the view config properties.
+                // and one special property 'targetView'
+                // viewConfig.targetView
+
+                $log.debug(LOG_TAG + '$viewContentLoading');
+                $log.debug(viewConfig);
+            });
+        $rootScope.$on('$viewContentLoaded',
+            function(event){
+                $log.debug(LOG_TAG + '$viewContentLoaded');
+            });
+
+        $rootScope.$on('$stateChangeError',
+            function(event, toState, toParams, fromState, fromParams, error){
+                $log.debug(LOG_TAG + '$stateChangeError');
+            });
+
+        $rootScope.$on('$stateNotFound',
+            function(event, unfoundState, fromState, fromParams){
+                console.log(unfoundState.to); // "lazy.state"
+                console.log(unfoundState.toParams); // {a:1, b:2}
+                console.log(unfoundState.options); // {inherit:false} + default options
+            });
     }
 
     /**

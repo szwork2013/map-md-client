@@ -10,11 +10,12 @@
         .config(['$httpProvider', function($httpProvider) {
             $httpProvider.interceptors.push('httpAuthInterceptor');
         }])
-        .factory('Oauth2Service', ['$window', '$q', 'MainRestangular', '$mmdUtil', Oauth2Service])
+        .factory('Oauth2Service', ['$window', '$q', 'MainRestangular', '$mmdUtil', 'localStorageService',
+            Oauth2Service])
         //.factory('authInterceptor', ['Oauth2Service', AuthInterceptor])
         .factory('httpAuthInterceptor', ['$window', '$rootScope', '$q', httpAuthInterceptor]);
 
-    function Oauth2Service($window, $q, MainRestangular, $mmdUtil) {
+    function Oauth2Service($window, $q, MainRestangular, $mmdUtil, localStorageService) {
 
         return {
             oauthUser: oauthUser,

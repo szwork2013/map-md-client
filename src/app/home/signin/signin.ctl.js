@@ -6,7 +6,7 @@
 
     angular.module('app.home.signin', [])
         .controller('SigninCtrl',
-        ['$rootScope', '$scope', '$log', '$mdDialog', '$mmdUtil', 'Oauth2Service', 'Users', 'Authenticate',
+        ['$rootScope', '$scope', '$log', '$mdDialog', 'mdThemeColors', 'Oauth2Service', 'Users', 'Authenticate',
             SigninController]);
 
     /**
@@ -15,13 +15,14 @@
      * @param $scope
      * @param $log
      * @param $mdDialog
-     * @param $mmdUtil
+     * @param mdThemeColors
      * @param Oauth2Service
      * @param Users
      * @param Authenticate
      * @constructor
      */
-    function SigninController($rootScope, $scope, $log, $mdDialog, $mmdUtil, Oauth2Service, Users, Authenticate) {
+    function SigninController($rootScope, $scope, $log, $mdDialog, mdThemeColors, Oauth2Service, Users, Authenticate) {
+        $scope.mdThemeColors = mdThemeColors;
         $scope.Authenticate = Authenticate;
         $scope.user = {username: '', password: ''};
 

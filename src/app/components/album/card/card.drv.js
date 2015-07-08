@@ -10,10 +10,10 @@
      * @name app.components.album.card
      */
     angular.module('app.components.album.card', [])
-        .directive('albumCard', ['$mdDialog', '$log', 'staticCtx', '$state',
+        .directive('albumCard', ['$mdDialog', '$log', 'UrlService', '$state',
             albumCardDirective]);
 
-    function albumCardDirective($mdDialog, $log, staticCtx, $state) {
+    function albumCardDirective($mdDialog, $log, UrlService, $state) {
         return {
             restrict: 'EA',
             link: link,
@@ -25,7 +25,7 @@
         };
 
         function link(scope, element, attrs) {
-            scope.staticCtx = staticCtx;
+            scope.UrlService = UrlService;
 
             if(scope.album&&!scope.album.cover) {
                 scope.album.cover = scope.album.photos[0];

@@ -10,6 +10,7 @@
         'app.components.album.card',
         'app.components.album.mapSelector',
         'app.components.album.cover',
-        'app.components.album.select']);
+        'app.components.album.select',
+        'app.components.album.albumsCard']);
 
 })();

@@ -6,7 +6,7 @@
 
     angular.module('app.core.services')
         .factory('Signup', ['ApiRestangular', SignupServiceFactory])
-        .factory('Authenticate', ['$q', '$mdDialog', 'Users', 'Oauth2Service',
+        .factory('Authenticate', ['$q', '$mdDialog', 'Users', 'Oauth2Service', 'localStorageService',
             AuthenticateFactory])
         .factory('Users', ['ApiRestangular', UsersServiceFactory])
     ;
@@ -21,7 +21,8 @@
         }
     }
 
-    function AuthenticateFactory($q, $mdDialog, Users, Oauth2Service) {
+    function AuthenticateFactory($q, $mdDialog, Users, Oauth2Service, localStorageService) {
+        var userStoreName = "user";
         return {
             login: false,
             logout: true,
@@ -31,11 +32,22 @@
                 if(self.login&&self.user) {
                     deferred.resolve(self.user);
                 }else if(!self.login && self.logout) {
-                    Users.me().then(function(user) {
+                    var user = this.getStorage(userStoreName);
+                    if(user) {
                         self.login = true;
                         self.user = user;
                         deferred.resolve(self.user);
-                    });
+                    }else {
+                        Users.me().then(function(user) {
+                            self.login = true;
+                            self.user = user;
+                            self.saveStorage(user);
+                            deferred.resolve(self.user);
+                        },function(err) {
+                            deferred.reject();
+                        });
+                    }
+
                 }else {
                     deferred.reject();
                 }
@@ -46,6 +58,16 @@
                 this.logout = true;
                 delete this.user;
                 Oauth2Service.removeToken();
+                this.removeStorage();
+            },
+            saveStorage: function(user) {
+                localStorageService.set(userStoreName, user);
+            },
+            getStorage: function() {
+                return localStorageService.get(userStoreName);
+            },
+            removeStorage: function() {
+                localStorageService.remove(userStoreName);
             },
             openSignin: function(ev) {
                 return $mdDialog.show({
@@ -78,6 +100,18 @@
                     deferred.resolve(false);
                 });
                 return deferred.promise;
+            },
+            setAvatarCover: function(cover) {
+                this.user.avatar = cover;
+                this.saveStorage(this.user);
+            },
+            setProfileCover: function(cover) {
+                this.user.profileCover = cover;
+                this.saveStorage(this.user);
+            },
+            setMastheadCover: function(cover) {
+                this.user.mastheadCover = cover;
+                this.saveStorage(this.user);
             }
         };
     }
@@ -92,7 +126,7 @@
         });
         return {
             me: getMe,
-            get: getOpenInfo,
+            //get: getOpenInfo,
             getUser: getUser,
             getByUsername: getByUsername,
             getPhotos: getPhotos,
@@ -107,9 +141,9 @@
             return service.one().get();
         }
 
-        function getOpenInfo(id) {
-            return service.one(id).one('openinfo').get();
-        }
+        //function getOpenInfo(id) {
+        //    return service.one(id).one('openinfo').get();
+        //}
 
         function getUser(id) {
             return service.one(id).get();
@@ -120,7 +154,7 @@
         }
 
         function getPhotos(id, pageSize, pageNo) {
-            return service.one(id).one('photos', pageSize).all(pageNo).getList();
+            return service.one(id).all('photos').getList({pageNo: pageNo, pageSize: pageSize});
         }
 
         function saveAvatar(id, imageId) {
@@ -147,12 +181,12 @@
             return service.one(user.id).post('account', user);
         }
 
-        function getAlbums(id) {
-            return service.one(id).all('albums').getList();
+        function getAlbums(id, pageNo, pageSize) {
+            return service.one(id).all('albums').getList({pageNo: pageNo, pageSize: pageSize});
         }
 
-        function getGroups(id) {
-            return service.one(id).all('groups').getList();
+        function getGroups(id, pageNo, pageSize) {
+            return service.one(id).all('groups').getList({pageNo: pageNo, pageSize: pageSize});
         }
     }
 })();

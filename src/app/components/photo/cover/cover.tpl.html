@@ -1,0 +1,14 @@
+<md-progress-linear class="md-accent"
+                    ng-show="progressPercentage>0&&progressPercentage<100"
+                    md-mode="determinate"
+                    value="{{progressPercentage}}"></md-progress-linear>
+<md-button class="md-icon-button"
+        ngf-select
+        ngf-capture="'camera'"
+        ngf-change="fileSelected($files, $event)"
+        accept="image/*" required>
+    <md-tooltip>
+        上传图片
+    </md-tooltip>
+    <md-icon md-svg-icon="image:photo_camera"></md-icon>
+</md-button>

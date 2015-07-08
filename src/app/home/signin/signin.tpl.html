@@ -5,7 +5,8 @@
     </md-button>
     <form name="signinForm" ng-submit="submit(user)">
         <md-card>
-            <md-card-content>
+            <md-card-content
+                    ng-style="{background: mdThemeColors.primary['default']}">
                 <h2>
                     登录 美丽地图
                 </h2>
@@ -34,14 +35,16 @@
                 </div>
                 <div flex layout="row" layout-align="center center">
                     <md-button flex class="md-primary" ng-href=""
-                               ng-click="signup($event)">Need an account? -></md-button>
+                               ng-click="signup($event)">注册新用户？ -></md-button>
                 </div>
             </div>
         </md-card>
     </form>
 
-    <div ng-show="loading" class="signining"
-         layout="row"  layout-align="center center">
+    <div ng-show="loading"
+         class="signining"
+         layout="row"
+         layout-align="center center">
         <md-progress-circular class="md-warn md-hue-3" md-mode="indeterminate"></md-progress-circular>
     </div>
 </md-dialog>

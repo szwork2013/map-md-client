@@ -68,22 +68,11 @@
                     $scope.isMy = res;
                 });
 
-                //if(photo.user_id > 0) {
-                //    // 获取照片作者信息
-                //    Users.getUser(photo.user_id).then(function(user) {
-                //
-                //    });
-                //}
-
                 // 获取照片相机信息
                 photo.getCameraInfo().then(function(cameraInfo) {
                     setCameraInfos(photo, cameraInfo);
                 });
 
-                // 获取照片评论
-                //photo.getComments().then(function(comments) {
-                //    $scope.comments = comments;
-                //});
             });
 
             $scope.comments = [];

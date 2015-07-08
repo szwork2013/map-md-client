@@ -28,7 +28,8 @@
         function showLocate(ev, photo) {
             return $mdDialog.show({
                 controller: ['$scope', '$mdDialog', '$timeout', '$q', 'leafletData',
-                    '$mmdLeafletUtil', '$mmdMessage', 'QQWebapi', 'Photos', 'photo', PhotoDialogController],
+                    '$mmdLeafletUtil', '$mmdMessage', 'QQWebapi', 'Photos',
+                    'photo', PhotoDialogController],
                 templateUrl: 'components/photoDialog/locateDialog/locateDialog.tpl.html',
                 targetEvent: ev,
                 locals: {
@@ -52,7 +53,8 @@
          * @constructor
          */
         function PhotoDialogController($scope, $mdDialog, $timeout, $q, leafletData,
-                                       $mmdLeafletUtil, $mmdMessage, QQWebapi, Photos, photo) {
+                                       $mmdLeafletUtil, $mmdMessage, QQWebapi,
+                                       Photos, photo) {
             var self = this;
 
             $scope.hide = function () {
@@ -65,10 +67,11 @@
                 $mdDialog.hide(answer);
             };
 
-            if(!photo.location) {
-                photo.location = {
-                    position: [0,0]
-                };
+            // TODO
+            photo.location = photo.location||{};
+            photo.location.position = photo.location.position||[0,0];
+            if(photo.location.position.length<2){
+                photo.location.position = [0,0];
             }
 
             angular.extend($scope, {

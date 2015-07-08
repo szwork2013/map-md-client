@@ -16,36 +16,45 @@
                     })
                 ;
             }])
-        .controller('PhotosAllCtrl', ['$scope', '$log', '$q', '$mmdPhotoDialog', '$mmdMessage',
-            'Authenticate', 'Users', 'Photos', '$albumAddPhoto', PhotosAllCtrl])
+        .controller('PhotosAllCtrl', ['$scope', '$log', '$q', '$mmdMessage', 'Users', 'Photos',
+            '$albumAddPhoto', 'user', PhotosAllCtrl])
     ;
 
-    function PhotosAllCtrl($scope, $log, $q, $mmdPhotoDialog, $mmdMessage, Authenticate,
-                           Users, Photos, $albumAddPhoto) {
+    /**
+     * 用户全部图片的页面控制器
+     * @param $scope
+     * @param $log
+     * @param $q
+     * @param $mmdMessage
+     * @param Users
+     * @param Photos
+     * @param $albumAddPhoto
+     * @param user
+     * @constructor
+     */
+    function PhotosAllCtrl($scope, $log, $q, $mmdMessage, Users, Photos, $albumAddPhoto, user) {
         var self = this;
-        self.photos = [];
         var pageSize = 50;
+        self.photos = [];
+        self.user = user;
 
         /**
          *
          */
         self.loadMorePhotos = function(pageNo) {
             var deferred = $q.defer();
-            Authenticate.getUser().then(function(user) {
-                self.user = user;
-                Users.getPhotos(user.id, pageSize, pageNo).then(function(photos) {
-                    angular.forEach(photos, function(photo, key) {
-                        colRowSpan(photo);
-                    });
-                    self.photos = self.photos.concat(photos);
-                    if(photos.length<pageSize) {
-                        deferred.resolve(false);
-                    }else {
-                        deferred.resolve(true);
-                    }
-                },function() {
-                    deferred.resolve(false);
+            Users.getPhotos(user.id, pageSize, pageNo).then(function(photos) {
+                angular.forEach(photos, function(photo, key) {
+                    colRowSpan(photo);
                 });
+                self.photos = self.photos.concat(photos);
+                if(photos.length<pageSize) {
+                    deferred.resolve(false);
+                }else {
+                    deferred.resolve(true);
+                }
+            },function() {
+                deferred.resolve(false);
             });
 
             return deferred.promise;
@@ -72,6 +81,7 @@
                 if(photo.colspan < photo.width/photo.height) {
                     photo.style = {
                         height: '100%',
+                        'max-width': '100%',
                         margin: '0 -' + (((photo.width/photo.height)-photo.colspan)/photo.colspan/2)*100 + '%'
                     };
                 }else {
@@ -85,6 +95,7 @@
                 if(photo.rowspan > photo.height/photo.width) {
                     photo.style = {
                         height: '100%',
+                        'max-width': '100%',
                         margin: '0 -' + ((photo.rowspan-(photo.height/photo.width))/photo.rowspan/2)*100 + '%'
                     };
                 }else {

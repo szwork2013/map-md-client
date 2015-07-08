@@ -21,7 +21,8 @@
         'app.home.signup',
         'app.home.avatar',
         'app.home.message',
-        'app.home.menus'
+        'app.home.menus',
+        'app.home.masthead'
     ])
     ;
 

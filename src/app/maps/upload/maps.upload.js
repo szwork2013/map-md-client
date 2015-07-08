@@ -321,6 +321,12 @@
 
             formData: function () {
                 var file = this.files[0];
+
+                var loation = angular.copy(file.photo.location);
+                if(loation.position&&loation.position.length < 2) {
+                    delete loation.position;
+                }
+
                 var imageProps = {
                     title: file.title || '',
                     description: file.description || ''
@@ -329,13 +335,16 @@
                     imageProps.color = file.preview.color;
                 }
                 var formDatas = [{
-                    name: "location",
-                    value: JSON.stringify(file.photo.location)
-                },{
                     name: "image",
                     value: JSON.stringify(imageProps)
+                }];
+
+                if(loation.position||loation.address) {
+                    formDatas.push({
+                        name: "location",
+                        value: JSON.stringify(loation)
+                    });
                 }
-                ];
 
                 // 添加到相册
                 if($scope.album) {
@@ -452,7 +461,6 @@
         file.photo = {
             tags: [],
             location: {
-                position: []
             }
         };
         file.setPosition = function (position) {

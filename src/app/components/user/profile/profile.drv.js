@@ -5,9 +5,9 @@
     'use strict';
 
     angular.module('app.components').
-        directive('userProfile', ['staticCtx', '$state', UserProfileDirective]);
+        directive('userProfile', ['$mdTheming', 'UrlService', '$state', UserProfileDirective]);
 
-    function UserProfileDirective(staticCtx, $state) {
+    function UserProfileDirective($mdTheming, UrlService, $state) {
         return {
             restrict: 'EA',
             transclude: true,
@@ -20,7 +20,8 @@
         };
 
         function link(scope, element, attrs) {
-            scope.staticCtx = staticCtx;
+            $mdTheming(element);
+            scope.UrlService = UrlService;
 
             scope.toUserPage = function(ev) {
                 scope.leave(ev);

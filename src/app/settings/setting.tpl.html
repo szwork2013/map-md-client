@@ -1,29 +1,25 @@
 <md-content flex layout-fill>
-    <md-toolbar class="masthead md-hue-1">
-        <div class="md-toolbar-tools">
-            <md-button class="md-icon-button" aria-label="Settings"
-                       ng-click="toggleLeftBar()">
-                <md-icon md-svg-icon="navigation:menu"></md-icon>
-            </md-button>
-            <span></span>
+
+    <md-masthead masthead-user="sc.user">
+        <div layout="column" style="position: relative">
+            <h2>设置</h2>
+            <cover-upload cover-uploaded="sc.mastheadUploaded(cover)"
+                          cover-type="MASTHEAD"
+                          class="cover-upload">
+            </cover-upload>
+            <md-tabs flex style="background-color: rgba(255,255,255,.5);"
+                     md-selected="menuSelectedIndex"
+                     md-dynamic-height
+                     md-border-bottom>
+                <md-tab label="{{item.name}}"
+                        ng-repeat="item in linkItems"
+                        md-on-select="sc.tabSelected(item)">
+                </md-tab>
+            </md-tabs>
         </div>
-        <div class="masthead-container" flex layout="column" layout-align="end center">
-            <div class="masthead-meta">
-                <h2>设置</h2>
-                <div flex layout="row">
-                    <md-tabs flex
-                             md-selected="menuSelectedIndex"
-                             md-dynamic-height md-border-bottom
-                            >
-                        <md-tab label="{{item.name}}"
-                                ng-repeat="item in linkItems"
-                                >
-                        </md-tab>
-                    </md-tabs>
-                </div>
-            </div>
-        </div>
-    </md-toolbar>
+
+    </md-masthead>
+
     <div flex layout="column"
          class="settings-pane">
         <div ui-view flex class="subpage-container">

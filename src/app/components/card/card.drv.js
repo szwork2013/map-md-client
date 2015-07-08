@@ -10,6 +10,7 @@
      */
     angular.module('app.components.card', [
         'app.components.card.editCard',
-        'app.components.card.asyncCard'
+        'app.components.card.asyncCard',
+        'app.components.card.formCard'
     ]);
 })();

@@ -6,11 +6,12 @@
 
     angular.module('app.home.signup', [])
         .controller('SignupCtrl',
-        ['$scope', '$log', '$mdDialog', 'Signup', 'Oauth2Service', 'Authenticate',
+        ['$scope', '$log', '$mdDialog', 'Signup', 'mdThemeColors', 'Authenticate',
             SignupController]);
 
-    function SignupController($scope, $log, $mdDialog, Signup, Oauth2Service, Authenticate) {
+    function SignupController($scope, $log, $mdDialog, Signup, mdThemeColors, Authenticate) {
         $scope.Authenticate = Authenticate;
+        $scope.mdThemeColors = mdThemeColors;
 
         $scope.hide = function() {
             $mdDialog.hide();

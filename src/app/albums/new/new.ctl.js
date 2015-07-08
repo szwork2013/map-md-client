@@ -31,6 +31,7 @@
         var self = this;
         self.step = 1;
         self.tags = [];
+        self.maps = [];
 
         if(userId) {
             self.album = {
@@ -49,8 +50,8 @@
 
         self.save = function(e) {
             var album = angular.copy(self.album);
-            if(self.map) {
-                album.map = {id: self.map.id};
+            if(self.maps && self.maps.length) {
+                album.map = {id: self.maps[0].id};
             }
             album.tags = self.tags;
             Albums.create(album).then(function(album) {
@@ -65,8 +66,8 @@
 
         self.update = function(ev) {
             var album = angular.copy(self.album);
-            if(self.map) {
-                album.map = {id: self.map.id};
+            if(self.maps && self.maps.length) {
+                album.map = {id: self.maps[0].id};
             }else {
                 delete album.map;
             }

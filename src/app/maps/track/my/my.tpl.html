@@ -32,12 +32,12 @@
                      class="leader"></md-icon>
             <div class="md-list-item-text">
                 <h3 ng-click="$event.preventDefault();go('app.maps.track.display', {id: track.id})">
-                    {{ track.name }} </h3>
+                    {{ track.title }} </h3>
                 <p> {{ track.description }} </p>
             </div>
             <md-button class="md-icon-button md-warn" ng-show="mtmc.edit.editing"
                        aria-label="删除"
-                       ng-click="$event.preventDefault();mtmc.remove(track)">
+                       ng-click="$event.stopPropagation();mtmc.remove(track)">
                 <md-icon md-svg-icon="action:delete"></md-icon>
             </md-button>
         </md-list-item>

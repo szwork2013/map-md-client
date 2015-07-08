@@ -1,6 +1,6 @@
 <div class="md-2-line">
     <img alt="{{ user.name }}"
-         ng-src="{{staticCtx}}/cover{{user.avatar || 1}}.png"
+         ng-src="{{UrlService.getAvatarUrl(user.avatar)}}"
          class="md-avatar" />
     <div class="profile-name">
         <a href ng-click="toUserPage($event)">{{user.name}}</a>

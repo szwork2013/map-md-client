@@ -1,63 +1,7 @@
-<md-card>
-    <md-card-content>
-        <div flex
-             layout="column"
-             layout-wrap
-             class="settings-map-container">
-            <leaflet id="settings-map"
-                     defaults="defaults"
-                     center="center"
-                     flex
-                     hide-sm></leaflet>
-
-            <div layout="row">
-                <md-tabs md-selected="selectedIndex" md-dynamic-height md-border-bottom flex layout-fill>
-                    <md-tab ng-repeat="provider in providers"
-                            md-on-select="changeTiles(provider)"
-                            ng-disabled="provider.disabled">
-                        <md-tab-label layout="row">
-                            <div layout="row">
-                                <md-checkbox ng-model="provider.used" aria-label="{{provider.name}}"></md-checkbox>
-                                <div flex>
-                                    <span>{{provider.name}}</span>
-                                </div>
-                            </div>
-
-                        </md-tab-label>
-                    </md-tab>
-                </md-tabs>
-            </div>
-        </div>
-    </md-card-content>
-
-    <div class="md-actions" layout="row" layout-align="end center">
-        <md-button class="md-raised md-primary">保存</md-button>
-        <md-button>取消</md-button>
-    </div>
-</md-card>
-
-<md-card>
-    <md-card-content>
-        <div flex
-             layout="column"
-             layout-wrap
-             class="settings-map-container">
-            <leaflet id="min-map"
-                     defaults="defaults"
-                     center="center"
-
-                     flex
-                     hide-sm></leaflet>
-
-            <div flex="20">
-
-            </div>
-        </div>
-
-    </md-card-content>
-
-    <div class="md-actions" layout="row" layout-align="end center">
-        <md-button class="md-raised md-primary">保存</md-button>
-        <md-button>取消</md-button>
-    </div>
-</md-card>
+<form-card form-name="settingsForm"
+           card-title="常用地图"
+           submit-name="保存"
+           form-submit="formSubmit(smc.maps)">
+    <map-selector maps="smc.maps" multiple="true"
+                  secondary-placeholder="选择常用底图类型"></map-selector>
+</form-card>

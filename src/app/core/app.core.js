@@ -9,7 +9,11 @@
         'app.core.theme',
         'app.core.services',
         'app.core.oauth',
-        'app.core.filters'])
+        'app.core.filters',
+        'LocalStorageModule'])
+        .config(['localStorageServiceProvider', function(localStorageServiceProvider){
+            localStorageServiceProvider.setPrefix('mdmap');
+        }])
         .factory('MainRestangular', ['Restangular', 'serverBaseUrl',
             function(Restangular, serverBaseUrl) {
             return Restangular.withConfig(function(RestangularConfigurer) {

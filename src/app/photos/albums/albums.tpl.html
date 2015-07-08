@@ -1,24 +1,29 @@
 <div class="photos-albums-page">
-    <md-grid-list class="albums-grid-list"
-            md-cols-gt-md="5" md-cols-sm="2" md-cols-md="3"
-            md-row-height-gt-md="1:1" md-row-height="1:1"
-            md-gutter-gt-md="10px" md-gutter-gt-sm="5px" md-gutter="1px">
-        <md-grid-tile
-                ng-repeat="album in pamc.albums"
-                md-colspan-gt-sm="1"
-                md-rowspan-gt-sm="1">
-            <album-card album="album" editable="true"
-                        layout-fill flex layout="row"
-                        class="album-card"
-                        ng-click="go('app.photos.album', {id: album.id})">
-            </album-card>
-        </md-grid-tile>
-    </md-grid-list>
+    <async-card load-more="pamc.loadMoreAlbums"
+                load-reset="pamc.loadReset()"
+                no-border="true">
+        <md-grid-list class="albums-grid-list"
+                md-cols-gt-md="5" md-cols-sm="2" md-cols-md="3"
+                md-row-height-gt-md="1:1" md-row-height="1:1"
+                md-gutter-gt-md="10px" md-gutter-gt-sm="5px" md-gutter="1px">
+            <md-grid-tile
+                    ng-repeat="album in pamc.albums"
+                    md-colspan-gt-sm="1"
+                    md-rowspan-gt-sm="1">
+                <album-card album="album" editable="true"
+                            layout-fill flex layout="row"
+                            class="album-card"
+                            ng-click="go('app.photos.album', {id: album.id})">
+                </album-card>
+            </md-grid-tile>
+        </md-grid-list>
+    </async-card>
 
     <!-- Add album -->
     <md-card>
         <md-card-content layout="column">
-            相册是保存地图上图片的一种专辑，任何类型的专辑都可以保存图片
+            相册是保存地图上图片的一种专辑<br/>
+            任何类型的专辑都可以保存图片
         </md-card-content>
         <div class="md-actions" layout="row" layout-align="end center">
             <md-button class="md-icon-button md-primary" aria-label="新建专辑"

@@ -60,10 +60,21 @@
                 }
             };
 
+            /**
+             * 确定选择
+             */
             $scope.save = function() {
-                $scope.answer($scope.selAlbum);
+                if($scope.selAlbum) {
+                    $scope.answer($scope.selAlbum);
+                }else {
+                    $scope.cancel();
+                }
             };
 
+            /**
+             * 新建相册
+             * @param ev
+             */
             $scope.newAlbum = function(ev) {
                 var deferred = $q.defer();
                 $scope.answer(deferred.promise);

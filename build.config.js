@@ -76,6 +76,7 @@ module.exports = {
       //'vendor/angular-leaflet-directive/dist/angular-leaflet-directive.js',
       'vendor/ng-file-upload/dist/ng-file-upload-shim.min.js',
       'vendor/ng-file-upload/dist/ng-file-upload.min.js',
+      'vendor/angular-local-storage/dist/angular-local-storage.min.js',
       'vendor/leaflet/dist/leaflet.js',
       'vendor/Leaflet.markercluster/dist/leaflet.markercluster.js',
       'vendor/Leaflet.heat/dist/leaflet-heat.js',

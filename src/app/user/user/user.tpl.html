@@ -31,30 +31,7 @@
     </md-card>
 
     <!-- My albums -->
-    <md-card class="albums-grid-card">
-        <md-card-content layout="column">
-            <md-grid-list class="albums-grid-list"
-                    md-cols-gt-md="5" md-cols-sm="2" md-cols-md="3"
-                    md-row-height-gt-md="1:1" md-row-height="1:1"
-                    md-gutter-gt-md="10px" md-gutter-gt-sm="6px" md-gutter="4px">
-                <md-grid-tile
-                        ng-repeat="album in uupc.albums"
-                        md-colspan="1"
-                        md-rowspan="1">
-                    <album-card album="album" editable="editable"
-                                layout-fill flex layout="column"
-                                class="album-card">
-                    </album-card>
-                </md-grid-tile>
-            </md-grid-list>
-        </md-card-content>
-        <div class="md-actions" layout="row" layout-align="end center" ng-show="editable">
-            <md-button class="md-icon-button md-primary" aria-label="新建专辑" title="新建专辑"
-                       ng-click="go('app.albums.new', {user: user.id})">
-                <md-icon md-svg-icon="content:add"></md-icon>
-            </md-button>
-        </div>
-    </md-card>
-
+    <albums-card user="user" authority="authority" page-size="10"
+                 albums-add="go('app.albums.new')"></albums-card>
 
 </div>

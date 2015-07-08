@@ -17,22 +17,21 @@
                     })
                 ;
             }])
-        .controller('SettingsAccountCtrl', ['$scope', '$log', '$mdDialog', 'Users', 'Authenticate', SettingsAccountCtrl])
+        .controller('SettingsAccountCtrl', ['$scope', '$log', '$mdDialog', 'Users', 'Authenticate',
+            'user', SettingsAccountCtrl])
     ;
 
     var LOG_TAG = "Settings-Account: ";
 
-    function SettingsAccountCtrl($scope, $log, $mdDialog, Users, Authenticate) {
+    function SettingsAccountCtrl($scope, $log, $mdDialog, Users, Authenticate, user) {
         var self = this;
         self.settings = {};
         $scope.Authenticate = Authenticate;
+        self.user = user;
 
-        Authenticate.getUser().then(function(user) {
-            self.user = user;
-            Users.getUser(user.id).then(function(settings) {
-                self.settings  = settings;
-                $scope.reset();
-            });
+        Users.getUser(user.id).then(function(settings) {
+            self.settings  = settings;
+            $scope.reset();
         });
 
         $scope.reset = function() {
@@ -58,10 +57,8 @@
                 controller: 'AvatarUploadCtrl',
                 templateUrl: 'home/avatar/avatar.tpl.html',
                 targetEvent: ev
-            }).then(function(image) {
-                Users.saveAvatar(self.user.id, image.id).then(function(user) {
-                    Authenticate.user.avatar = user.avatar;
-                });
+            }).then(function(avatar) {
+                Authenticate.setAvatarCover(avatar);
             });
         };
     }

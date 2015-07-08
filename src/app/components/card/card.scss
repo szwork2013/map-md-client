@@ -1,9 +1,14 @@
 .md-card-no-border {
-  md-card {
+  >md-card {
     box-shadow: initial;
     margin: 0;
-    md-card-content {
+    background-color: initial;
+    >md-card-content {
       padding: 0;
     }
   }
+}
+
+.card-header {
+  padding: 10px 20px;
 }

@@ -24,19 +24,26 @@
         self.step = 1;
 
         self.save = function(e) {
-            Groups.create(self.group).then(function(group) {
-                $mmdMessage.success.create();
-                $scope.groupNewForm.$setPristine();
-                self.step = 2;
-            }, function(err) {
-                $mmdMessage.fail.create(err);
-            });
 
+            if(self.group.id) {
+
+            }else {
+                self.saving = true;
+                Groups.create(self.group).then(function(group) {
+                    $mmdMessage.success.create();
+                    self.group.id = group.id;
+                    $scope.groupNewForm.$setPristine();
+                    self.step = 2;
+                    self.saving = false;
+                }, function(err) {
+                    $mmdMessage.fail.create(err);
+                    self.saving = false;
+                });
+            }
         };
 
         self.cancel = function(e) {
 
         };
-
     }
 })();

@@ -11,7 +11,7 @@
     angular.module('app.user.group', [
     ])
         .directive('userGroupPage', ['$mdTheming', '$log', userGroupPageDirective])
-        .controller('UserGroupPageCtrl', ['$scope', '$state', 'Groups', '$log', '$mmdMessage', 'Authenticate',
+        .controller('UserGroupPageCtrl', ['$scope', '$state', '$log', '$mmdMessage', 'Groups', 'Users',
             UserGroupPageCtrl]);
 
     var LOG_TAG = "[User page] ";
@@ -23,7 +23,7 @@
             replace: true,
             scope: {
                 group: '=',
-                owned: '='
+                authority: '='
             },
             link: link,
             controller: 'UserGroupPageCtrl as ugpc',
@@ -34,42 +34,13 @@
         }
     }
 
-    function UserGroupPageCtrl($scope, $state, Groups, $log, $mmdMessage, Authenticate) {
+    function UserGroupPageCtrl($scope, $state, $log, $mmdMessage, Groups, Users) {
         var self = this;
 
-        $scope.$watch('group', function(group) {
-            if(group) {
-                self.group = group;
-                setEditable(self.group);
-                Groups.getAlbums(group.id).then(function(albums) {
-                    // TODO
-                    angular.forEach(albums, function(album, key) {
-                        if(!album.cover) {
-                            album.cover = album.photos[0];
-                        }
-                    });
-                    self.albums = albums;
-                });
-            }
+        self.group = $scope.group;
+        Users.getAlbums($scope.group.id).then(function(albums) {
+            self.albums = albums;
         });
-
-        /**
-         * 设置登录用户是否可编辑
-         */
-        function setEditable(group) {
-            $scope.editable = false;
-            $scope.owned = false;
-            Authenticate.getUser().then(function(user) {
-                angular.forEach(group.members, function(member, key) {
-                    if(member.id == user.id) {
-                        $scope.editable = true;
-                    }
-                });
-                if(user.id == group.user.id) {
-                    $scope.owned = true;
-                }
-            });
-        }
 
         $scope.applyJoin = function() {
             Groups.applyJoin(self.group.id).then(function(group) {
@@ -82,17 +53,6 @@
 
         $scope.go = function(state, params) {
             $state.go(state, params);
-        };
-
-        $scope.goEdit = function(album) {
-            if(album.type=='Base') {
-                $state.go("app.maps.album.fc.edit", {id: album.id});
-            }else {
-                $state.go("app.maps.album.fc.edit", {id: album.id});
-            }
-        };
-        $scope.goDisplay = function(album) {
-            $state.go("app.maps.album.display", {userName: self.group.username, albumName: album.name});
         };
 
         /**

@@ -11,6 +11,7 @@
      */
     angular.module('app.components.leaflet', [
         'app.components.leaflet.clusterControl',
-        'app.components.leaflet.select'
+        'app.components.leaflet.select',
+        'app.components.leaflet.photoMarkControl'
     ]);
 })();

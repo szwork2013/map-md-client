@@ -12,64 +12,34 @@
                     .state('app.settings.map', {
                         url: '/map',
                         templateUrl: 'settings/map/map.tpl.html',
-                        controller: 'SettingsMapCtrl',
-                        resolve: {}
+                        controller: 'SettingsMapCtrl as smc',
+                        resolve: {
+                            //providers: ['Maps', function(Maps) {
+                            //        return Authenticate.getUser();
+                            //}]
+                        }
                     })
                 ;
             }])
-        .controller('SettingsMapCtrl', ['$scope', '$timeout', 'leafletData', '$mmdLeafletUtil',
+        .controller('SettingsMapCtrl', ['$scope', '$log', '$mmdMessage',
             SettingsMapCtrl])
     ;
 
-    function SettingsMapCtrl($scope, $timeout, leafletData, $mmdLeafletUtil) {
+    var LOG_TAG = "[Settings maps]";
+
+    function SettingsMapCtrl($scope, $log, $mmdMessage) {
         var self = this;
+        self.settings = {};
+        self.maps = [];
 
-        $scope.providers = angular.copy($mmdLeafletUtil.providers);
-
-        angular.extend($scope, {
-            defaults: {
-                tileLayer: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            }
-        });
-
-        angular.extend($scope, {
-            center: {
-                lat: 34,
-                lng: 110,
-                zoom: 6
-            }
-            //layers: {
-            //    //baselayers: {},
-            //    overlays: {}
-            //}
-        });
-
-        var control = L.control.layersManager({}, {}, {autoZIndex: false});
-        $scope.changeTiles = function(provider) {
-            if(provider.overlay) {
-                var overlay = {};
-                overlay[provider.name] = provider.code;
-                control.setOverLayers(overlay);
-            }else {
-                control.clear();
-                control.setBaseLayer(provider.code, provider.name);
-            }
+        $scope.formSubmit = function(maps) {
+            $mmdMessage.fail.update("功能开发中");
         };
 
-        leafletData.getMap('settings-map').then(function(map) {
-            // 由于动态产生的界面地图容器大小会变化，所以在创建后再检查容器大小是否变化
-            $timeout(function () {
-                map.invalidateSize(false);
-            }, 500);
-
-            control.addTo(map);
+        $scope.$watch('smc.maps.length', function(length) {
+            if(length && $scope.settingsForm) {
+                $scope.settingsForm.$dirty = true;
+            }
         });
-
-        //leafletData.getMap('min-map').then(function(map) {
-        //    // 由于动态产生的界面地图容器大小会变化，所以在创建后再检查容器大小是否变化
-        //    $timeout(function () {
-        //        map.invalidateSize(false);
-        //    }, 500);
-        //});
     }
 })();

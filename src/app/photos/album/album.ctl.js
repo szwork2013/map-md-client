@@ -28,10 +28,14 @@
         var self = this;
         var originalAlbum = {};
         self.album = {tags: []};
+        self.maps = [];
 
         Albums.get(id).then(function(album) {
             self.album = album;
             originalAlbum = angular.copy(album);
+            if(album.map) {
+                self.maps[0] = album.map;
+            }
             $scope.setPage("app.photos.album", self.album.title, {id: self.album.id});
         });
 
@@ -42,9 +46,9 @@
                 description: self.album.description,
                 tags: self.album.tags
             };
-            if(self.album.map) {
+            if(self.maps && self.maps.length) {
                 album.map = {
-                  id: self.album.map.id
+                  id: self.maps[0].id
                 };
             }
 
@@ -116,7 +120,7 @@
                 $scope.showSelectPrompt(ev);
                 return;
             }
-            Albums.setCover(self.album.id, {id: photos[0].id, type: "photo"})
+            Albums.setCover(self.album.id, {id: photos[0].id, type: "PHOTO"})
                 .then(function(album) {
                     $mmdMessage.success.update();
                 },function(err) {
@@ -170,11 +174,5 @@
                 self.album.photos.splice(self.album.photos.indexOf(photo), 1);
             });
         }
-
-        $scope.getMaps = function() {
-            Maps.getAll().then(function(maps) {
-                self.maps = maps;
-            });
-        };
     }
 })();

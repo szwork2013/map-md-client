@@ -1,0 +1,15 @@
+<form name="formCardForm" ng-submit="formSubmit()">
+    <md-card>
+        <div class="md-subhead card-header">{{cardTitle}}</div>
+        <md-card-content ng-transclude>
+        </md-card-content>
+        <div class="md-actions" layout="row" layout-align="end center">
+            <md-button class="md-raised"
+                       ng-class="{'md-primary': formCardForm.$dirty}">
+                {{submitName||'提交'}}
+            </md-button>
+            <md-button class=""
+                       ng-click="fcc.reset()">取消</md-button>
+        </div>
+    </md-card>
+</form>

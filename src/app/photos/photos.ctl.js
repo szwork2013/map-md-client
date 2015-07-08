@@ -19,7 +19,11 @@
                         url: '/photos',
                         templateUrl: 'photos/photos.tpl.html',
                         controller: 'PhotosCtrl',
-                        resolve: {}
+                        resolve: {
+                            user: ['Authenticate', function(Authenticate){
+                                return Authenticate.getUser();
+                            }]
+                        }
                     })
                 ;
             }])
