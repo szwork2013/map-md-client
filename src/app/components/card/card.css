@@ -1,0 +1,7 @@
+.md-card-no-border md-card {
+  box-shadow: initial;
+  margin: 0; }
+  .md-card-no-border md-card md-card-content {
+    padding: 0; }
+
+/*# sourceMappingURL=card.css.map */

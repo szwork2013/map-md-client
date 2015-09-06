@@ -82,6 +82,7 @@
                     photo.style = {
                         height: '100%',
                         'max-width': '100%',
+                        width: 'initial',
                         margin: '0 -' + (((photo.width/photo.height)-photo.colspan)/photo.colspan/2)*100 + '%'
                     };
                 }else {
@@ -96,6 +97,7 @@
                     photo.style = {
                         height: '100%',
                         'max-width': '100%',
+                        width: 'initial',
                         margin: '0 -' + ((photo.rowspan-(photo.height/photo.width))/photo.rowspan/2)*100 + '%'
                     };
                 }else {

@@ -265,7 +265,6 @@
 
             controlLayers.addTo(map);
 
-
             map.on('photoClick', onMapPhotoClicked);
 
             L.control.locate({

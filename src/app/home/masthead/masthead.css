@@ -1,0 +1,19 @@
+.masthead {
+  position: relative;
+  margin-bottom: -90px;
+  min-height: 340px;
+  height: 340px;
+  background-color: #00BCD4;
+  box-shadow: initial; }
+
+.masthead-container {
+  min-height: 268px;
+  height: 268px;
+  width: 100%;
+  max-width: 944px;
+  margin: 0 auto;
+  padding: 10px 20px 100px; }
+  .masthead-container .masthead-meta {
+    width: 100%; }
+
+/*# sourceMappingURL=masthead.css.map */
